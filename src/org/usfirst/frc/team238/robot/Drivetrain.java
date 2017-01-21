@@ -3,7 +3,7 @@ package org.usfirst.frc.team238.robot;
 
 import org.usfirst.frc.team238.core.Logger;
 
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
