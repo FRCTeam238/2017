@@ -7,33 +7,29 @@ import edu.wpi.first.wpilibj.RobotDrive;
 
 public class CommandTankDrive extends AbstractCommand {
 
-	RobotDrive myRobotDrive; 
-	public CommandTankDrive(RobotDrive robotDrive)
-	{
-		this.myRobotDrive = robotDrive;
-	}
-	
-	public void prepare(){
-		
-		
-		
-	}
-	
-	@Override
-	public void execute() {
-		double leftJsValue = 0;
-		double rightJsValue = 0;
-		leftJsValue = ControlBoard.getDriverLeftJs().getY();
-		rightJsValue = ControlBoard.getDriverRightJs().getY();
+  RobotDrive myRobotDrive;
 
-		myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
-		
-	}
+  public CommandTankDrive(RobotDrive robotDrive) {
+    this.myRobotDrive = robotDrive;
+  }
 
-	//@Override
-	//public void execute(double overRideValue) {
-		// TODO Auto-generated method stub
+  public void prepare() {
 
-	}
+  }
 
+  @Override
+  public void execute() {
+    double leftJsValue = 0;
+    double rightJsValue = 0;
+    leftJsValue = ControlBoard.getDriverLeftJs().getY();
+    rightJsValue = ControlBoard.getDriverRightJs().getY();
 
+    myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
+
+  }
+
+  // @Override
+  // public void execute(double overRideValue) {
+  // TODO Auto-generated method stub
+
+}
