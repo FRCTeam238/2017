@@ -94,8 +94,8 @@ public class ControlBoard {
 
     controllers.put(0, getCommand(manualOverrideJs));
     controllers.put(CrusaderCommon.OPR_CMD_LIST, getCommand(operatorJs));
-    controllers.put(CrusaderCommon.INPUT_DRIVER_RIGHT_JS, getDriverCommand(getDriverRightJs()));
-    controllers.put(CrusaderCommon.INPUT_DRIVER_LEFT_JS, getDriverCommand(getDriverLeftJs()));
+    controllers.put(CrusaderCommon.INPUT_DRIVER_RIGHT_JS, getCommand(getDriverRightJs()));
+    controllers.put(CrusaderCommon.INPUT_DRIVER_LEFT_JS, getCommand(getDriverLeftJs()));
     controllers.put(CrusaderCommon.DT_CMD_LIST, CrusaderCommon.DRIVE_TRAIN_CMD_IDX);
 
     return controllers;

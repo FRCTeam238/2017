@@ -112,10 +112,10 @@ public class CommandController {
 			
 			
 			buttonPressed = commandValue.get(CrusaderCommon.DT_CMD_LIST);
-			Logger.logInt("buttonPressed : ", buttonPressed);
+			//Logger.logInt("buttonPressed : ", buttonPressed);
 			commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
 			if(commandForTheButtonPressed != null){
-				Logger.logInt("buttonPressed(in if statement) : ", buttonPressed);
+				//Logger.logInt("buttonPressed(in if statement) : ", buttonPressed);
 				commandForTheButtonPressed.execute();
 			}
 			
@@ -123,6 +123,7 @@ public class CommandController {
 			
 			buttonPressed = commandValue.get(CrusaderCommon.OPR_CMD_LIST);		
 			commandForTheButtonPressed = operatorCmdList.get(buttonPressed); 
+			//Logger.logInt("buttonPressed : ", buttonPressed);
 			if(commandForTheButtonPressed != null){
 				commandForTheButtonPressed.execute();
 			}

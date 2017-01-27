@@ -182,7 +182,7 @@ public class Robot extends IterativeRobot {
 		try {
 			System.out.println("RobotInit()");
 			
-			SmartDashboard.putBoolean("Debug", false);
+			SmartDashboard.putBoolean("Debug", true);
 			
 			SmartDashboard.putInt("AutoStateCmdIndex", 0);
 			
