@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team238.core.AutonomousState;
 import org.usfirst.frc.team238.core.AutonomousController;
-import org.usfirst.frc.team238.core.AutonomousJSONFactory;
+import org.usfirst.frc.team238.core.AutonomousDataHandler;
 import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Navigation;
@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 	// Autonomous Mode Support
 	String autoMode;
 	/*AutonomousDrive autonomousDrive;*/
-	private AutonomousJSONFactory jSONFileWriter;
+	private AutonomousDataHandler myAutonomousDataHandler;
 	private AutonomousController theMACP;
 	SendableChooser autonomousChooser;
 	SendableChooser autonomousSaveChooser;
@@ -89,12 +89,15 @@ public class Robot extends IterativeRobot {
 				
 				count = 0;
 				
+				//Send the list of AutonomousModes into the AutonomousController for processing
+        theMACP.setAutonomousControllerData(myAutonomousDataHandler);
+				
 				myNavigation.getDistanceFromUltrasonic();
 				
 				debug = SmartDashboard.getBoolean("Debug");
 				Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
-				int automousModeFromDS =  theMACP.getAutonomousSelection();//  autonomousChooser.getSelected();
+				int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection();
 				Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
 			
 				//see if we need to modify the params on a state
@@ -106,24 +109,19 @@ public class Robot extends IterativeRobot {
 				
 				theMACP.pickAMode(automousModeFromDS);
 				
-				//Get the list of autonomousModes
-				autonomousModeList = theMACP.getAutoModeList();
-				//Get the names of each set of autonomousModes
-				AutoModeNames = theMACP.getAutoModeNames();
-				
 				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
 				
 				if(update != 0)
 				{
-					theMACP.updateStateParameters();
+					theMACP.updateStateParameters(automousModeFromDS);
 				}
 				
 				if(save != 0)
 				{
-					jSONFileWriter.save(autonomousModeList, AutoModeNames);	
+				  myAutonomousDataHandler.save();	
 				}
 
-				theMACP.dump();
+				myAutonomousDataHandler.dump();
 				
 				myNavigation.navxValues();
 				
@@ -132,6 +130,8 @@ public class Robot extends IterativeRobot {
 				dataFromVision = theVision.getTheData();
 				
 				Logger.logDouble("Angle ", dataFromVision[CrusaderCommon.VISION_ANGLE_SLOT]);
+				
+				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
 			}
 			
@@ -165,9 +165,10 @@ public class Robot extends IterativeRobot {
 
 			try {
 			
-				int automousModeFromDS =  theMACP.getAutonomousSelection();//  autonomousChooser.getSelected();
+				int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection(); //controller
 				Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
 				theMACP.pickAMode(automousModeFromDS);
+				
 			} catch (Exception ex) {
 				Logger.logString("AutononousInit:Something BAD happened");
 			}
@@ -180,7 +181,7 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
 	public void robotInit() {
 
 		try {
@@ -195,7 +196,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putInt("AutoStateCmdIndex", 0);
 			
 			
-			
+			//Sendable Chooser for the state update function
 			autonomousStateParamsUpdate = new SendableChooser();
 			autonomousStateParamsUpdate.addDefault("As Received", "0");
 			autonomousStateParamsUpdate.addObject("UPDATE", "1");
@@ -205,8 +206,8 @@ public class Robot extends IterativeRobot {
 			autonomousSaveChooser.addDefault("DON'T Save", "0");
 			autonomousSaveChooser.addObject("Save", "1");
 			
+			//Put sendableChoosers to the SmartDashboard
 			SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
-			//put it on the SmartDashboard
 			SmartDashboard.putData("Save Changes", autonomousSaveChooser);
 			
 			myLogger = new Logger();
@@ -260,16 +261,18 @@ public class Robot extends IterativeRobot {
 			//Controller object for telop
 			theMCP = new CommandController();
 			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision);
-
+			
+			//The handler that handles everything JSON related 
+			myAutonomousDataHandler = new AutonomousDataHandler();
+			
+		  //Takes the CommandController in order to create AutonomousStates that work with the control scheme
+			myAutonomousDataHandler.init(theMCP);
+			
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
-			theMACP.init(theMCP);
 			
-			//The file writer to create new AutonomousModes
-			jSONFileWriter = new AutonomousJSONFactory();
-			
-			
-			
+			//Gives the newly read JSON data to the AutonomousController for processing
+      theMACP.setAutonomousControllerData(myAutonomousDataHandler);
 			
 			Logger.logString("Fully Initialized");
 
