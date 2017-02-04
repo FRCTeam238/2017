@@ -2,16 +2,13 @@ package org.usfirst.frc.team238.core;
 
 
 import java.util.HashMap;
-
+//import org.usfirst.frc.team238.robot.AutonomousDrive;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
-
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
-import org.usfirst.frc.team238.robot.Vision;
-
 import edu.wpi.first.wpilibj.RobotDrive;
 
-
+import org.usfirst.frc.team238.robot.Vision;
 
 public class CommandController {
 	AutonomousCmdFactory theRouge;
@@ -26,12 +23,12 @@ public class CommandController {
 	
 	HashMap<Integer, Command> commandValue;
 	
-	public void  init(RobotDrive myRobotDrive, Drivetrain driveTrain, Navigation myNavigation, Vision myVision)
+	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Drivetrain driveTrain, Navigation myNavigation, Vision myVision)
 	{
 		// populate the command lists
-		setupOperatorCommands(driveTrain, myNavigation, myVision);
+		setupOperatorCommands(myNavigation, driveTrain, myVision);
 		setupDriverCommands(myRobotDrive, driveTrain);
-		setupAutonomousCommands(driveTrain, myNavigation);
+		setupAutonomousCommands(driveTrain, myNavigation, myVision);
 		
 		commandValue = new HashMap<Integer, Command>(8);
 	}
@@ -44,11 +41,11 @@ public class CommandController {
 	}
 	
 	//loads all the autonomous commands from the auto factory
-	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation)
+	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision)
 	{
 		theRouge = new AutonomousCmdFactory();
 		theRouge.init();
-		autoCmdList = theRouge.createAutonomousCommands(driveTrain, myNavigation);
+		autoCmdList = theRouge.createAutonomousCommands(driveTrain, myNavigation, myVision);
 		
 	}
 	
@@ -74,12 +71,12 @@ public class CommandController {
 		return operatorCmdList.get(cmdName);
 	}
 	
-	private void setupOperatorCommands(Drivetrain theDrivetrain, Navigation theNavigation, Vision theVision)
+	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
 		
-		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(theDrivetrain, theNavigation, theVision);
+		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision);
 	}
 
 	/*
@@ -87,7 +84,34 @@ public class CommandController {
 	 * which the values  ( button1 = 1 etc) are the key into a Map of commands that have been pre-loaded 
 	 * in the setup methods,  then "get"s the command associated with the key in the hashmap and calls the execute function on that command.
 	 */
-	
+	/*public void buttonPressed(int[] commandValue){
+		
+		Command commandForTheButtonPressed;
+		Integer buttonPressed = commandValue(CrusaderCommon.INPUT_DRIVER_LEFT_JS);
+		
+		commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed);
+		if(commandForTheButtonPressed != null){
+			commandForTheButtonPressed.execute();
+		}
+		
+		buttonPressed = commandValue[CrusaderCommon.INPUT_DRIVER_RIGHT_JS];
+		commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
+		if(commandForTheButtonPressed != null){
+			commandForTheButtonPressed.execute();
+		}
+		
+		buttonPressed = commandValue[CrusaderCommon.DT_CMD_LIST];		
+		commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
+		if(commandForTheButtonPressed != null){
+			commandForTheButtonPressed.execute();
+		}
+		
+		buttonPressed = commandValue[CrusaderCommon.OPR_CMD_LIST];		
+		commandForTheButtonPressed = operatorCmdList.get(buttonPressed); 
+		if(commandForTheButtonPressed != null){
+			commandForTheButtonPressed.execute();
+		}
+	}*/
 	
 	public void buttonPressed(HashMap<Integer, Integer> commandValue){
 			
@@ -98,6 +122,7 @@ public class CommandController {
 			
 			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed);
 			if(commandForTheButtonPressed != null){
+				
 				commandForTheButtonPressed.execute();
 			}
 			
@@ -106,6 +131,7 @@ public class CommandController {
 			buttonPressed = commandValue.get(CrusaderCommon.INPUT_DRIVER_RIGHT_JS);
 			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
 			if(commandForTheButtonPressed != null){
+				//Logger.logInt("buttonPressed driver right : ", buttonPressed);
 				commandForTheButtonPressed.execute();
 			}
 			
@@ -123,13 +149,14 @@ public class CommandController {
 			
 			buttonPressed = commandValue.get(CrusaderCommon.OPR_CMD_LIST);		
 			commandForTheButtonPressed = operatorCmdList.get(buttonPressed); 
-			//Logger.logInt("buttonPressed : ", buttonPressed);
 			if(commandForTheButtonPressed != null){
 				commandForTheButtonPressed.execute();
 			}
 			
 			
 		}
+	
+	//Edit to send to github
 
 	
 }

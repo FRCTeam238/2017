@@ -11,16 +11,16 @@ import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Drivetrain;
-
+import org.usfirst.frc.team238.robot.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 
 
@@ -35,7 +35,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 // @SuppressWarnings("deprecation")
 public class Robot extends IterativeRobot {
 
-	private static int count = 0;
+	private static int count = 1;
+	double[] dataFromVision;
 	//private static boolean AUTO_STARTED = false;
 	
 	CANTalon leftFrontDrive; //id = 1
@@ -47,11 +48,8 @@ public class Robot extends IterativeRobot {
 	ControlBoard myControlBoard;
 	CommandController theMCP;
 	RobotDrive myRobotDrive;
-	
 	Navigation myNavigation;
 	Drivetrain myDriveTrain;
-	Compressor thePump;
-
 	DriverStation myDriverstation;
 	Vision theVision;
 	
@@ -60,10 +58,10 @@ public class Robot extends IterativeRobot {
 	/*AutonomousDrive autonomousDrive;*/
 	private AutonomousJSONFactory jSONFileWriter;
 	private AutonomousController theMACP;
-	SendableChooser<?> autonomousChooser;
-	SendableChooser<String> autonomousSaveChooser;
+	SendableChooser autonomousChooser;
+	SendableChooser autonomousSaveChooser;
 	Logger myLogger;
-	SendableChooser<String> autonomousStateParamsUpdate;
+	SendableChooser autonomousStateParamsUpdate;
 	//Holds all the autonomous states
 	//and takes the data from the AutonomousController in order to
 	//transfer it to the JSONFactory
@@ -75,9 +73,6 @@ public class Robot extends IterativeRobot {
 		try {
 			// only use checkForSmartDashboardChanges function in init methods
 			// or you will smoke the roborio into a useless pile of silicon
-			
-			// ^ Thanks for the heads up bro! ^
-			
 			//checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
 			
 			Logger.logString("disabledInit:");
@@ -91,7 +86,7 @@ public class Robot extends IterativeRobot {
 		boolean debug;
 		try {
 			if (count > 150) {
-
+				
 				count = 0;
 				
 				myNavigation.getDistanceFromUltrasonic();
@@ -118,8 +113,6 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
 				
-				//Could combine update and save so it's just save
-				
 				if(update != 0)
 				{
 					theMACP.updateStateParameters();
@@ -134,8 +127,19 @@ public class Robot extends IterativeRobot {
 				
 				myNavigation.navxValues();
 				
+				//Logger.logDouble("Distance ", dataFromVision[CrusaderCommon.VISION_DISTANCE_SLOT]);
+				
+				dataFromVision = theVision.getTheData();
+				
+				Logger.logDouble("Angle ", dataFromVision[CrusaderCommon.VISION_ANGLE_SLOT]);
+				
 			}
+			
+			
+			
+			
 			count++;
+			
 		} catch (Exception ex) {
 			Logger.logString("disabledPriodic exception" );
 			ex.printStackTrace();
@@ -146,7 +150,7 @@ public class Robot extends IterativeRobot {
 	public void teleopInit() {
 		try {
 			Logger.logString("TeleopInit()");
-			
+			myControlBoard.checkXboxController();
 			
 		} catch (Exception ex) {
 			Logger.logString("TeleopInit:Exception");
@@ -182,16 +186,22 @@ public class Robot extends IterativeRobot {
 		try {
 			System.out.println("RobotInit()");
 			
+			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
+			
 			SmartDashboard.putBoolean("Debug", true);
+			
+			SmartDashboard.putBoolean("Match Time Flag", false);
 			
 			SmartDashboard.putInt("AutoStateCmdIndex", 0);
 			
-			autonomousStateParamsUpdate = new SendableChooser<String>();
+			
+			
+			autonomousStateParamsUpdate = new SendableChooser();
 			autonomousStateParamsUpdate.addDefault("As Received", "0");
 			autonomousStateParamsUpdate.addObject("UPDATE", "1");
 			
 			//Create a new SendableChooser for the save function
-			autonomousSaveChooser = new SendableChooser<String>();
+			autonomousSaveChooser = new SendableChooser();
 			autonomousSaveChooser.addDefault("DON'T Save", "0");
 			autonomousSaveChooser.addObject("Save", "1");
 			
@@ -206,15 +216,25 @@ public class Robot extends IterativeRobot {
 			myControlBoard.controlBoardInit();
 
 			//Create robot core objects 
-												// Test Robot | Actual Robot
-			leftFrontDrive = new CANTalon(CrusaderCommon.LEFT_FRONT_TALON);  //id =  1			 5
-			leftRearDrive = new CANTalon(CrusaderCommon.LEFT_REAR_TALON);   //id =  2			 6
-			rightFrontDrive = new CANTalon(CrusaderCommon.RIGHT_FRONT_TALON); //id =  3			 7
-			rightRearDrive = new CANTalon(CrusaderCommon.RIGHT_REAR_TALON);  //id =  4			 8
+												              // Test Robot | Actual Robot
+			leftFrontDrive = new CANTalon(5);  //id =  1			 5
+			leftRearDrive = new CANTalon(6);   //id =  2			 6
+			rightFrontDrive = new CANTalon(7); //id =  3			 7
+			rightRearDrive = new CANTalon(8);  //id =  4			 8
+			
+			//Setting the talons to follow master talons
+			rightRearDrive.changeControlMode(TalonControlMode.Follower);
+			leftRearDrive.changeControlMode(TalonControlMode.Follower);
+			rightRearDrive.set(7);
+			leftRearDrive.set(5);
+			
 			
 			myRobotDrive = new RobotDrive(leftFrontDrive,leftRearDrive,rightFrontDrive,rightRearDrive);
 			myRobotDrive.setSafetyEnabled(false);
-		
+			myRobotDrive.setMaxOutput(CrusaderCommon.DRIVETRAIN_MAX_RPM);
+			/*autonomousDrive = new AutonomousDrive(myRobotDrive);
+			autonomousDrive.init();*/
+			
 			myNavigation = new Navigation();
 			myNavigation.init();
 			
@@ -233,14 +253,13 @@ public class Robot extends IterativeRobot {
 			leftRearDrive.enableBrakeMode(true);
 			rightRearDrive.enableBrakeMode(true);
 			
-			
 			theVision = new Vision();
 			theVision.init();
 			theVision.startClient();
 			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive,  myDriveTrain, myNavigation, theVision);
+			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision);
 
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
@@ -249,8 +268,9 @@ public class Robot extends IterativeRobot {
 			//The file writer to create new AutonomousModes
 			jSONFileWriter = new AutonomousJSONFactory();
 			
-
-			thePump = new Compressor();
+			
+			
+			
 			Logger.logString("Fully Initialized");
 
 		} catch (Exception ex) {
@@ -261,12 +281,17 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
+	public CommandController getTheMCP()
+	{
+		return theMCP;
+	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		
+		//SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		try {
 			
 			theMACP.process();
@@ -295,7 +320,9 @@ public class Robot extends IterativeRobot {
 			commandValue = myControlBoard.getCommands();
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
-			
+			//myNavigation.navxValues();
+			//myNavigation.ultrasonicSensor();
+			//SmartDashboard.putNumber("Match Time", myDriverstation.getMatchTime());
 			
 
 		} catch (Exception e) {
@@ -312,11 +339,52 @@ public class Robot extends IterativeRobot {
 
 	}
 	
-	public void resetPCM()
-	{
-		thePump.clearAllPCMStickyFaults(); 
-		return ;
-	}
-
 	
+	/**
+	 * This should ONLY be called from an init function
+	 */
+	private void checkForSmartDashboardChanges(String key, String value) {
+		myPreferences = Preferences.getInstance();
+
+		String valueFromPrefs = myPreferences.getString(key, value);
+		if (valueFromPrefs != null) {
+			Logger.logFourString("CheckSDChanges:valueFromPrefs : " , key , " = " , valueFromPrefs);
+			String valueFromDS = null;
+			
+			try {
+				valueFromDS = SmartDashboard.getString(key);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				SmartDashboard.putString(key, valueFromPrefs);
+			}
+
+			Logger.logFourString("CheckSDChanges.ValFromDS : " , key , " = " , valueFromDS);
+
+			// check for null and also if it's empty don't overwrite what's in
+			// the preferences table
+			if ((valueFromDS != null)  && (!valueFromDS.isEmpty())) {
+								// if they are not the same then update the preferences
+				if (!valueFromPrefs.equalsIgnoreCase(valueFromDS)) {
+					
+					Logger.logFourString("CheckSDChanges.UpdatePrefs" , key , " = " , valueFromDS);
+					myPreferences.putString(key, valueFromDS);
+
+					// NEVER NEVER use this save() in a periodic function or you
+					// will destroy your RoboRio
+					// making it an expensive chunk of useless plastic and
+					// silicon
+					
+					//Thanks for the heads up bro!
+					
+					myPreferences.save();
+				}
+			}
+			
+			if(( valueFromDS != null) && (valueFromDS.isEmpty()) && (!valueFromPrefs.isEmpty())) {
+			
+				SmartDashboard.putString(key, valueFromPrefs);
+			
+			}
+		}
+	}
 }

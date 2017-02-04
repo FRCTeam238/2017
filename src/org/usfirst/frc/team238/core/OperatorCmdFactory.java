@@ -5,21 +5,20 @@ import java.util.HashMap;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Vision;
+
 import org.usfirst.frc.team238.commands.CommandResetPcm;
 import org.usfirst.frc.team238.commands.CommandTrackTargetRight;
-import org.usfirst.frc.team238.commands.CommandTrackTargetLeft;
+import org.usfirst.frc.team238.commands.CommandTrackTarget;
 
 
 
 public class OperatorCmdFactory {
 
-	
-	
 	CommandResetPcm commandResetPcm;
 	
 	CommandTrackTargetRight commandTrackRight;
 	
-	CommandTrackTargetLeft commandTrackLeft;
+	CommandTrackTarget commandTrackLeft;
 	
 	HashMap <Integer, Command> operatorCommands;
 
@@ -34,14 +33,12 @@ public class OperatorCmdFactory {
 	public HashMap<Integer, Command> createOperatorCommands(Drivetrain driveTrain, Navigation theNavigation, Vision theVision){
 	
 		
-		//commandResetPcm = new CommandResetPcm(theIntake);
-		//operatorCommands.put(4, commandResetPcm);
 		
 		commandTrackRight = new CommandTrackTargetRight(driveTrain, theNavigation, theVision);
-		operatorCommands.put(8, commandTrackRight);
+		operatorCommands.put(9, commandTrackRight);
 		
-		commandTrackLeft = new CommandTrackTargetLeft(driveTrain, theNavigation, theVision);
-		operatorCommands.put(9, commandTrackLeft);
+		commandTrackLeft = new CommandTrackTarget(driveTrain, theNavigation, theVision);
+		operatorCommands.put(8, commandTrackLeft);
 		
 		return operatorCommands;
 	

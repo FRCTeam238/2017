@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Robot;
 
 //import edu.wpi.first.wpilibj.buttons.NetworkButton;
@@ -26,7 +27,7 @@ public class AutonomousController implements AutonomousState {
 	ArrayList<String> autoModeNames;
 	SendableChooser aModeChooser; 
 	//NetworkButton testBtn;
-	int MAX_NUM_IN_A_LIST =  20; //mjf
+	int MAX_NUM_IN_A_LIST =  20;
 	 
 	//Returns a list of each set of AutonomousMode States
 	public ArrayList<AutonomousState>[] getAutoModeList (){
@@ -75,11 +76,7 @@ public class AutonomousController implements AutonomousState {
 		state.prepare();
 		Logger.logString("State: " + currentState);
 	}
-	/*
-	 * (non-Javadoc)
-	 * @see org.usfirst.frc.team238.core.AutonomousState#process()
-	 *  Walks down the list of autonomous actions
-	 */
+	
 	@Override
 	public void process() {
 		
@@ -253,7 +250,6 @@ public class AutonomousController implements AutonomousState {
 		
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void updateStateParameters()
 	{
 		int index = SmartDashboard.getInt("AutoStateCmdIndex");
@@ -285,6 +281,12 @@ public class AutonomousController implements AutonomousState {
 		
 		String automousModeFromDashBoard = (String) aModeChooser.getSelected();
 		Logger.logTwoString("The chosen One =  " , automousModeFromDashBoard);
+		
+		if(automousModeFromDashBoard == null){
+			
+			return 0;
+			
+		}
 		
 		return Integer.parseInt(automousModeFromDashBoard);
 	}

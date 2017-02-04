@@ -14,11 +14,6 @@ public class CrusaderCommon {
 	public static final int INPUT_DRIVER_LEFT_JS = 2;
 	public static final int INPUT_DRIVER_RIGHT_JS = 3;
 	
-	public static final int LEFT_FRONT_TALON = 5;
-	public static final int LEFT_REAR_TALON = 6;
-	public static final int RIGHT_FRONT_TALON = 7;
-	public static final int RIGHT_REAR_TALON = 8;
-	
 
 		// this element in the commandValue array is only
 		// used by the AutoMode1Impl class. CommandController
@@ -29,6 +24,8 @@ public class CrusaderCommon {
 	public static final boolean SHIFTER_HIGH_GEAR = true;
 	public static final boolean SHIFTER_LOW_GEAR = false;
 	
+	public static final double DRIVETRAIN_MAX_RPM = 1500;
+	
 	
 	
 	/*
@@ -37,18 +34,31 @@ public class CrusaderCommon {
 	 * method.
 	 */
 	/*DO NOT NUKE*/
-	/*public static final double AUTO_DRIVE_FORWARD = 0.75;
+	public static final double AUTO_DRIVE_FORWARD = 0.75;
 	public static final double AUTO_DRIVE_BACKWARD = -0.75;
-	public static final double AUTO_DRIVE_IDLE = 0.0;*/
+	public static final double AUTO_DRIVE_IDLE = 0.0;
 	
 	
-	public final static int VISION_ANGLE_SLOT = 0;
-	public final static int VISION_DISTANCE_SLOT = 1;
+	
 	
 	/*DO NOT NUKE*/
 	public static final int DRIVE_TRAIN_CMD_IDX = 0;
 	
 	/*DO NOT NUKE*/
-	/*public static final int AUTO_DRIVE_LIMIT = 15000;*/
+	public static final int AUTO_DRIVE_LIMIT = 15000;
 	
+	//Intake Motor Values
+	
+	public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
+	public final static double INTAKE_MOTOR_ROTATE_OUT = -1.0;
+	public final static double INTAKE_MOTOR_OFF = 0;
+	
+	public final static int VISION_ANGLE_SLOT = 0;
+	public final static int VISION_DISTANCE_SLOT = 1;
+	
+	public final static double TRACKING_MOTOR_VALUE = 1;
+	
+	public final static double TALON_F_VALUE = 0.3510;
+	public final static double TALON_P_VALUE = 1;
+	public final static int TALON_NO_VALUE = 0;
 }

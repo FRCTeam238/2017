@@ -38,6 +38,9 @@ public class CommandDeccrementTestDriveWithButtons extends AbstractCommand  {
 		Logger.logTwoString("!!!!!DEBUG!!!!!!!!!!!!" , "DECREMENT");
 		myRobotDrive.decrementMotorValue(2);
 		
+		int encoder = myRobotDrive.getEncoderTicks();
+		Logger.logInt("encoder ", encoder);
+		
 	}
 	
 	public void setParams(String params[])

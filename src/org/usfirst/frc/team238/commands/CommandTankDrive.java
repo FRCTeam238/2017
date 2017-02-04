@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.robot.ControlBoard;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -24,7 +25,7 @@ public class CommandTankDrive extends AbstractCommand {
     leftJsValue = ControlBoard.getDriverLeftJs().getY();
     rightJsValue = ControlBoard.getDriverRightJs().getY();
 
-    myRobotDrive.tankDrive(-leftJsValue, -rightJsValue);
+    myRobotDrive.tankDrive(leftJsValue * CrusaderCommon.DRIVETRAIN_MAX_RPM, rightJsValue * CrusaderCommon.DRIVETRAIN_MAX_RPM);
 
   }
 

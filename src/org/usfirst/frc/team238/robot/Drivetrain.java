@@ -4,7 +4,7 @@ package org.usfirst.frc.team238.robot;
 import org.usfirst.frc.team238.core.Logger;
 
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
+import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -53,6 +53,9 @@ public class Drivetrain {
 		leftFrontDrive.configEncoderCodesPerRev(256);
 		rightFrontDrive.configEncoderCodesPerRev(256);
 		
+		configTalon(leftFrontDrive);
+		configTalon(rightFrontDrive);
+		
 		 btncounter = 0;
 		btncounterDec = 0;
 		
@@ -63,7 +66,7 @@ public class Drivetrain {
 		
 		debug = SmartDashboard.getBoolean("Debug");
 		
-		if(debug == false)
+		if(debug == true)// normally false
 		{
 			encoderLeft = leftFrontDrive.getEncPosition();
 			encoderRight = rightFrontDrive.getEncPosition();
@@ -125,25 +128,27 @@ public class Drivetrain {
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_LOW_GEAR);
 		Logger.logString("!!!!!!!!!!DEBUGLOW!!!!!!!!!!");
 	}
-	
+	/*These four functions are used in autonomous to drive the robot*/
 	public void driveForward(double leftMotorValue, double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue, rightMotorValue);	
+	  /*the joystick value is multiplied by a target RPM so the 
+	  *robot works with the velocity tuning code*/
+		robotMotors.tankDrive(-leftMotorValue * CrusaderCommon.DRIVETRAIN_MAX_RPM, -rightMotorValue * CrusaderCommon.DRIVETRAIN_MAX_RPM);	
 	}
 	
-	public void driveBackwards(double leftMotorValue, double rightMotorValue)  {
+	public void driveBackwards(double leftMotorValue , double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue * -1, rightMotorValue * -1);
+		robotMotors.tankDrive(leftMotorValue * -1 * CrusaderCommon.DRIVETRAIN_MAX_RPM, rightMotorValue * -1 * CrusaderCommon.DRIVETRAIN_MAX_RPM);
 	}
 	
 	public void turnLeft (double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
+		robotMotors.tankDrive(leftJsValue * CrusaderCommon.DRIVETRAIN_MAX_RPM, rightJsValue * -1 * CrusaderCommon.DRIVETRAIN_MAX_RPM);
 	}
 	
 	public void turnRight(double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue * -1, rightJsValue);
+		robotMotors.tankDrive(leftJsValue * -1 * CrusaderCommon.DRIVETRAIN_MAX_RPM, rightJsValue * CrusaderCommon.DRIVETRAIN_MAX_RPM);
 	}
 	
 	public boolean complete() {
@@ -325,6 +330,31 @@ public class Drivetrain {
 		}
 	}
 	 */
+	/*configTalon  is used to configure the master talons for velocity tuning
+	 * so they can be set to go to a specific velocity rather than just 
+	 * use a voltage percentage
+	 * This can be found in the CTRE Talon SRX Software Reference Manual 
+	 * Section 12.4: Velocity Closed-Loop Walkthrough Java */
+	public void configTalon(CANTalon talon)
+	{
+	  /*This sets the voltage range the talon can use; should be 
+	  *set at +12.0f and -12.0f*/
+	  talon.configNominalOutputVoltage(+0.0f, -0.0f);
+	  talon.configPeakOutputVoltage(+12.0f, -12.0f);
+    
+	  /*This sets the FPID values to correct error in the motor's velocity
+	   * */
+    talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
+    talon.setF(CrusaderCommon.TALON_F_VALUE); //.3113);
+    talon.setP(CrusaderCommon.TALON_P_VALUE); //.8);//064543);
+    talon.setI(CrusaderCommon.TALON_NO_VALUE); 
+    talon.setD(CrusaderCommon.TALON_NO_VALUE);
+    
+    //this set the talon to use speed mode instead of voltage mode
+    talon.changeControlMode(TalonControlMode.Speed);
+    
+	}
+	
 }
 
 
