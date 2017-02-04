@@ -26,7 +26,8 @@ public class CrusaderCommon {
 	
 	public static final double DRIVETRAIN_MAX_RPM = 1500;
 	
-	
+
+  public static final int AUTO_JSON_CREATOR_PARAM_LIMIT = 4;
 	
 	/*
 	 * The AUTO_DRIVE_* constants are the joystick positions when moving in the
