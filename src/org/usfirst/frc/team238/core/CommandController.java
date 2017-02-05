@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
+import org.usfirst.frc.team238.robot.Shooter;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 import org.usfirst.frc.team238.robot.Vision;
@@ -23,10 +24,10 @@ public class CommandController {
 	
 	HashMap<Integer, Command> commandValue;
 	
-	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Drivetrain driveTrain, Navigation myNavigation, Vision myVision)
+	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Drivetrain driveTrain, Navigation myNavigation, Vision myVision, Shooter myShooter)
 	{
 		// populate the command lists
-		setupOperatorCommands(myNavigation, driveTrain, myVision);
+		setupOperatorCommands(myNavigation, driveTrain, myVision, myShooter);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision);
 		
@@ -71,12 +72,12 @@ public class CommandController {
 		return operatorCmdList.get(cmdName);
 	}
 	
-	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision)
+	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision, Shooter myShooter)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
 		
-		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision);
+		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision, myShooter);
 	}
 
 	/*

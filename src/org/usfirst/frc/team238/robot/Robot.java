@@ -12,6 +12,7 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Vision;
+import org.usfirst.frc.team238.robot.FuelHandler;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -52,16 +53,21 @@ public class Robot extends IterativeRobot {
 	Drivetrain myDriveTrain;
 	DriverStation myDriverstation;
 	Vision theVision;
+	Shooter theShooter;
+	FuelHandler theFuelHandler;
 	
 	// Autonomous Mode Support
 	String autoMode;
 	/*AutonomousDrive autonomousDrive;*/
 	private AutonomousDataHandler myAutonomousDataHandler;
 	private AutonomousController theMACP;
-	SendableChooser autonomousChooser;
-	SendableChooser autonomousSaveChooser;
+	@SuppressWarnings("rawtypes")
+  SendableChooser autonomousChooser;
+	@SuppressWarnings("rawtypes")
+  SendableChooser autonomousSaveChooser;
 	Logger myLogger;
-	SendableChooser autonomousStateParamsUpdate;
+	@SuppressWarnings("rawtypes")
+  SendableChooser autonomousStateParamsUpdate;
 	//Holds all the autonomous states
 	//and takes the data from the AutonomousController in order to
 	//transfer it to the JSONFactory
@@ -134,9 +140,6 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
 			}
-			
-			
-			
 			
 			count++;
 			
@@ -229,6 +232,8 @@ public class Robot extends IterativeRobot {
 			rightRearDrive.set(7);
 			leftRearDrive.set(5);
 			
+			theFuelHandler = new FuelHandler();
+			theFuelHandler.init();
 			
 			myRobotDrive = new RobotDrive(leftFrontDrive,leftRearDrive,rightFrontDrive,rightRearDrive);
 			myRobotDrive.setSafetyEnabled(false);
@@ -258,9 +263,12 @@ public class Robot extends IterativeRobot {
 			theVision.init();
 			theVision.startClient();
 			
+			theShooter = new Shooter();
+			
+			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision);
+			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, theShooter);
 			
 			//The handler that handles everything JSON related 
 			myAutonomousDataHandler = new AutonomousDataHandler();
@@ -340,6 +348,15 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 
+	  try{
+	    
+	    theFuelHandler.test();
+	    
+	  }catch(Exception e){
+	    
+	    e.printStackTrace();
+	  }
+	  
 	}
 	
 	
