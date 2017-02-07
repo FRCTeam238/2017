@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
 	Drivetrain myDriveTrain;
 	DriverStation myDriverstation;
 	Vision theVision;
-	Shooter theShooter;
+	Climber theClimber;
 	FuelHandler theFuelHandler;
 	
 	// Autonomous Mode Support
@@ -263,12 +263,13 @@ public class Robot extends IterativeRobot {
 			theVision.init();
 			theVision.startClient();
 			
-			theShooter = new Shooter();
+			theFuelHandler = new FuelHandler();
 			
+			theClimber = new Climber();
 			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, theShooter);
+			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, theFuelHandler, theClimber);
 			
 			//The handler that handles everything JSON related 
 			myAutonomousDataHandler = new AutonomousDataHandler();

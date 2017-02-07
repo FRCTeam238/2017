@@ -2,9 +2,13 @@ package org.usfirst.frc.team238.core;
 
 
 import java.util.HashMap;
+
+import org.usfirst.frc.team238.robot.Climber;
 //import org.usfirst.frc.team238.robot.AutonomousDrive;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.FuelHandler;
+import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Shooter;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -24,10 +28,10 @@ public class CommandController {
 	
 	HashMap<Integer, Command> commandValue;
 	
-	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Drivetrain driveTrain, Navigation myNavigation, Vision myVision, Shooter myShooter)
+	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Drivetrain driveTrain, Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler, Climber myClimber)
 	{
 		// populate the command lists
-		setupOperatorCommands(myNavigation, driveTrain, myVision, myShooter);
+		setupOperatorCommands(myNavigation, driveTrain, myVision, myFuelHandler, myClimber);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision);
 		
@@ -72,12 +76,11 @@ public class CommandController {
 		return operatorCmdList.get(cmdName);
 	}
 	
-	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision, Shooter myShooter)
+	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision, FuelHandler myFuelHandler, Climber myClimber)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
-		
-		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision, myShooter);
+		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision, myFuelHandler, myClimber);
 	}
 
 	/*

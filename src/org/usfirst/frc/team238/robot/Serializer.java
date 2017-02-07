@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Serializer {
 
+  //POSSIBLE REDO/REFACTOR
+  
   CANTalon serializerMotor;
 
   PowerDistributionPanel myPowerDistributionPanel;

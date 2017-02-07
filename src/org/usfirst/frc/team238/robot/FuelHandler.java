@@ -1,19 +1,34 @@
 package org.usfirst.frc.team238.robot;
 
 import org.usfirst.frc.team238.robot.Serializer;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Elevator;
 import org.usfirst.frc.team238.robot.Intake;
-import org.usfirst.frc.team238.robot.Climber;
+import org.usfirst.frc.team238.robot.Shooter;
 
+/**
+ * Inits and holds public objects
+ * 
+ * Objects include:
+ * Serializer,
+ * Elevator,
+ * Intake,
+ * Shooter
+ * 
+ * @author Mike Frye
+ *
+ */
 public class FuelHandler {
 
-  Serializer theSerializer;
-  Elevator theElevator;
-  Intake theIntake;
-  Climber theClimber;
+  public Serializer theSerializer;
+  public Elevator theElevator;
+  public Intake theIntake;
+  public Shooter theShooter;
   
   public void init(){
     
+    try{
+      
     theSerializer = new Serializer();
     theSerializer.init();
     
@@ -23,17 +38,26 @@ public class FuelHandler {
     theIntake = new Intake();
     theIntake.init();
     
-    theClimber = new Climber();
-    theClimber.init();
+    theShooter = new Shooter();
+    theShooter.shooterInit();
     
+    }catch(Exception e){
+      
+      Logger.logString("FuelHandler Init has failed!");
+      e.printStackTrace();
+      
+    }
   }
   
+  /**
+   * Test function for everything relating to any fuel handling
+   */
   public void test(){
     
     theSerializer.test();
     theElevator.test();
     theIntake.test();
-    theClimber.test();
+    theShooter.test();
     
   }
   

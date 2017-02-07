@@ -1,22 +1,20 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
-import org.usfirst.frc.team238.robot.Intake;
+import org.usfirst.frc.team238.robot.Serializer;
 
-public class CommandStartIntake implements Command {
+public class CommandStartSerializer implements Command {
 
-  Intake myIntake;
+  Serializer mySerializer;
   
-  public CommandStartIntake (Intake theIntake){
-    
-    this.myIntake = theIntake;
-  
+  public CommandStartSerializer (Serializer theSerializer){
+    this.mySerializer = theSerializer;
   }
   
   @Override
   public void execute() {
     // TODO Auto-generated method stub
-    myIntake.IntakeOut();
+    mySerializer.startSpinning();
   }
 
   @Override
@@ -33,9 +31,8 @@ public class CommandStartIntake implements Command {
 
   @Override
   public boolean done() {
-    
-    return myIntake.complete();
-
+    // TODO Auto-generated method stub
+    return mySerializer.complete();
   }
 
 }

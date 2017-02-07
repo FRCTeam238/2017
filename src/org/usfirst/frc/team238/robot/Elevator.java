@@ -6,6 +6,8 @@ import org.usfirst.frc.team238.robot.CrusaderCommon;
 import com.ctre.CANTalon;
 
 public class Elevator {
+
+  //POSSIBLE REDO/REFACTOR
  
   CANTalon elevatorMotor;
   

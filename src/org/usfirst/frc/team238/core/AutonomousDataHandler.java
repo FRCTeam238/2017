@@ -80,7 +80,7 @@ public class AutonomousDataHandler implements AutonomousState{
 	
 	
 	/**
-	 * Starts up the JSONHandler
+	 * Starts up the AutonomousDataHandler
 	 * @param theMCP (The control scheme that's being used)
 	 */
 	public void init(CommandController theMCP)
@@ -91,7 +91,7 @@ public class AutonomousDataHandler implements AutonomousState{
 	
 	
 	/**
-	 * Test function for JSONHandler
+	 * Test function for AutonomousDataHandler
 	 * @param theMCP (The control scheme that's being used)
 	 */
 	public void Test(CommandController theMCP){
@@ -101,11 +101,11 @@ public class AutonomousDataHandler implements AutonomousState{
 		readJson(theMCP);
 		dump();
 		save();
-		Logger.logString("JSONHandler Standing by!");
+		Logger.logString("AutonomousDataHandler Standing by!");
 		
 		}catch(Exception e){
 			e.printStackTrace();
-			Logger.logString("JSONHandler Test Failed!");
+			Logger.logString("AutonomousDataHandler Test Failed!");
 		}
 	}
 	

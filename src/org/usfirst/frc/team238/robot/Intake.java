@@ -23,7 +23,7 @@ public class Intake {
   /**
    * Starts the intake
    */
-  public void startIntake(){
+  public void IntakeIn(){
     intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
     intakeIsOn = true;
   }
@@ -31,9 +31,14 @@ public class Intake {
   /**
    * Stops the intake
    */
-  public void stopIntake(){
+  public void IntakeStop(){
     intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_OFF);
     intakeIsOn = false;
+  }
+  
+  public void IntakeOut(){
+    intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_OUT);
+    intakeIsOn = true;
   }
   
   /**
@@ -44,13 +49,13 @@ public class Intake {
       
     int count = 0;
     
-    startIntake();
+    IntakeIn();
     
     if(count < 150){
      
       if(count >= 150){
       
-        stopIntake();
+        IntakeStop();
       }
       count++;
     }
