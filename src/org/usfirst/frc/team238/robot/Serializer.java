@@ -77,6 +77,20 @@ public class Serializer {
     
   }
   
+  public void areWeOverloaded()
+  {
+    
+    if(currentOverLoad())
+    {
+      stopSpinning();
+    }
+    else
+    {
+      startSpinning();
+    }
+    
+  }
+  
   /**
   * A function meant to check if the robot is running into a wall by checking the current output
   * @return

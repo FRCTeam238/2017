@@ -1,22 +1,22 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
-import org.usfirst.frc.team238.robot.Intake;
+import org.usfirst.frc.team238.robot.Elevator;
 
-public class CommandStartIntake implements Command {
+public class CommandRunElevator implements Command {
 
-  Intake myIntake;
+  Elevator myElevator;
   
-  public CommandStartIntake (Intake theIntake){
+  public CommandRunElevator(Elevator theElevator){
     
-    this.myIntake = theIntake;
-  
+    this.myElevator = theElevator;
+    
   }
   
   @Override
   public void execute() {
     // TODO Auto-generated method stub
-    myIntake.IntakeOut();
+    myElevator.runElevator();
   }
 
   @Override
@@ -33,9 +33,7 @@ public class CommandStartIntake implements Command {
 
   @Override
   public boolean done() {
-    
-    return myIntake.complete();
-
+    return myElevator.complete();
   }
 
 }

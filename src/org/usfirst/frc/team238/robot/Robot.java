@@ -13,6 +13,7 @@ import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.robot.FuelHandler;
+import org.usfirst.frc.team238.robot.Climber;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -55,6 +56,7 @@ public class Robot extends IterativeRobot {
 	Vision theVision;
 	Shooter theShooter;
 	FuelHandler theFuelHandler;
+	Climber theClimber;
 	
 	// Autonomous Mode Support
 	String autoMode;
@@ -263,12 +265,13 @@ public class Robot extends IterativeRobot {
 			theVision.init();
 			theVision.startClient();
 			
-			theShooter = new Shooter();
-			
+			theFuelHandler = new FuelHandler();
+			theFuelHandler.init();
 			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, theShooter);
+			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, 
+			    theFuelHandler, theClimber);
 			
 			//The handler that handles everything JSON related 
 			myAutonomousDataHandler = new AutonomousDataHandler();

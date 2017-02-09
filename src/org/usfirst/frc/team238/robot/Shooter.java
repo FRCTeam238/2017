@@ -5,6 +5,8 @@ import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon;
 import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.core.Logger;
+import org.usfirst.frc.team238.robot.Hood;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /*THIS IS THE CLASS THAT THE SHOOTER MECHANISM IS USING
@@ -17,6 +19,8 @@ public class Shooter {
   
   Vision shooterVision;
   
+  Hood theHood;
+  
   int encoderPosition;
   
   public Shooter() {
@@ -24,13 +28,15 @@ public class Shooter {
   }
   
   //Init method, initializes everything, called in robot init
-  public void shooterInit()
+  public void init()
   {
     
    shooterMaster = new CANTalon(CrusaderCommon.SHOOTER_MASTER_TALON);
    shooterSlave = new CANTalon(CrusaderCommon.SHOOTER_SLAVE_TALON);
    
    shooterVision = new Vision();
+   
+   theHood = new Hood();
    
    //sets up slave talon to follow master
    shooterSlave.changeControlMode(TalonControlMode.Follower);
@@ -56,6 +62,7 @@ public class Shooter {
     
   }
   
+  //Resets encoders to zero
   public void resetShooterEncoder()
   {
     shooterMaster.setEncPosition(0);
@@ -74,6 +81,7 @@ public class Shooter {
     
   }
   
+  //configures the talons for velocity tuning code
   public void configShooterTalons(CANTalon talon)
   {
     
@@ -90,16 +98,105 @@ public class Shooter {
      talon.setI(CrusaderCommon.SHOOTER_TALON_I_VALUE); 
      talon.setD(CrusaderCommon.SHOOTER_TALON_D_VALUE);
      
+     
+     
      //this set the talon to use speed mode instead of voltage mode
      talon.changeControlMode(TalonControlMode.Speed);
+     
+    
+  }
+  
+  //Moves the hood up
+  public void moveHoodUp()
+  {
+    
+    theHood.moveHoodUp();
+    
+  }
+  
+  //Moves the hood up
+  public void moveHoodDown()
+  {
+    
+    theHood.moveHoodDown();
+    
+  }
+  
+  public boolean targetAcquired()
+  {
+    
+    double angle = shooterVision.getTheData()[CrusaderCommon.VISION_ANGLE_SLOT];
+    
+    if(angle > -1 && angle < 1)
+    {
+      
+      return true;
+      
+    }
+    else
+    {
+      return false;
+    }
+    
+  }
+  
+  public boolean isShooterAtSpeed()
+  {
+    
+    double talonMasterSpeed;
+    
+    talonMasterSpeed = shooterMaster.getSpeed();
+    
+    if(talonMasterSpeed == CrusaderCommon.SHOOTER_MAX_RPM)
+    {
+      
+      return true;
+      
+    }
+    else
+    {
+      return false;
+    }
+    
+    
     
   }
   
   //This will be called in test periodic and will test the functionality of the system
   public void test()
   {
+   
+    int count = 0;
     
+    Logger.logString("Begining Shooter Test");
+    
+    try
+    {
+
+      if(count < 150)
+      {
+        
+        execute();
+        
+        Logger.logInt("Shooter Encoder Position", encoderPosition);
+        
+        count++;
+        
+      }
+      
+    }
+    
+    catch(Exception e)
+    {
+      
+      e.printStackTrace();
+      Logger.logString("Shooter Test Failed!");
+      
+    }
+    
+    Logger.logString("Shooter Test Sucessful!");
   }
+  
   
 
 }

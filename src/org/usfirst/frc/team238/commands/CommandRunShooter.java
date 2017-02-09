@@ -2,32 +2,37 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.robot.Shooter;
+import org.usfirst.frc.team238.robot.FuelHandler;
+import org.usfirst.frc.team238.robot.Elevator;
 
 public class CommandRunShooter extends AbstractCommand {
 
   Shooter myShooter;
+  FuelHandler myFuelHandler;
+  Elevator myElevator;
   
   double targetValue;
   double motorValue;
+  double visionAngle;
   
-  public CommandRunShooter(Shooter theShooter) 
+  public CommandRunShooter(FuelHandler theFuelHandler) 
   {
     // TODO Auto-generated constructor stub
-    this.myShooter = theShooter;
+    this.myFuelHandler = theFuelHandler;
     
   }
   
   public void execute()
   {
     
-    myShooter.execute();
+    myFuelHandler.shoot();
     
   }
   
   public void prepare()
   {
     
-    myShooter.resetShooterEncoder();
+    
     
   }
   

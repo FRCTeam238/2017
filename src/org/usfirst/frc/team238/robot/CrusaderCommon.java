@@ -84,4 +84,7 @@ public class CrusaderCommon {
 	public final static double SHOOTER_TALON_I_VALUE = 0;
 	public final static double SHOOTER_TALON_D_VALUE = 0;
 	
+	//SERVOS
+	public final static int HOOD_SERVO_ID = 1;
+	
 }

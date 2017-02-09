@@ -4,13 +4,15 @@ import org.usfirst.frc.team238.robot.Serializer;
 import org.usfirst.frc.team238.robot.Elevator;
 import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Climber;
+import org.usfirst.frc.team238.robot.Shooter;
 
 public class FuelHandler {
 
-  Serializer theSerializer;
-  Elevator theElevator;
-  Intake theIntake;
-  Climber theClimber;
+  public Serializer theSerializer;
+  public Elevator theElevator;
+  public Intake theIntake;
+  public Climber theClimber;
+  public Shooter theShooter;
   
   public void init(){
     
@@ -26,6 +28,9 @@ public class FuelHandler {
     theClimber = new Climber();
     theClimber.init();
     
+    theShooter = new Shooter();
+    theShooter.init();
+    
   }
   
   public void test(){
@@ -35,6 +40,33 @@ public class FuelHandler {
     theIntake.test();
     theClimber.test();
     
+  }
+  
+  public void shoot()
+  {
+    
+    
+        if(theShooter.targetAcquired())
+        {
+         
+          theShooter.execute();
+          //Checks to see if the shooter is at speed before firing
+          if(theShooter.isShooterAtSpeed())
+          {
+            
+            theElevator.runElevator();
+            
+            if(theElevator.elevatorInUse)
+            {
+              
+              theSerializer.startSpinning();
+              
+              theSerializer.areWeOverloaded();
+              
+            }
+            
+          }
+        }
   }
   
 }

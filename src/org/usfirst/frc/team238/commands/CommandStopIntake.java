@@ -16,7 +16,7 @@ public class CommandStopIntake implements Command {
   @Override
   public void execute() {
     // TODO Auto-generated method stub
-    myIntake.stopIntake();
+    myIntake.IntakeStop();
   }
 
   @Override
