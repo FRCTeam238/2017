@@ -268,6 +268,9 @@ public class Robot extends IterativeRobot {
 			theFuelHandler = new FuelHandler();
 			theFuelHandler.init();
 			
+			theClimber = new Climber();
+			theClimber.init();
+			
 			//Controller object for telop
 			theMCP = new CommandController();
 			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, 

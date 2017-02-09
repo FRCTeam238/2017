@@ -11,7 +11,6 @@ public class FuelHandler {
   public Serializer theSerializer;
   public Elevator theElevator;
   public Intake theIntake;
-  public Climber theClimber;
   public Shooter theShooter;
   
   public void init(){
@@ -25,9 +24,6 @@ public class FuelHandler {
     theIntake = new Intake();
     theIntake.init();
     
-    theClimber = new Climber();
-    theClimber.init();
-    
     theShooter = new Shooter();
     theShooter.init();
     
@@ -38,30 +34,30 @@ public class FuelHandler {
     theSerializer.test();
     theElevator.test();
     theIntake.test();
-    theClimber.test();
+    theShooter.test();
     
   }
   
+  /**
+   *  This is the function that has the logic for shooting*/
   public void shoot()
   {
-    
-    
+        //check to see if we are aligned with the targer
         if(theShooter.targetAcquired())
         {
-         
+          //runs the shooter motors
           theShooter.execute();
           //Checks to see if the shooter is at speed before firing
           if(theShooter.isShooterAtSpeed())
           {
-            
+            //runs the elevator
             theElevator.runElevator();
-            
+            //makes sure the elevator is on before turning on the serializer
             if(theElevator.elevatorInUse)
             {
               
-              theSerializer.startSpinning();
-              
-              theSerializer.areWeOverloaded();
+              //runs the serializer if we are not experiencing a current overload
+              theSerializer.runSerializer();
               
             }
             

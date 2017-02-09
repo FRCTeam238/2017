@@ -77,7 +77,7 @@ public class Serializer {
     
   }
   
-  public void areWeOverloaded()
+  public void runSerializer()
   {
     
     if(currentOverLoad())
