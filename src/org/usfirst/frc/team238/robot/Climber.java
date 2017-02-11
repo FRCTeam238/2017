@@ -38,10 +38,10 @@ public class Climber {
     
     currentlyClimbing = true;
     
-    if(currentOverLoad()){
+    /*if(currentOverLoad()){
       StopClimbing();
     }
-    
+    */
   }
   
   /**
@@ -95,7 +95,7 @@ public class Climber {
    double TotalCurrentDraw = 0;
    
    double ElevatorMotorCurrentDrawOne = myPowerDistributionPanel.getCurrent(11); 
-   double ElevatorMotorCurrentDrawTwo = myPowerDistributionPanel.getCurrent(12);
+   double ElevatorMotorCurrentDrawTwo = myPowerDistributionPanel.getCurrent(10);
 
    TotalCurrentDraw = (ElevatorMotorCurrentDrawOne+ElevatorMotorCurrentDrawTwo)/2;
    

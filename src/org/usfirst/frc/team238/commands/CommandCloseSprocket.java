@@ -1,41 +1,43 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
-import org.usfirst.frc.team238.robot.Intake;
+import org.usfirst.frc.team238.robot.SprocketDoor;
 
-public class CommandStartIntake implements Command {
+public class CommandCloseSprocket implements Command {
 
-  Intake myIntake;
+  SprocketDoor theSprocket;
   
-  public CommandStartIntake (Intake theIntake){
+  public CommandCloseSprocket(SprocketDoor theSprocketdoor) {
+    // TODO Auto-generated constructor stub
     
-    this.myIntake = theIntake;
-  
+    this.theSprocket = theSprocketdoor;
+    
   }
-  
+
   @Override
   public void execute() {
     // TODO Auto-generated method stub
-    myIntake.IntakeIn();
+    
+    theSprocket.closeDoor();
+    
   }
 
   @Override
   public void prepare() {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void setParams() {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public boolean done() {
-    
-    return myIntake.complete();
-
+    // TODO Auto-generated method stub
+    return false;
   }
 
 }

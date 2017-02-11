@@ -5,6 +5,7 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Navigation;
 
 /**
  * @author Crusader
@@ -15,13 +16,15 @@ public class CommandDelay extends AbstractCommand {
   int        count;
   int        targetValue;
   Drivetrain myRobotdrive;
+  Navigation myNavigation;
 
   /**
    * 
    */
-  public CommandDelay(Drivetrain myRobotDrive) {
+  public CommandDelay(Drivetrain myRobotDrive, Navigation theNavigation) {
     // TODO Auto-generated constructor stub
-    myRobotdrive = myRobotDrive;
+    this.myRobotdrive = myRobotDrive;
+    this.myNavigation = theNavigation;
   }
 
   /*
@@ -32,6 +35,8 @@ public class CommandDelay extends AbstractCommand {
   @Override
   public void execute() {
     count++;
+    myRobotdrive.resetEncoders();
+    myNavigation.resetNAVX();
   }
 
   /*
@@ -43,6 +48,7 @@ public class CommandDelay extends AbstractCommand {
   public void prepare() {
     // TODO Auto-generated method stub
     myRobotdrive.resetEncoders();
+    myNavigation.resetNAVX();
     count = 0;
   }
 

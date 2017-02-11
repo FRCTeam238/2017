@@ -3,8 +3,9 @@ package org.usfirst.frc.team238.robot;
 import org.usfirst.frc.team238.robot.Serializer;
 import org.usfirst.frc.team238.robot.Elevator;
 import org.usfirst.frc.team238.robot.Intake;
-import org.usfirst.frc.team238.robot.Climber;
+
 import org.usfirst.frc.team238.robot.Shooter;
+import org.usfirst.frc.team238.robot.HopperDoor;
 
 public class FuelHandler {
 
@@ -12,6 +13,7 @@ public class FuelHandler {
   public Elevator theElevator;
   public Intake theIntake;
   public Shooter theShooter;
+  public HopperDoor theHopperDoor;
   
   public void init(){
     
@@ -26,6 +28,9 @@ public class FuelHandler {
     
     theShooter = new Shooter();
     theShooter.init();
+    
+    theHopperDoor = new HopperDoor();
+    theHopperDoor.init();
     
   }
   
@@ -63,6 +68,31 @@ public class FuelHandler {
             
           }
         }
+  }
+  
+  //Stops  all motors
+  public void stopEverything()
+  {
+    
+    theElevator.stopElevator();
+    theIntake.IntakeStop();
+    theShooter.stopShooter();
+    theSerializer.stopSpinning();
+    
+  }
+  
+  public void openHopper()
+  {
+    
+    theHopperDoor.openDoor();
+    
+  }
+  
+  public void closeHopper()
+  {
+    
+    theHopperDoor.closeDoor();
+    
   }
   
 }

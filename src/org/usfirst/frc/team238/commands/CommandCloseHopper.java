@@ -1,41 +1,40 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
-import org.usfirst.frc.team238.robot.Intake;
+import org.usfirst.frc.team238.robot.FuelHandler;
 
-public class CommandStartIntake implements Command {
+public class CommandCloseHopper implements Command {
 
-  Intake myIntake;
+  FuelHandler theFuelHandler;
   
-  public CommandStartIntake (Intake theIntake){
+  public CommandCloseHopper(FuelHandler theFuelHandler) {
+    // TODO Auto-generated constructor stub
     
-    this.myIntake = theIntake;
-  
+    this.theFuelHandler = theFuelHandler;
   }
-  
+
   @Override
   public void execute() {
     // TODO Auto-generated method stub
-    myIntake.IntakeIn();
+    theFuelHandler.closeHopper();
   }
 
   @Override
   public void prepare() {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public void setParams() {
     // TODO Auto-generated method stub
-    
+
   }
 
   @Override
   public boolean done() {
-    
-    return myIntake.complete();
-
+    // TODO Auto-generated method stub
+    return false;
   }
 
 }

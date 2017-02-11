@@ -81,6 +81,13 @@ public class Shooter {
     
   }
   
+  public void stopShooter()
+  {
+    
+    shooterMaster.set(0);
+    
+  }
+  
   //configures the talons for velocity tuning code
   public void configShooterTalons(CANTalon talon)
   {

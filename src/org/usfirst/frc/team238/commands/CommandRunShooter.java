@@ -6,8 +6,7 @@ import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Elevator;
 
 public class CommandRunShooter extends AbstractCommand {
-
-  Shooter myShooter;
+  
   FuelHandler myFuelHandler;
   Elevator myElevator;
   

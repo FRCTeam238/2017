@@ -4,6 +4,8 @@ import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CommandTurnRight extends AbstractCommand {
 
   Drivetrain myRobotDrive;
@@ -31,6 +33,8 @@ public class CommandTurnRight extends AbstractCommand {
     // Using -motorValues to spin the right motors backwards
     // If that's how it works lol Maybe change this
     myRobotDrive.turnRight(motorValue, motorValue);
+    myNavigation.navxValues();
+    
   }
 
   public void setParams(String params[]) {
