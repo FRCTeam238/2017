@@ -241,8 +241,8 @@ public class Robot extends IterativeRobot {
 			//Setting the talons to follow master talons
 			rightRearDrive.changeControlMode(TalonControlMode.Follower);
 			leftRearDrive.changeControlMode(TalonControlMode.Follower);
-			rightRearDrive.set(7);
-			leftRearDrive.set(5);
+			rightRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT);
+			leftRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);
 			
 			theFuelHandler = new FuelHandler();
 			theFuelHandler.init();
