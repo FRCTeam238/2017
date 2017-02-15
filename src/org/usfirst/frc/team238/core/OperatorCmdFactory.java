@@ -2,26 +2,67 @@ package org.usfirst.frc.team238.core;
 
 import java.util.HashMap;
 
+import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
+import org.usfirst.frc.team238.robot.SprocketDoor;
 import org.usfirst.frc.team238.robot.Vision;
+import org.usfirst.frc.team238.robot.FuelHandler;
 
 import org.usfirst.frc.team238.commands.CommandResetPcm;
+import org.usfirst.frc.team238.commands.CommandRunElevator;
 import org.usfirst.frc.team238.commands.CommandTrackTargetRight;
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
-
+import org.usfirst.frc.team238.commands.CommandRunShooter;
+import org.usfirst.frc.team238.commands.CommandStartClimber;
+import org.usfirst.frc.team238.commands.CommandStartIntake;
+import org.usfirst.frc.team238.commands.CommandStartSerializer;
+import org.usfirst.frc.team238.commands.CommandStopClimber;
+import org.usfirst.frc.team238.commands.CommandStopElevator;
+import org.usfirst.frc.team238.commands.CommandStopIntake;
+import org.usfirst.frc.team238.commands.CommandStopSerializer;
+import org.usfirst.frc.team238.commands.CommandStopEverything;
+import org.usfirst.frc.team238.commands.CommandCloseHopper;
+import org.usfirst.frc.team238.commands.CommandCloseSprocket;
+import org.usfirst.frc.team238.commands.CommandOpenHopper;
+import org.usfirst.frc.team238.commands.CommandOpenSprocket;
 
 
 public class OperatorCmdFactory {
 
 	CommandResetPcm commandResetPcm;
 	
-	CommandTrackTargetRight commandTrackRight;
+	CommandTrackTarget commandTrackTarget;
 	
-	CommandTrackTarget commandTrackLeft;
+	CommandRunShooter commandRunShooter;
+
+	CommandStartClimber commandRunClimber;
+	
+	CommandStopClimber commandStopClimber;
+	
+	CommandStartIntake commandRunIntake;
+	
+	CommandStopIntake commandStopIntake;
+	
+	CommandRunElevator commandRunElevator;
+	
+	CommandStopElevator commandStopElevator;
+	
+	CommandStartSerializer commandRunSerializer;
+	
+	CommandStopSerializer commandStopSerializer;
+	
+	CommandStopEverything commandStopEverything;
+	
+	CommandOpenHopper commandOpenHopper;
+	
+	CommandCloseHopper commandCloseHopper;
+	
+	CommandOpenSprocket commandOpenSprocket;
+	
+	CommandCloseSprocket commandCloseSprocket;
 	
 	HashMap <Integer, Command> operatorCommands;
-
 	
 	
 	public void init(){
@@ -30,15 +71,42 @@ public class OperatorCmdFactory {
 	
 	}
 	
-	public HashMap<Integer, Command> createOperatorCommands(Drivetrain driveTrain, Navigation theNavigation, Vision theVision){
+	public HashMap<Integer, Command> createOperatorCommands(Drivetrain driveTrain,
+	    Navigation theNavigation, Vision theVision, FuelHandler myFuelHandler,
+	    Climber theClimber, SprocketDoor theSprocket){
 	
+		commandStopEverything = new CommandStopEverything(myFuelHandler, theClimber);
+		operatorCommands.put(0, commandStopEverything);
+	  
+	  commandRunShooter = new CommandRunShooter(myFuelHandler);
+		operatorCommands.put(1, commandRunShooter);
 		
+		commandRunClimber = new CommandStartClimber(theClimber);
+		operatorCommands.put(2, commandRunClimber);
 		
-		commandTrackRight = new CommandTrackTargetRight(driveTrain, theNavigation, theVision);
-		operatorCommands.put(9, commandTrackRight);
+		commandStopClimber = new CommandStopClimber(theClimber);
+		operatorCommands.put(3, commandStopClimber);
 		
-		commandTrackLeft = new CommandTrackTarget(driveTrain, theNavigation, theVision);
-		operatorCommands.put(8, commandTrackLeft);
+		commandRunIntake = new CommandStartIntake(myFuelHandler.theIntake);
+		operatorCommands.put(4, commandRunIntake);
+		
+		commandOpenHopper = new CommandOpenHopper(myFuelHandler);
+		operatorCommands.put(5, commandOpenHopper);
+		
+		commandRunElevator = new CommandRunElevator(myFuelHandler.theElevator);
+		operatorCommands.put(6, commandRunElevator);
+
+		commandCloseHopper = new CommandCloseHopper(myFuelHandler);
+		operatorCommands.put(7, commandCloseHopper);
+		
+		commandRunSerializer = new CommandStartSerializer(myFuelHandler.theSerializer);
+		operatorCommands.put(8, commandRunSerializer);
+	
+		commandOpenSprocket = new CommandOpenSprocket(theSprocket);
+		operatorCommands.put(9, commandOpenSprocket);
+		
+		commandTrackTarget = new CommandTrackTarget(driveTrain, theNavigation, theVision);
+		operatorCommands.put(10, commandTrackTarget);
 		
 		return operatorCommands;
 	

@@ -5,6 +5,7 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.Navigation;
 
 /**
  * @author Crusader
@@ -14,14 +15,19 @@ public class CommandDelay extends AbstractCommand {
 
   int        count;
   int        targetValue;
+  double     start;
+  double     current;
+  double     elapsed;
   Drivetrain myRobotdrive;
+  Navigation myNavigation;
 
   /**
    * 
    */
-  public CommandDelay(Drivetrain myRobotDrive) {
+  public CommandDelay(Drivetrain myRobotDrive, Navigation theNavigation) {
     // TODO Auto-generated constructor stub
-    myRobotdrive = myRobotDrive;
+    this.myRobotdrive = myRobotDrive;
+    this.myNavigation = theNavigation;
   }
 
   /*
@@ -31,7 +37,24 @@ public class CommandDelay extends AbstractCommand {
    */
   @Override
   public void execute() {
-    count++;
+    
+    myRobotdrive.resetEncoders();
+    myNavigation.zeroYaw();
+    //This if else is used to have this delay work in time rather than iterations
+    if(count == 0)
+    {
+      
+      start = System.currentTimeMillis();
+      count++;
+      
+    }
+    else
+    {
+      current = System.currentTimeMillis();
+    }
+    
+    elapsed = current - start;
+    
   }
 
   /*
@@ -43,6 +66,7 @@ public class CommandDelay extends AbstractCommand {
   public void prepare() {
     // TODO Auto-generated method stub
     myRobotdrive.resetEncoders();
+    myNavigation.zeroYaw();
     count = 0;
   }
 
@@ -53,7 +77,7 @@ public class CommandDelay extends AbstractCommand {
   public boolean done() {
     boolean isDone = false;
 
-    if (count > targetValue) {
+    if (elapsed > targetValue) {
       isDone = true;
     }
 

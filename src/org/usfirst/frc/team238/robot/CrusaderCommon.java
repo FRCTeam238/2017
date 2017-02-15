@@ -25,9 +25,9 @@ public class CrusaderCommon {
 	public static final boolean SHIFTER_LOW_GEAR = false;
 	
 	public static final double DRIVETRAIN_MAX_RPM = 1500;
+	public static final double SHOOTER_MAX_RPM = 1500;
 	
-
-  public static final int AUTO_JSON_CREATOR_PARAM_LIMIT = 4;
+	public static final double AUTO_JSON_CREATOR_PARAM_LIMIT = 4;
 	
 	/*
 	 * The AUTO_DRIVE_* constants are the joystick positions when moving in the
@@ -62,4 +62,32 @@ public class CrusaderCommon {
 	public final static double TALON_F_VALUE = 0.3510;
 	public final static double TALON_P_VALUE = 1;
 	public final static int TALON_NO_VALUE = 0;
+	
+	/*THESE ARE THE ALL THE TALON IDS FOR THE 2017 ROBOT*/
+	public final static int SHOOTER_MASTER_TALON = 1;
+  public final static int SHOOTER_SLAVE_TALON = 2;
+  public final static int ELEVATOR_TALON = 3;
+  public final static int INTAKE_TALON = 4;
+	public final static int DRIVE_TRAIN_MASTER_RIGHT = 5;
+	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 6;
+	public final static int DRIVE_TRAIN_MASTER_LEFT = 7;
+	public final static int DRIVE_TRAIN_SLAVE_LEFT = 8;
+	public final static int SERIALIZER_TALON = 9;
+//RENAME THIS IF IT IS USED!!!
+  public final static int UNASSIGNED_TALON = 10;
+	public final static int CLIMBER_TALON_ONE = 11;
+	public final static int CLIMBER_TALON_TWO = 12;
+	
+	//FPID VALUES FOR SHOOTER
+	public final static double SHOOTER_TALON_F_VALUE = 0;
+	public final static double SHOOTER_TALON_P_VALUE = 0;
+	public final static double SHOOTER_TALON_I_VALUE = 0;
+	public final static double SHOOTER_TALON_D_VALUE = 0;
+	
+	//SERVOS
+	public final static int HOOD_SERVO_ID = 13;
+	public final static int HOPPER_DOOR_ID = 14;
+	public final static int SPROCKET_ONE = 15;
+	public final static int SPROCKET_TWO = 16;
+	
 }

@@ -9,9 +9,13 @@ import org.usfirst.frc.team238.core.AutonomousController;
 import org.usfirst.frc.team238.core.AutonomousDataHandler;
 import org.usfirst.frc.team238.core.CommandController;
 import org.usfirst.frc.team238.core.Logger;
+import org.usfirst.frc.team238.core.TargetingDataHandler;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Vision;
+import org.usfirst.frc.team238.robot.FuelHandler;
+import org.usfirst.frc.team238.robot.Climber;
+import org.usfirst.frc.team238.robot.SprocketDoor;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -52,16 +56,24 @@ public class Robot extends IterativeRobot {
 	Drivetrain myDriveTrain;
 	DriverStation myDriverstation;
 	Vision theVision;
+	Shooter theShooter;
+	FuelHandler theFuelHandler;
+	Climber theClimber;
+	SprocketDoor theSprocket;
 	
 	// Autonomous Mode Support
 	String autoMode;
 	/*AutonomousDrive autonomousDrive;*/
 	private AutonomousDataHandler myAutonomousDataHandler;
+	private TargetingDataHandler myTargetingData;
 	private AutonomousController theMACP;
-	SendableChooser autonomousChooser;
-	SendableChooser autonomousSaveChooser;
+	@SuppressWarnings("rawtypes")
+  SendableChooser autonomousChooser;
+	@SuppressWarnings("rawtypes")
+  SendableChooser autonomousSaveChooser;
 	Logger myLogger;
-	SendableChooser autonomousStateParamsUpdate;
+	@SuppressWarnings("rawtypes")
+  SendableChooser autonomousStateParamsUpdate;
 	//Holds all the autonomous states
 	//and takes the data from the AutonomousController in order to
 	//transfer it to the JSONFactory
@@ -95,10 +107,10 @@ public class Robot extends IterativeRobot {
 				myNavigation.getDistanceFromUltrasonic();
 				
 				debug = SmartDashboard.getBoolean("Debug");
-				Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
+				//Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
 				int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection();
-				Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
+				//Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
 			
 				//see if we need to modify the params on a state
 				String updateParams = (String) autonomousStateParamsUpdate.getSelected();
@@ -111,7 +123,7 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
 				
-				if(update != 0)
+				/*if(update != 0)
 				{
 					theMACP.updateStateParameters(automousModeFromDS);
 				}
@@ -119,9 +131,9 @@ public class Robot extends IterativeRobot {
 				if(save != 0)
 				{
 				  myAutonomousDataHandler.save();	
-				}
+				}*/
 
-				myAutonomousDataHandler.dump();
+				//myAutonomousDataHandler.dump();
 				
 				myNavigation.navxValues();
 				
@@ -134,9 +146,6 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
 			}
-			
-			
-			
 			
 			count++;
 			
@@ -168,6 +177,8 @@ public class Robot extends IterativeRobot {
 				int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection(); //controller
 				Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
 				theMACP.pickAMode(automousModeFromDS);
+				
+				myDriveTrain.getEncoderTicks();
 				
 			} catch (Exception ex) {
 				Logger.logString("AutononousInit:Something BAD happened");
@@ -229,10 +240,12 @@ public class Robot extends IterativeRobot {
 			rightRearDrive.set(7);
 			leftRearDrive.set(5);
 			
+			theFuelHandler = new FuelHandler();
+			theFuelHandler.init();
 			
-			myRobotDrive = new RobotDrive(leftFrontDrive,leftRearDrive,rightFrontDrive,rightRearDrive);
+			myRobotDrive = new RobotDrive(leftFrontDrive,rightFrontDrive);
 			myRobotDrive.setSafetyEnabled(false);
-			myRobotDrive.setMaxOutput(CrusaderCommon.DRIVETRAIN_MAX_RPM);
+			//myRobotDrive.setMaxOutput(CrusaderCommon.DRIVETRAIN_MAX_RPM);
 			/*autonomousDrive = new AutonomousDrive(myRobotDrive);
 			autonomousDrive.init();*/
 			
@@ -258,9 +271,21 @@ public class Robot extends IterativeRobot {
 			theVision.init();
 			theVision.startClient();
 			
+			theFuelHandler = new FuelHandler();
+			theFuelHandler.init();
+			
+			theClimber = new Climber();
+			theClimber.init();
+			
+			theSprocket = new SprocketDoor();
+			theSprocket.init();
+			
+			myDriveTrain.resetEncoders();
+			
 			//Controller object for telop
 			theMCP = new CommandController();
-			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision);
+			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, 
+			    theFuelHandler, theClimber, theSprocket);
 			
 			//The handler that handles everything JSON related 
 			myAutonomousDataHandler = new AutonomousDataHandler();
@@ -273,6 +298,9 @@ public class Robot extends IterativeRobot {
 			
 			//Gives the newly read JSON data to the AutonomousController for processing
       theMACP.setAutonomousControllerData(myAutonomousDataHandler);
+      
+      myTargetingData = new TargetingDataHandler();
+      myTargetingData.init(theMCP);
 			
 			Logger.logString("Fully Initialized");
 
@@ -323,7 +351,7 @@ public class Robot extends IterativeRobot {
 			commandValue = myControlBoard.getCommands();
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
-			//myNavigation.navxValues();
+			myNavigation.navxValues();
 			//myNavigation.ultrasonicSensor();
 			//SmartDashboard.putNumber("Match Time", myDriverstation.getMatchTime());
 			
@@ -340,6 +368,15 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 
+	  try{
+	    
+	    theFuelHandler.test();
+	    
+	  }catch(Exception e){
+	    
+	    e.printStackTrace();
+	  }
+	  
 	}
 	
 	

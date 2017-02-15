@@ -13,6 +13,7 @@ public class CommandTurnLeft extends AbstractCommand {
   double motorValue;
   double targetValue;
   double newTargetYaw;
+  double currentYaw;
   int    count;
 
   public CommandTurnLeft(Drivetrain theRobotDrive, Navigation myNavigationForTarget) {
@@ -32,7 +33,10 @@ public class CommandTurnLeft extends AbstractCommand {
   public void execute() {
     // Using -motorValues to spin the left motors backwards
     // If that's how it works lol Maybe change this
+    currentYaw = myNavigation.getYaw();
+    motorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
     myRobotDrive.turnLeft(motorValue, motorValue);
+    myNavigation.navxValues();
 
   }
 

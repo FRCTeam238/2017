@@ -6,8 +6,11 @@ import java.util.HashMap;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
-import edu.wpi.first.wpilibj.RobotDrive;
+import org.usfirst.frc.team238.robot.SprocketDoor;
 
+import edu.wpi.first.wpilibj.RobotDrive;
+import org.usfirst.frc.team238.robot.FuelHandler;
+import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Vision;
 
 public class CommandController {
@@ -23,10 +26,12 @@ public class CommandController {
 	
 	HashMap<Integer, Command> commandValue;
 	
-	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ Drivetrain driveTrain, Navigation myNavigation, Vision myVision)
+	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ 
+	    Drivetrain driveTrain, Navigation myNavigation, Vision myVision, 
+	    FuelHandler theFuelHandler, Climber myClimber, SprocketDoor theSprocket)
 	{
 		// populate the command lists
-		setupOperatorCommands(myNavigation, driveTrain, myVision);
+		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber, theSprocket);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision);
 		
@@ -71,12 +76,14 @@ public class CommandController {
 		return operatorCmdList.get(cmdName);
 	}
 	
-	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision)
+	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision,
+	    FuelHandler theFuelHandler, Climber theClimber, SprocketDoor theSprocket)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
 		
-		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision);
+		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision, 
+		                                              theFuelHandler, theClimber, theSprocket);
 	}
 
 	/*

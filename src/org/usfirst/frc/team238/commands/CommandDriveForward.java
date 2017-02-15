@@ -41,6 +41,7 @@ public class CommandDriveForward extends AbstractCommand {
 
   public void prepare() {
 
+    myNavigation.zeroYaw();
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
     SmartDashboard.putNumber("Starting Yaw", yawValue);
@@ -66,9 +67,12 @@ public class CommandDriveForward extends AbstractCommand {
                                                                                    // max
                                                                                    // value
 
-    double finalMotorValueLeft = motorValue + yawCorrection;
-    double finalMotorValueRight = motorValue - yawCorrection;
-
+    double finalMotorValueLeft = motorValue - yawCorrection;
+    double finalMotorValueRight = motorValue + yawCorrection;
+    
+    Logger.logDouble("FINAL LEFT MOTOR", finalMotorValueLeft);
+    Logger.logDouble("FINAL RIGHT MOTOR", finalMotorValueRight);
+    
     myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight); // If
                                                                           // yaw
                                                                           // error
@@ -95,7 +99,9 @@ public class CommandDriveForward extends AbstractCommand {
      */
 
     Logger.logThreeDoubles("CurrentYaw: ", currentYaw, "  YawError: ", yawError, "  YawCorrection: ", yawCorrection);
-
+    
+    //myRobotDrive.driveForward(motorValue, motorValue);
+    
     // myRobotDrive.driveForward(motorValue, motorValue);
 
   }
@@ -103,7 +109,7 @@ public class CommandDriveForward extends AbstractCommand {
   public void setParams(String params[]) {
 
     if ((params[0] != null) || (!params[0].isEmpty())) {
-      targetValue = Double.parseDouble(params[0]) * 4560;
+      targetValue = Double.parseDouble(params[0]) * 3900; //4560;
     } else {
       targetValue = 0;
     }
@@ -136,6 +142,7 @@ public class CommandDriveForward extends AbstractCommand {
     amountOfTicks = myRobotDrive.getEncoderTicks();
     Logger.logTwoDouble("Target Value = ", targetValue, " Amount Of Ticks = ", amountOfTicks);
     Logger.logTwoDouble("RollValue : ", rollValue, "CurrentRollValue : ", currnetRollValue);
+    Logger.logDouble("Ultrasonic : ", ultrasonicTarget);
 
     if (rollValue > 0) {
       if ((currnetRollValue >= rollValue) && (amountOfTicks > 9000)) // why is
@@ -167,6 +174,8 @@ public class CommandDriveForward extends AbstractCommand {
        */
       if ((amountOfTicks >= targetValue - 6840)) {
         currentUltrasonicDistance = myNavigation.getDistanceFromUltrasonic();
+        
+        
 
         if (currentUltrasonicDistance <= ultrasonicTarget) {
           isDone = true;
@@ -174,8 +183,14 @@ public class CommandDriveForward extends AbstractCommand {
         }
 
       }
-    } else {
-      if (amountOfTicks > targetValue) {
+    } 
+    else 
+    {
+      boolean areWeDone = (amountOfTicks > targetValue);
+      
+      //Logger.logBoolean("DONE : ", areWeDone);
+      
+      if (areWeDone) {
         isDone = true;
         myRobotDrive.driveForward(0, 0);
 

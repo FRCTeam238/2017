@@ -34,7 +34,7 @@ public class CommandDriveBackwards extends AbstractCommand {
   public void setParams(String params[]) {
 
     if ((params[0] != null) || (!params[0].isEmpty())) {
-      targetValue = Double.parseDouble(params[0]) * 4560;
+      targetValue = Double.parseDouble(params[0]) * 3900;
     } else {
       targetValue = 0;
     }
