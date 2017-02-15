@@ -127,14 +127,14 @@ public class CommandTrackTarget extends AbstractCommand {
 		
 		
 		
-		myNavigation.resetNAVX();
+		myNavigation.zeroYaw();
 		
 	}
 
 	@Override
 	public void prepare() {
 		// TODO Auto-generated method stub
-		myNavigation.resetNAVX();
+		myNavigation.zeroYaw();
 	}
 	
 	public double getSlowSide()
@@ -152,8 +152,8 @@ public class CommandTrackTarget extends AbstractCommand {
 		 
 		 
 		 	
-			if ((params[0] != null) || (!params[1].isEmpty())){
-				pickASide = Double.parseDouble(params[1]);
+			if ((params[0] != null) || (!params[0].isEmpty())){
+				pickASide = Double.parseDouble(params[0]);
 			}
 			else 
 			{
@@ -161,7 +161,7 @@ public class CommandTrackTarget extends AbstractCommand {
 				throw new Exception("Bad Param in trackTarget, Please Fix");
 				
 			}
-			if ((params[1] != null) || (!params[0].isEmpty())){
+			if ((params[1] != null) || (!params[1].isEmpty())){
 				paramMotorValue = Double.parseDouble(params[1]);
 			}
 			else {

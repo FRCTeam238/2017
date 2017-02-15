@@ -14,6 +14,7 @@ public class CommandTurnRight extends AbstractCommand {
   double motorValue;
   double targetValue;
   double newTargetYaw;
+  double currentYaw;
   int    count;
 
   public CommandTurnRight(Drivetrain robotDrive, Navigation myNavigationForTarget) {
@@ -25,13 +26,15 @@ public class CommandTurnRight extends AbstractCommand {
 
   public void prepare() {
 
-    myNavigation.resetNAVX();
+    myNavigation.zeroYaw();
 
   }
 
   public void execute() {
     // Using -motorValues to spin the right motors backwards
     // If that's how it works lol Maybe change this
+    currentYaw = myNavigation.getYaw();
+    motorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
     myRobotDrive.turnRight(motorValue, motorValue);
     myNavigation.navxValues();
     

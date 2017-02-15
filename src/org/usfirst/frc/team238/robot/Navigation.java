@@ -47,6 +47,13 @@ public class Navigation {
 		
 	}
 	
+	public void zeroYaw()
+	{
+	  
+	  ahrs.zeroYaw();
+	  
+	}
+	
 	public double getRoll()
 	{
 		currentRoll = ahrs.getRoll();
@@ -95,7 +102,7 @@ public class Navigation {
 		
 		Logger.logTwoDouble("Current Yaw is : ", currentYaw, " \n Target is : ", targetYaw);
 		
-		if(currentYaw > (targetYaw - 5) && currentYaw < (targetYaw + 5))
+		if(currentYaw > (targetYaw - 1) && currentYaw < (targetYaw + 1))
 		{
 			return true;
 		}
@@ -104,6 +111,45 @@ public class Navigation {
 
 			return false;
 		}
+	}
+	
+	public double turningMotorValue(double targetYaw, double currentYaw, double motorValue)
+	{
+	  
+	  
+	  
+	  double yawPConstant = 0.1;
+	  /*
+	   * This is for me to figure out if this math works
+	   * 
+	   * if:   targetYaw = 90 and currentYaw = 0
+	   * then: yawError = 90
+	   * 
+	   * if:   yawError = 90 and yawPConstant = 0.1 and motorValue = 0.5
+	   * then: yawCorrection = 4.5, but the Math.min caps the motorValue at whatever the motorValue is, usually 0.5 - 0.75, times a small amount
+	   *                             if the yawCorrection is less than the motorValue then we are moving slower and we should ease into the angle
+	   *                             the deadzone can now be tighter and it should fix itself if it overshoots
+	   * 
+	   * 
+	   * */
+	  double yawError = targetYaw - currentYaw;
+	  
+	  Logger.logDouble("Yaw Error : ", yawError);
+	  
+	  double yawCorrection = yawPConstant * yawError * motorValue;
+	  
+	  Logger.logDouble("True Yaw Correction : ", yawCorrection);
+	  
+	  yawCorrection = Math.min(yawCorrection, motorValue * 0.2);
+	  
+	  Logger.logDouble("Used Yaw Correction : ", yawCorrection);
+	  
+	  double finalMotorValue = motorValue + yawCorrection;
+	  
+	  Logger.logDouble("Final Motor Value : ", finalMotorValue);
+	  
+	  return finalMotorValue;
+	  
 	}
 	
 }
