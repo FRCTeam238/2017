@@ -54,7 +54,7 @@ public class StateTrackTarget implements AutonomousState {
 	public void process() {
 		
 		trackerCommand.execute();
-		Logger.logString("tracking target...");
+		Logger.Log("tracking target...");
 		
 	}
 

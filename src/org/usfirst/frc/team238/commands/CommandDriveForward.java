@@ -46,7 +46,7 @@ public class CommandDriveForward extends AbstractCommand {
     yawValue = myNavigation.getYaw();
     SmartDashboard.putNumber("Starting Yaw", yawValue);
     yawErrorTotal = 0;
-    Logger.logString("CommandDriveForward.prepare");
+    Logger.Log("CommandDriveForward.prepare");
 
   }
 
@@ -70,8 +70,8 @@ public class CommandDriveForward extends AbstractCommand {
     double finalMotorValueLeft = motorValue - yawCorrection;
     double finalMotorValueRight = motorValue + yawCorrection;
     
-    Logger.logDouble("FINAL LEFT MOTOR", finalMotorValueLeft);
-    Logger.logDouble("FINAL RIGHT MOTOR", finalMotorValueRight);
+    Logger.Log("FINAL LEFT MOTOR" + finalMotorValueLeft);
+    Logger.Log("FINAL RIGHT MOTOR" + finalMotorValueRight);
     
     myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight); // If
                                                                           // yaw
@@ -98,7 +98,7 @@ public class CommandDriveForward extends AbstractCommand {
      * SmartDashboard.putNumber("finalMotorValueRight", finalMotorValueRight);
      */
 
-    Logger.logThreeDoubles("CurrentYaw: ", currentYaw, "  YawError: ", yawError, "  YawCorrection: ", yawCorrection);
+    Logger.Log("CurrentYaw: "+ currentYaw+ "  YawError: "+ yawError+ "  YawCorrection: "+ yawCorrection);
     
     //myRobotDrive.driveForward(motorValue, motorValue);
     
@@ -140,9 +140,9 @@ public class CommandDriveForward extends AbstractCommand {
     double currentUltrasonicDistance;
 
     amountOfTicks = myRobotDrive.getEncoderTicks();
-    Logger.logTwoDouble("Target Value = ", targetValue, " Amount Of Ticks = ", amountOfTicks);
-    Logger.logTwoDouble("RollValue : ", rollValue, "CurrentRollValue : ", currnetRollValue);
-    Logger.logDouble("Ultrasonic : ", ultrasonicTarget);
+    Logger.Log("Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
+    Logger.Log("RollValue : "+ rollValue+ "CurrentRollValue : "+ currnetRollValue);
+    Logger.Log("Ultrasonic : "+ ultrasonicTarget);
 
     if (rollValue > 0) {
       if ((currnetRollValue >= rollValue) && (amountOfTicks > 9000)) // why is

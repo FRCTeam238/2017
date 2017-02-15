@@ -22,16 +22,16 @@ public class SprocketDoor {
   public void openDoor()
   {
     
-    sprocketServoOne.set(1);
-    sprocketServoOne.set(1);
+    sprocketServoOne.set(CrusaderCommon.SERVO_ON);
+    sprocketServoOne.set(CrusaderCommon.SERVO_ON);
     
   }
   
   public void closeDoor()
   {
     
-    sprocketServoOne.set(0);
-    sprocketServoTwo.set(0);
+    sprocketServoOne.set(CrusaderCommon.SERVO_OFF);
+    sprocketServoTwo.set(CrusaderCommon.SERVO_OFF);
     
   }
 

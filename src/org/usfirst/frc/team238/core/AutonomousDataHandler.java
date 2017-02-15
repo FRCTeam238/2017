@@ -36,9 +36,6 @@ public class AutonomousDataHandler implements AutonomousState{
 	//Holds the names for each autonomousMode
 	ArrayList<String> autonomousModeNames;
 	
-	//REMINDER: THIS LIMIT NEEDS TO BE CHANGED IF THE COMMAND'S PARAM ARRAY HAS MORE THAN 4 ELEMENTS.
-	private int paramLimit = 4;
-	
 	//Put's out all the autonomousModes for the user to choose from
 	SendableChooser aModeChooser; 
 	
@@ -101,11 +98,11 @@ public class AutonomousDataHandler implements AutonomousState{
 		readJson(theMCP);
 		dump();
 		save();
-		Logger.logString("JSONHandler Standing by!");
+		Logger.Log("JSONHandler Standing by!");
 		
 		}catch(Exception e){
 			e.printStackTrace();
-			Logger.logString("JSONHandler Test Failed!");
+			Logger.Log("JSONHandler Test Failed!");
 		}
 	}
 	
@@ -124,9 +121,15 @@ public class AutonomousDataHandler implements AutonomousState{
 			//Path in which all states will be created
 			String classPath = "org.usfirst.frc.team238.autonomousStates.State";
 			
-			//Creates an object in which the file will be read
-			Object obj = parser.parse(new FileReader("/home/lvuser/amode238.txt"));
+			//Instead of doing this, seperate the file reader from the object
+			//Object obj = parser.parse(new FileReader("/home/lvuser/amode238.txt"));
 
+			//Create a FileReader to read and interpret the amode
+			FileReader amodeFile = new FileReader("/home/lvuser/amode238.txt");
+			
+			//Creates an object in which the file will be read
+			Object obj = parser.parse(amodeFile);
+			
 			//Converts the object into a JSONObject
 			JSONObject jsonObject = (JSONObject) obj;
 			
@@ -138,7 +141,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			
 			//Get's the number of modes
 			int numModes = autonomousModes.size();
-			Logger.logInt("NumModes : " , numModes);
+			Logger.Log("NumModes : " + numModes);
 			
 			//create a list of commandsteps for each mode
 			autonomousModeCommandList = new ArrayList[numModes];
@@ -160,7 +163,7 @@ public class AutonomousDataHandler implements AutonomousState{
 				//Gets the name of the autonomousMode
             	JSONObject autoModeX = aModeIterator.next();
             	String name = (String) autoModeX.get("Name");
-            	Logger.logString("Autonmous Name: " + name);
+            	Logger.Log("Autonmous Name: " + name);
             	
             	//Add the name of this mode to the arrayList
             	autonomousModeNames.add(name);
@@ -185,9 +188,9 @@ public class AutonomousDataHandler implements AutonomousState{
             		
             		//Debug stuff
             		String cmdName = (String) aCommand.get("Name");
-            		Logger.logTwoString("	Command Name = " , cmdName);
+            		Logger.Log("	Command Name = " + cmdName);
             		String cmdClass = classPath + cmdName; 
-            		Logger.logTwoString("	Class = " , cmdClass);
+            		Logger.Log("	Class = " + cmdClass);
 
             		//Gets the array of params in the command
             		JSONArray paramArrayList = (JSONArray) aCommand.get("Parameters");
@@ -200,7 +203,7 @@ public class AutonomousDataHandler implements AutonomousState{
             		int i = 0;
             		while (paramIterator.hasNext()) {
             			params[i++] = (String) paramIterator.next();
-            			Logger.logStringIntString("	Param:" , i , " = " + params[i -1]);
+            			Logger.Log("	Param:" + i + " = " + params[i -1]);
             		}
             		
             		try {
@@ -225,6 +228,9 @@ public class AutonomousDataHandler implements AutonomousState{
 			
 			//Push the list of Amodes to the dashboard
 			SmartDashboard.putData("Choose Auto", aModeChooser);
+			
+			//Close the file after we're done reading
+			amodeFile.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -404,7 +410,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			name = name.substring(41);
 			statesList = "AutoStateList " + count + " ";
 			SmartDashboard.putString( statesList, name);
-			Logger.logString("AUTONOMOUS DUMP " + name);
+			Logger.Log("AUTONOMOUS DUMP " + name);
 		
 			//If this state was selected
 			if ( count == index){
@@ -418,7 +424,6 @@ public class AutonomousDataHandler implements AutonomousState{
 			count++;
 		}
 
-		//Kinda confused on what this is specifically used for
 		while(count < autonomousModeStates.size()){ 
 			
 			statesList = "AutoStateList " + count + " ";

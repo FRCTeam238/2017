@@ -6,7 +6,6 @@ import com.ctre.CANTalon;
 import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Hood;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /*THIS IS THE CLASS THAT THE SHOOTER MECHANISM IS USING
@@ -56,7 +55,7 @@ public class Shooter {
     
     encoderPosition = shooterMaster.getEncPosition();
     
-    Logger.logInt("Shooter Encoder Position", encoderPosition);
+    Logger.Log("Shooter Encoder Position" + encoderPosition);
     
     return encoderPosition;
     
@@ -69,7 +68,7 @@ public class Shooter {
     
     encoderPosition = shooterMaster.getEncPosition();
     
-    Logger.logInt("Shooter Encoder Position", encoderPosition);
+    Logger.Log("Shooter Encoder Position" + encoderPosition);
     
   }
   
@@ -175,17 +174,17 @@ public class Shooter {
    
     int count = 0;
     
-    Logger.logString("Begining Shooter Test");
+    Logger.Log("Begining Shooter Test");
     
     try
     {
 
-      if(count < 150)
+      if(count < CrusaderCommon.TEST_COUNT_CONDITION)
       {
         
         execute();
         
-        Logger.logInt("Shooter Encoder Position", encoderPosition);
+        Logger.Log("Shooter Encoder Position" + encoderPosition);
         
         count++;
         
@@ -197,11 +196,11 @@ public class Shooter {
     {
       
       e.printStackTrace();
-      Logger.logString("Shooter Test Failed!");
+      Logger.Log("Shooter Test Failed!");
       
     }
     
-    Logger.logString("Shooter Test Sucessful!");
+    Logger.Log("Shooter Test Sucessful!");
   }
   
   

@@ -49,7 +49,7 @@ public class CommandTrackTarget extends AbstractCommand {
 		
 		myNavigation.setTargetValues(realAngle);
 		
-		Logger.logDouble("Target Value is = ", realAngle);
+		Logger.Log("Target Value is = " + realAngle);
 		
 		if(visionAngle[CrusaderCommon.VISION_ANGLE_SLOT] == 127)
 		{
@@ -121,7 +121,7 @@ public class CommandTrackTarget extends AbstractCommand {
 			
 		}
 		
-		Logger.logDouble("The Slow Side is = ", slowSide);
+		Logger.Log("The Slow Side is = "+ slowSide);
 		
 		myRobotDrive.driveForward(leftMotor, rightMotor);
 		
@@ -189,7 +189,7 @@ public class CommandTrackTarget extends AbstractCommand {
 			
 			if(count >20)
 			{
-				Logger.logString("We Have Finished!");
+				Logger.Log("We Have Finished!");
 				return true;
 				
 			}

@@ -20,13 +20,13 @@ public class HopperDoor {
   public void openDoor()
   {
     
-    hopperServo.set(1);
+    hopperServo.set(CrusaderCommon.SERVO_ON);
     
   }
   
   public void closeDoor()
   {
-    hopperServo.set(0);
+    hopperServo.set(CrusaderCommon.SERVO_OFF);
   }
 
 }

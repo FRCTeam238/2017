@@ -19,7 +19,7 @@ public class StateTargetSolution implements AutonomousState {
 
   public void process() {
     
-    Logger.logString("target state is in process");
+    Logger.Log("target state is in process");
   }
 
   public boolean done() {

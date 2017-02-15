@@ -87,10 +87,10 @@ public class Robot extends IterativeRobot {
 			// or you will smoke the roborio into a useless pile of silicon
 			//checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
 			
-			Logger.logString("disabledInit:");
+			Logger.Log("disabledInit:");
 		
 		} catch (Exception ex) {
-			Logger.logString("disabledInit exception");
+			Logger.Log("disabledInit exception");
 		}
 	}
 
@@ -141,7 +141,7 @@ public class Robot extends IterativeRobot {
 				
 				dataFromVision = theVision.getTheData();
 				
-				Logger.logDouble("Angle ", dataFromVision[CrusaderCommon.VISION_ANGLE_SLOT]);
+				Logger.Log("Angle "+ dataFromVision[CrusaderCommon.VISION_ANGLE_SLOT]);
 				
 				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
@@ -150,7 +150,7 @@ public class Robot extends IterativeRobot {
 			count++;
 			
 		} catch (Exception ex) {
-			Logger.logString("disabledPriodic exception" );
+			Logger.Log("disabledPriodic exception" );
 			ex.printStackTrace();
 		}
 
@@ -158,11 +158,11 @@ public class Robot extends IterativeRobot {
 
 	public void teleopInit() {
 		try {
-			Logger.logString("TeleopInit()");
+			Logger.Log("TeleopInit()");
 			myControlBoard.checkXboxController();
 			
 		} catch (Exception ex) {
-			Logger.logString("TeleopInit:Exception");
+			Logger.Log("TeleopInit:Exception");
 		}
 
 	}
@@ -170,21 +170,21 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		try {
 
-			Logger.logString("AutononousInit()");
+			Logger.Log("AutononousInit()");
 
 			try {
 			
 				int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection(); //controller
-				Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
+				Logger.Log("The chosen One =  " + String.valueOf(automousModeFromDS));
 				theMACP.pickAMode(automousModeFromDS);
 				
 				myDriveTrain.getEncoderTicks();
 				
 			} catch (Exception ex) {
-				Logger.logString("AutononousInit:Something BAD happened");
+				Logger.Log("AutononousInit:Something BAD happened");
 			}
 		} catch (Exception ex) {
-			Logger.logString("AutononousInit:Exception");
+			Logger.Log("AutononousInit:Exception");
 		}
 	}
 	
@@ -197,8 +197,8 @@ public class Robot extends IterativeRobot {
 
 		try {
 			System.out.println("RobotInit()");
-			
-			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
+	     
+      SmartDashboard.putBoolean("Output Log to File", false);
 			
 			SmartDashboard.putBoolean("Debug", true);
 			
@@ -302,11 +302,11 @@ public class Robot extends IterativeRobot {
       myTargetingData = new TargetingDataHandler();
       myTargetingData.init(theMCP);
 			
-			Logger.logString("Fully Initialized");
+			Logger.Log("Fully Initialized");
 
 		} catch (Exception ex) {
 
-			Logger.logString(ex.getMessage());
+			Logger.Log(ex.getMessage());
 			ex.printStackTrace();
 
 		}
@@ -330,7 +330,7 @@ public class Robot extends IterativeRobot {
 			myNavigation.getDistanceFromUltrasonic();
 			
 		} catch (Exception ex) {
-			Logger.logString("Autonomous exception");
+			Logger.Log("Autonomous exception");
 			ex.printStackTrace();
 		}
 	}
@@ -358,7 +358,7 @@ public class Robot extends IterativeRobot {
 
 		} catch (Exception e) {
 			
-			Logger.logString("telopperiodic: ");
+			Logger.Log("telopperiodic: ");
 			e.printStackTrace();
 		}
 	}
@@ -388,7 +388,7 @@ public class Robot extends IterativeRobot {
 
 		String valueFromPrefs = myPreferences.getString(key, value);
 		if (valueFromPrefs != null) {
-			Logger.logFourString("CheckSDChanges:valueFromPrefs : " , key , " = " , valueFromPrefs);
+			Logger.Log("CheckSDChanges:valueFromPrefs : " + key + " = " + valueFromPrefs);
 			String valueFromDS = null;
 			
 			try {
@@ -398,7 +398,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putString(key, valueFromPrefs);
 			}
 
-			Logger.logFourString("CheckSDChanges.ValFromDS : " , key , " = " , valueFromDS);
+			Logger.Log("CheckSDChanges.ValFromDS : " + key + " = " + valueFromDS);
 
 			// check for null and also if it's empty don't overwrite what's in
 			// the preferences table
@@ -406,7 +406,7 @@ public class Robot extends IterativeRobot {
 								// if they are not the same then update the preferences
 				if (!valueFromPrefs.equalsIgnoreCase(valueFromDS)) {
 					
-					Logger.logFourString("CheckSDChanges.UpdatePrefs" , key , " = " , valueFromDS);
+					Logger.Log("CheckSDChanges.UpdatePrefs" + key + " = " + valueFromDS);
 					myPreferences.putString(key, valueFromDS);
 
 					// NEVER NEVER use this save() in a periodic function or you

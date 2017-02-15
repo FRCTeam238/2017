@@ -5,16 +5,19 @@ import org.usfirst.frc.team238.robot.CrusaderCommon;
 
 import com.ctre.CANTalon;
 
-public class Elevator {
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
-  //POSSIBLE REDO/REFACTOR
+public class Elevator {
  
   CANTalon elevatorMotor;
   
   boolean elevatorInUse;
   
+  PowerDistributionPanel myPowerDistributionPanel;
+  
   public void init(){
     elevatorMotor = new CANTalon(CrusaderCommon.ELEVATOR_TALON);
+    myPowerDistributionPanel = new PowerDistributionPanel();
   }
   
   /**
@@ -23,6 +26,9 @@ public class Elevator {
   public void runElevator(){
     elevatorMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
     elevatorInUse = true;
+    if(currentOverLoad()){
+      stopElevator();
+    }
   }
   
   /**
@@ -44,9 +50,9 @@ public class Elevator {
       
     runElevator();
       
-    if(count < 150){
+    if(count < CrusaderCommon.TEST_COUNT_CONDITION){
        
-      if(count >= 150){
+      if(count >= CrusaderCommon.TEST_COUNT_CONDITION){
         
         stopElevator();
       }
@@ -55,15 +61,37 @@ public class Elevator {
    
     }catch(Exception e){
         e.printStackTrace();
-        Logger.logString("Elevator has failed!");
+        Logger.Log("Elevator has failed!");
     }
     
-    Logger.logString("Elevator standing by!");    
+    Logger.Log("Elevator standing by!");    
     
   }
   
-  //ADD OVERLOAD FUNCTION
-  
+  /**
+   * A function meant to check if the robot is running into a wall by checking the current output
+   * @return
+   */
+   private boolean currentOverLoad(){ 
+    boolean currentOverload = false;
+    
+    double TotalCurrentDraw = 0;
+    
+    double ElevatorMotorCurrentDrawOne = myPowerDistributionPanel.getCurrent(CrusaderCommon.PDP_ELEVATOR_MOTOR_ID);
+
+    TotalCurrentDraw = ElevatorMotorCurrentDrawOne;
+    
+    Logger.Log("Climber: TotalCurrentDraw is = "+TotalCurrentDraw);
+   
+    if( TotalCurrentDraw > CrusaderCommon.PDP_CURRENT_DRAW_LIMIT) {
+    
+      currentOverload = true; 
+     
+    }
+    
+   return currentOverload; 
+  }
+   
   public boolean preFilled(){
     return false;
   }

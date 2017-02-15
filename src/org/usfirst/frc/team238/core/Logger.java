@@ -1,14 +1,27 @@
 package org.usfirst.frc.team238.core;
 
+import java.io.File;
+import java.io.FileWriter;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Logger {
 	
+  private static final String newline = "\n"; 
 	static Boolean isDebug;
+	static Boolean outputToLog;
 	
 	public Logger() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public static Boolean isWriteToFile(){
+	  
+	  outputToLog = SmartDashboard.getBoolean("Output Log to File");
+	  
+	  return outputToLog;
+	}
+	
 	public static Boolean isDebug()
 	{
 		
@@ -17,95 +30,50 @@ public class Logger {
 		return isDebug;
 	}
 	
-	public static void logDouble(String comment, double value)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + value);
-		}
-		
-	}
-	public static void logString(String comment)
+	public static void Log(String comment)
 	{
 		if(isDebug())
 		{
 			System.out.println(comment);
+      
+      if(isWriteToFile()){
+        
+        writeToLogFile(comment);
+        
+      }
+      
 		}
 		
 	}
-	
-	public static void logInt(String comment, int value)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + value);
-		}
-	}
-	
-	public static void logTwoInt(String comment, int value, String comment2, int value2)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + value + " " + comment2 + value2);
-		}
-	}
-	
-	public static void logTwoDouble(String comment, double value, String comment2, double value2)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + value + " " + comment2 + value2);
-		}
-		
-	}
-	
-	public static void logTwoString(String comment, String comment2)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + " " + comment2);
-		}
-	}
-	
-	public static void logFourString(String comment, String comment2, String comment3, String comment4)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + " " + comment2 + " " + comment3 + " " + comment4 + " ");
-		}
-	}
-	
-	public static void logBoolean(String comment, boolean Boolean)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + Boolean);
-		}
-	}
-	
-	public static void logTwoBoolean(String comment, boolean Boolean, String comment2, boolean Boolean2)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + Boolean + " " + comment2 + Boolean2);
-		}
-	}
-	
-	public static void logStringIntString(String comment, int value, String comment2)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + value + comment2);
-		}
-		
-	}
-	
-	public static void logThreeDoubles(String comment, double value, String comment2, double value2, String comment3, double value3)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment + value + comment2 + value2 + comment3 + value3);
-		}
+
+	public static void writeToLogFile(String log){
+    
+	  try{
+	  
+    File logFile238 = new File("/home/lvuser/logFile238.txt");
+	  
+	    if(logFile238.exists()){
+	      
+	      FileWriter logFile = new FileWriter("/home/lvuser/logFile238.txt");
+	      logFile.write(newline+log);
+	      logFile.flush();
+	      logFile.close();
+	      
+	    }else{
+	     
+	      logFile238.createNewFile();
+	      FileWriter logFile = new FileWriter("/home/lvuser/logFile238.txt");
+        logFile.write(newline+log);
+        logFile.flush();
+        logFile.close();
+        
+	    }
+	  }catch(Exception e){
+	    
+	    e.printStackTrace();
+	    Log("Logger: writeToLogFile has Failed!");
+	  
+	  }
 	}
 	
 }

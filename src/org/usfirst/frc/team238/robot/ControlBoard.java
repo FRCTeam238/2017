@@ -42,7 +42,7 @@ public class ControlBoard {
 		
 		catch(Exception ex)
 		{
-			Logger.logString("ControlBoard Init Failed");
+			Logger.Log("ControlBoard Init Failed");
 		}
 	}
 	
@@ -146,7 +146,7 @@ public class ControlBoard {
 	public static boolean resetEncoderValue()
 	{
 		boolean resetEncoderValue = operatorJs.getRawButton(8);
-		Logger.logString("Reset Encoder = " + resetEncoderValue);
+		Logger.Log("Reset Encoder = " + resetEncoderValue);
 		return resetEncoderValue;
 	}
 	

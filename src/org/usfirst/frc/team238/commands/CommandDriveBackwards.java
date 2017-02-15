@@ -21,7 +21,7 @@ public class CommandDriveBackwards extends AbstractCommand {
   public void prepare() {
 
     myRobotDrive.resetEncoders();
-    Logger.logString("CommandDriveBackwards.prepare");
+    Logger.Log("CommandDriveBackwards.prepare");
 
   }
 
@@ -53,7 +53,7 @@ public class CommandDriveBackwards extends AbstractCommand {
     double amountOfTicks;
 
     amountOfTicks = myRobotDrive.getEncoderTicks();
-    Logger.logTwoDouble("Target Value = ", targetValue, " Amount Of Ticks = ", amountOfTicks);
+    Logger.Log("Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
 
     if (amountOfTicks < targetValue) {
 

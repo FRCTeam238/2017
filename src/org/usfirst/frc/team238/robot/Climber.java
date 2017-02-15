@@ -9,12 +9,6 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class Climber {
 
-  //Replace with CrusaderCommon values
-  private static final double ClimbingValue = 0;
-  private static final double StopClimbingValue = 0;
-
-  double CurrentDrawLimit = 20.0; // Limit for CurrentDraw
-  
   CANTalon climberMotorOne;
   CANTalon climberMotorTwo;
   
@@ -23,8 +17,8 @@ public class Climber {
   PowerDistributionPanel myPowerDistributionPanel;
   
   public void init(){
-    climberMotorOne = new CANTalon(11);
-    climberMotorTwo = new CANTalon(12);
+    climberMotorOne = new CANTalon(CrusaderCommon.CLIMBER_TALON_ONE);
+    climberMotorTwo = new CANTalon(CrusaderCommon.CLIMBER_TALON_TWO);
     myPowerDistributionPanel = new PowerDistributionPanel();
   }
   
@@ -67,9 +61,9 @@ public class Climber {
       
     StartClimbing();
       
-    if(count < 150){
+    if(count < CrusaderCommon.TEST_COUNT_CONDITION){
        
-      if(count >= 150 || currentOverLoad()){
+      if(count >= CrusaderCommon.TEST_COUNT_CONDITION || currentOverLoad()){
         
         StopClimbing();
       }
@@ -78,10 +72,10 @@ public class Climber {
    
     }catch(Exception e){
         e.printStackTrace();
-        Logger.logString("Climber has failed!");
+        Logger.Log("Climber has failed!");
     }
     
-    Logger.logString("Climber standing by!");    
+    Logger.Log("Climber standing by!");    
     
   }
   
@@ -94,14 +88,14 @@ public class Climber {
    
    double TotalCurrentDraw = 0;
    
-   double ElevatorMotorCurrentDrawOne = myPowerDistributionPanel.getCurrent(11); 
-   double ElevatorMotorCurrentDrawTwo = myPowerDistributionPanel.getCurrent(10);
+   double ClimberMotorCurrentDrawOne = myPowerDistributionPanel.getCurrent(CrusaderCommon.PDP_CLIMBER_MOTOR_ONE_ID); 
+   double ClimberMotorCurrentDrawTwo = myPowerDistributionPanel.getCurrent(CrusaderCommon.PDP_CLIMBER_MOTOR_TWO_ID);
 
-   TotalCurrentDraw = (ElevatorMotorCurrentDrawOne+ElevatorMotorCurrentDrawTwo)/2;
+   TotalCurrentDraw = (ClimberMotorCurrentDrawOne+ClimberMotorCurrentDrawTwo)/2;
    
-   Logger.logString("Elevator: TotalCurrentDraw is = "+TotalCurrentDraw);
+   Logger.Log("Climber: TotalCurrentDraw is = "+TotalCurrentDraw);
   
-   if( TotalCurrentDraw > CurrentDrawLimit) {
+   if( TotalCurrentDraw > CrusaderCommon.PDP_CURRENT_DRAW_LIMIT) {
    
      currentOverload = true; 
     

@@ -47,7 +47,7 @@ public class CommandTrackTargetRight extends AbstractCommand {
 		 
 		myNavigation.setTargetValues(realAngle);
 		
-		Logger.logDouble("Target Value is = ", realAngle);
+		Logger.Log("Target Value is = "+ realAngle);
 		
 		if(Math.abs(realAngle) > 10)
 		{
@@ -63,7 +63,7 @@ public class CommandTrackTargetRight extends AbstractCommand {
 			
 		}
 		
-		Logger.logDouble("The Slow Side is = ", slowSide);
+		Logger.Log("The Slow Side is = "+ slowSide);
 		
 		myRobotDrive.driveForward(-motorValue, -slowSide);
 		
@@ -112,7 +112,7 @@ public class CommandTrackTargetRight extends AbstractCommand {
 			
 			myRobotDrive.driveForward(0, 0); 
 			
-			Logger.logString("We Have Aligned!");
+			Logger.Log("We Have Aligned!");
 			
 			return true;
 			

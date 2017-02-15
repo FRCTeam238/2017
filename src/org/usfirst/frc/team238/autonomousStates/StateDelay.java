@@ -22,7 +22,7 @@ public class StateDelay implements AutonomousState {
 
   public void process() {
     delay.execute();
-    Logger.logString("delaying");
+    Logger.Log("delaying...");
   }
 
   public boolean done() {

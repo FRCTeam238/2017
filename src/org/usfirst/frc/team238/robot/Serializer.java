@@ -10,8 +10,6 @@ public class Serializer {
   CANTalon serializerMotor;
 
   PowerDistributionPanel myPowerDistributionPanel;
-  
-  double CurrentDrawLimit = 20.0; // Limit for CurrentDraw
 
   public boolean spinning;
   
@@ -32,9 +30,9 @@ public class Serializer {
     
     startSpinning();
     
-    if(count < 150){
+    if(count < CrusaderCommon.TEST_COUNT_CONDITION){
      
-      if(count >= 150 || currentOverLoad()){
+      if(count >= CrusaderCommon.TEST_COUNT_CONDITION || currentOverLoad()){
       
         stopSpinning();
         
@@ -44,10 +42,10 @@ public class Serializer {
  
     }catch(Exception e){
       e.printStackTrace();
-      Logger.logString("Serializer has failed!");
+      Logger.Log("Serializer has failed!");
     }
     
-    Logger.logString("Serializer standing by!");
+    Logger.Log("Serializer standing by!");
     
   }
   
@@ -98,11 +96,11 @@ public class Serializer {
   private boolean currentOverLoad(){ 
    boolean currentOverload = false;
    
-   double SerializerCurrentDraw = myPowerDistributionPanel.getCurrent(9); 
+   double SerializerCurrentDraw = myPowerDistributionPanel.getCurrent(CrusaderCommon.PDP_SERIALIZER_MOTOR_ID); 
 
-   Logger.logString("Serializer: CurrentDraw is = "+SerializerCurrentDraw);
+   Logger.Log("Serializer: CurrentDraw is = "+SerializerCurrentDraw);
   
-   if( SerializerCurrentDraw > CurrentDrawLimit) {
+   if( SerializerCurrentDraw > CrusaderCommon.PDP_CURRENT_DRAW_LIMIT) {
    
      currentOverload = true; 
     

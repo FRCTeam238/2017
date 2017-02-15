@@ -51,9 +51,9 @@ public class Intake {
     
     IntakeIn();
     
-    if(count < 150){
+    if(count < CrusaderCommon.TEST_COUNT_CONDITION){
      
-      if(count >= 150){
+      if(count >= CrusaderCommon.TEST_COUNT_CONDITION){
       
         IntakeStop();
       }
@@ -62,10 +62,10 @@ public class Intake {
     
     }catch(Exception e){
       e.printStackTrace();
-      Logger.logString("Intake has failed!");
+      Logger.Log("Intake has failed!");
     }
     
-    Logger.logString("Intake standing by!");
+    Logger.Log("Intake standing by!");
     
   }
   

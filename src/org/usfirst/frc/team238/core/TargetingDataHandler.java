@@ -108,11 +108,11 @@ public class TargetingDataHandler implements AutonomousState{
 		readJson(theMCP);
 		dump();
 		save();
-		Logger.logString("JSONHandler Standing by!");
+		Logger.Log("JSONHandler Standing by!");
 		
 		}catch(Exception e){
 			e.printStackTrace();
-			Logger.logString("JSONHandler Test Failed!");
+			Logger.Log("JSONHandler Test Failed!");
 		}
 	}
 	
@@ -145,7 +145,7 @@ public class TargetingDataHandler implements AutonomousState{
 			
 			//Get's the number of target solutions
 			int numSolutions = targetSolutions.size();
-			Logger.logInt("numSolutions : " , numSolutions);
+			Logger.Log("numSolutions : " + numSolutions);
 			
 			//create a list of commandsteps for each targetSolution
 			targetSolutionCommandList = new ArrayList[numSolutions];
@@ -167,7 +167,7 @@ public class TargetingDataHandler implements AutonomousState{
 				//Gets the name of the targetSolution
             	JSONObject targetSolution = targetSolutionsIterator.next();
             	String name = (String) targetSolution.get("Name");
-            	Logger.logString("TargetSolution Name: " + name);
+            	Logger.Log("TargetSolution Name: " + name);
             	
             	//Add the name of this targetSolution to the arrayList
             	targetSolutionNames.add(name);
@@ -192,9 +192,9 @@ public class TargetingDataHandler implements AutonomousState{
             		
             		//Debug stuff
             		String cmdName = (String) aCommand.get("Name");
-            		Logger.logTwoString("	Command Name = " , cmdName);
+            		Logger.Log("	Command Name = " + cmdName);
             		String cmdClass = classPath + cmdName; 
-            		Logger.logTwoString("	Class = " , cmdClass);
+            		Logger.Log("	Class = " + cmdClass);
 
             		//Gets the array of params in the command
             		JSONArray paramArrayList = (JSONArray) aCommand.get("Parameters");
@@ -207,7 +207,7 @@ public class TargetingDataHandler implements AutonomousState{
             		int i = 0;
             		while (paramIterator.hasNext()) {
             			params[i++] = (String) paramIterator.next();
-            			Logger.logStringIntString("	Param:" , i , " = " + params[i -1]);
+            			Logger.Log("	Param:" + i + " = " + params[i -1]);
             		}
             		
             		try {
@@ -412,7 +412,7 @@ public class TargetingDataHandler implements AutonomousState{
 			name = name.substring(41);
 			statesList = "TargetStateList " + count + " ";
 			SmartDashboard.putString( statesList, name);
-			Logger.logString("TargetSolution DUMP " + name);
+			Logger.Log("TargetSolution DUMP " + name);
 		
 			//If this state was selected
 			if ( count == index){
@@ -426,7 +426,6 @@ public class TargetingDataHandler implements AutonomousState{
 			count++;
 		}
 
-		//Kinda confused on what this is specifically used for
 		while(count < targetSolutionStates.size()){ 
 			
 			statesList = "AutoStateList " + count + " ";

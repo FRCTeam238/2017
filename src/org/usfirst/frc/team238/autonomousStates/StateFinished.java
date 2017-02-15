@@ -35,7 +35,7 @@ public class StateFinished implements AutonomousState {
 
   @Override
   public void process() {
-    Logger.logString("AutonomousMode Done ");
+    Logger.Log("AutonomousMode Done ");
 
   }
 

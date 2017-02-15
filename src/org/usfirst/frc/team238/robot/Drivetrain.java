@@ -109,7 +109,7 @@ public class Drivetrain {
 		
 
 		
-		Logger.logTwoInt("ENCODER LEFT : " , encoderLeft , "ENCODER RIGHT : " , encoderRight);
+		Logger.Log("ENCODER LEFT : " + encoderLeft + "ENCODER RIGHT : " + encoderRight);
 	}
 	
 	public int getEncoderCount(int count)
@@ -122,13 +122,13 @@ public class Drivetrain {
 	public void shiftHigh()
 	{
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
-		Logger.logString("!!!!!!!!!!DEBUGHIGH!!!!!!!!!!");
+		Logger.Log("!!!!!!!!!!DEBUGHIGH!!!!!!!!!!");
 	}
 	
 	public void shiftLow()
 	{
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_LOW_GEAR);
-		Logger.logString("!!!!!!!!!!DEBUGLOW!!!!!!!!!!");
+		Logger.Log("!!!!!!!!!!DEBUGLOW!!!!!!!!!!");
 	}
 	/*These four functions are used in autonomous to drive the robot*/
 	public void driveForward(double leftMotorValue, double rightMotorValue)  {
@@ -187,7 +187,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.logDouble("Increment", protoCounter);
+			Logger.Log("Increment "+ protoCounter);
 		}
 	}
 	
@@ -216,7 +216,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.logDouble("decrenment", protoCounter);
+			Logger.Log("decrenment "+ protoCounter);
 		}
 	}
 	
@@ -249,7 +249,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.logDouble("Increment", protoCounter);
+			Logger.Log("Increment"+ protoCounter);
 		}
 	}
 	
@@ -278,7 +278,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.logDouble("decrenment", protoCounter);
+			Logger.Log("decrenment "+ protoCounter);
 		}
 	}
 	
@@ -287,7 +287,7 @@ public class Drivetrain {
 		protoCounter = 0;
 		lastBtnPressed = 1;
 		robotMotors.tankDrive(0, 0);
-		Logger.logDouble("Reset", protoCounter);
+		Logger.Log("Reset "+ protoCounter);
 	}
 	public void nobtnPressed()
 	{

@@ -26,7 +26,7 @@ public class Hood {
   public void moveHoodUp()
   {
     
-    hoodServo.set(1);
+    hoodServo.set(CrusaderCommon.SERVO_ON);
     
   }
   
@@ -35,7 +35,7 @@ public class Hood {
   public void moveHoodDown()
   {
     
-    hoodServo.set(0);
+    hoodServo.set(CrusaderCommon.SERVO_OFF);
     
   }
   
@@ -48,8 +48,8 @@ public class Hood {
         try
         {
           
-          Logger.logString("Moving Hood Up");
-          if(count < 150)
+          Logger.Log("Moving Hood Up");
+          if(count < CrusaderCommon.TEST_COUNT_CONDITION)
           {
              
             moveHoodUp();
@@ -58,8 +58,8 @@ public class Hood {
             
           }
           
-          Logger.logString("Moving Hood Down");
-          if(count > 150 && count < 300)
+          Logger.Log("Moving Hood Down");
+          if(count > CrusaderCommon.TEST_COUNT_CONDITION && count < (CrusaderCommon.TEST_COUNT_CONDITION*2))
           {
             
             moveHoodDown();
@@ -73,11 +73,11 @@ public class Hood {
         {
           
           e.printStackTrace();
-          Logger.logString("Hood Test Failed!");
+          Logger.Log("Hood Test Failed!");
           
         }
         
-        Logger.logString("Hood Test Sucessful!");
+        Logger.Log("Hood Test Sucessful!");
     
   }
 
