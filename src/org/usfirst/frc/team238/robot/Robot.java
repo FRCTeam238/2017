@@ -123,6 +123,10 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
 				
+				int targetSolutionFromDS = myTargetingData.getTargetChooserSelection();
+				
+				SmartDashboard.putString("Chosen Targeting Data", String.valueOf(targetSolutionFromDS));
+				
 				/*if(update != 0)
 				{
 					theMACP.updateStateParameters(automousModeFromDS);
