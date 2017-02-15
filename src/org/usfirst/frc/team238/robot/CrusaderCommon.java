@@ -90,4 +90,22 @@ public class CrusaderCommon {
 	public final static int SPROCKET_ONE = 15;
 	public final static int SPROCKET_TWO = 16;
 	
+	public final static double NAVIGATION_P_VALUE = 0.1;
+	public final static double NAVIGATION_MAX_MOTOR_INCREMENT = 0.2;
+	public final static double NAVIGATION_TURNING_DEADZONE = 1;
+	
+	public final static double DRIVE_FORWARD_P_VALUE = 0.015;
+	public final static double DRIVE_FORWARD_I_VALUE = 0;
+	public final static double DRIVE_FORWARD_MAX_YAW_PERCENT = 0.1;
+	
+	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 3900;
+	
+	public final static int SONIC_SENSOR_ACTIVATION_DISTANCE = 6840;
+	public final static int SONIC_INPUT_PORT = 8;
+	public final static int SONIC_OUTPUT_PORT = 9;
+	
+	public final static double CURRENT_DRAW_LIMIT = 20.0;
+	
+	public final static double SHOOTER_VISION_DEADZONE = 1;
+	
 }

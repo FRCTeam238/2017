@@ -25,7 +25,7 @@ public class Navigation {
 		currentYaw = ahrs.getYaw();
 		
 		currentRoll = ahrs.getRoll();
-		myUltrasonic = new Ultrasonic(9,8);
+		myUltrasonic = new Ultrasonic(CrusaderCommon.SONIC_OUTPUT_PORT,CrusaderCommon.SONIC_INPUT_PORT);
 		myUltrasonic.setEnabled(true);
 		myUltrasonic.setAutomaticMode(true);
 		
@@ -102,7 +102,7 @@ public class Navigation {
 		
 		Logger.logTwoDouble("Current Yaw is : ", currentYaw, " \n Target is : ", targetYaw);
 		
-		if(currentYaw > (targetYaw - 1) && currentYaw < (targetYaw + 1))
+		if(currentYaw > (targetYaw - CrusaderCommon.NAVIGATION_TURNING_DEADZONE) && currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE))
 		{
 			return true;
 		}
@@ -118,7 +118,7 @@ public class Navigation {
 	  
 	  
 	  
-	  double yawPConstant = 0.1;
+	  double yawPConstant = CrusaderCommon.NAVIGATION_P_VALUE;
 	  /*
 	   * This is for me to figure out if this math works
 	   * 
@@ -140,7 +140,7 @@ public class Navigation {
 	  
 	  Logger.logDouble("True Yaw Correction : ", yawCorrection);
 	  
-	  yawCorrection = Math.min(yawCorrection, motorValue * 0.2);
+	  yawCorrection = Math.min(yawCorrection, motorValue * CrusaderCommon.NAVIGATION_MAX_MOTOR_INCREMENT);
 	  
 	  Logger.logDouble("Used Yaw Correction : ", yawCorrection);
 	  

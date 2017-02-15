@@ -3,6 +3,7 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Logger;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
@@ -25,10 +26,10 @@ public class CommandDriveForward extends AbstractCommand {
   PowerDistributionPanel myPowerDistributionPanel;
   double                 CurrentDrawLimit = 20.0; // Limit for CurrentDraw
 
-  double yawPConstant            = 0.015; // Proportional constant for drive
+  double yawPConstant            = CrusaderCommon.DRIVE_FORWARD_P_VALUE; // Proportional constant for drive
                                           // straight controller
-  double yawIConstant            = 0;
-  double yawCorrectionMaxPercent = 0.1;   // percent of motorValue for max yaw
+  double yawIConstant            = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
+  double yawCorrectionMaxPercent = CrusaderCommon.DRIVE_FORWARD_MAX_YAW_PERCENT;   // percent of motorValue for max yaw
                                           // correction
 
   public CommandDriveForward(Drivetrain robotDrive, Navigation myNav) {
@@ -109,7 +110,7 @@ public class CommandDriveForward extends AbstractCommand {
   public void setParams(String params[]) {
 
     if ((params[0] != null) || (!params[0].isEmpty())) {
-      targetValue = Double.parseDouble(params[0]) * 3900; //4560;
+      targetValue = Double.parseDouble(params[0]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT; //4560;
     } else {
       targetValue = 0;
     }
@@ -172,7 +173,7 @@ public class CommandDriveForward extends AbstractCommand {
        * This (amountOfTicks >= targetValue - 6840) is here so the sonic sensor
        * doesn't kick in until 1.5 feet away from the target distance
        */
-      if ((amountOfTicks >= targetValue - 6840)) {
+      if ((amountOfTicks >= targetValue - CrusaderCommon.SONIC_SENSOR_ACTIVATION_DISTANCE)) {
         currentUltrasonicDistance = myNavigation.getDistanceFromUltrasonic();
         
         

@@ -9,9 +9,9 @@ import org.usfirst.frc.team238.robot.Hood;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-/*THIS IS THE CLASS THAT THE SHOOTER MECHANISM IS USING
- *THIS IS DEPENDANT ON IF WE HAVE A TARGET LOCKED
- *WILL HAVE A MANUAL OVERRIDE MODE */
+/**THIS IS THE CLASS THAT THE SHOOTER MECHANISM IS USING
+ * THIS IS DEPENDANT ON IF WE HAVE A TARGET LOCKED
+ * WILL HAVE A MANUAL OVERRIDE MODE */
 public class Shooter {
   
   CANTalon shooterMaster;
@@ -134,7 +134,7 @@ public class Shooter {
     
     double angle = shooterVision.getTheData()[CrusaderCommon.VISION_ANGLE_SLOT];
     
-    if(angle > -1 && angle < 1)
+    if(angle > -CrusaderCommon.SHOOTER_VISION_DEADZONE && angle < CrusaderCommon.SHOOTER_VISION_DEADZONE)
     {
       
       return true;

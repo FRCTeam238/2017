@@ -233,10 +233,10 @@ public class Robot extends IterativeRobot {
 
 			//Create robot core objects 
 												              // Test Robot | Actual Robot
-			leftFrontDrive = new CANTalon(5);  //id =  1			 5
-			leftRearDrive = new CANTalon(6);   //id =  2			 6
-			rightFrontDrive = new CANTalon(7); //id =  3			 7
-			rightRearDrive = new CANTalon(8);  //id =  4			 8
+			leftFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);  //id =  1			 5
+			leftRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_LEFT);   //id =  2			 6
+			rightFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT); //id =  3			 7
+			rightRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_RIGHT);  //id =  4			 8
 			
 			//Setting the talons to follow master talons
 			rightRearDrive.changeControlMode(TalonControlMode.Follower);

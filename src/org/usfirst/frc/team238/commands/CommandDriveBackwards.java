@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Logger;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 
 public class CommandDriveBackwards extends AbstractCommand {
@@ -34,7 +35,7 @@ public class CommandDriveBackwards extends AbstractCommand {
   public void setParams(String params[]) {
 
     if ((params[0] != null) || (!params[0].isEmpty())) {
-      targetValue = Double.parseDouble(params[0]) * 3900;
+      targetValue = Double.parseDouble(params[0]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT;
     } else {
       targetValue = 0;
     }

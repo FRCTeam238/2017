@@ -11,7 +11,7 @@ public class Serializer {
 
   PowerDistributionPanel myPowerDistributionPanel;
   
-  double CurrentDrawLimit = 20.0; // Limit for CurrentDraw
+  double CurrentDrawLimit = CrusaderCommon.CURRENT_DRAW_LIMIT; // Limit for CurrentDraw
 
   public boolean spinning;
   
