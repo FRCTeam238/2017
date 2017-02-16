@@ -25,7 +25,7 @@ public class Navigation {
 		currentYaw = ahrs.getYaw();
 		
 		currentRoll = ahrs.getRoll();
-		myUltrasonic = new Ultrasonic(9,8);
+		myUltrasonic = new Ultrasonic(CrusaderCommon.SONIC_OUTPUT_PORT,CrusaderCommon.SONIC_INPUT_PORT);
 		myUltrasonic.setEnabled(true);
 		myUltrasonic.setAutomaticMode(true);
 		
@@ -45,6 +45,13 @@ public class Navigation {
 		
 		ahrs.reset();
 		
+	}
+	
+	public void zeroYaw()
+	{
+	  
+	  ahrs.zeroYaw();
+	  
 	}
 	
 	public double getRoll()
@@ -93,9 +100,9 @@ public class Navigation {
 	{
 		currentYaw = ahrs.getYaw();
 		
-		Logger.logTwoDouble("Current Yaw is : ", currentYaw, " \n Target is : ", targetYaw);
+		Logger.Log("Current Yaw is : "+ currentYaw+ " \n Target is : "+ targetYaw);
 		
-		if(currentYaw > (targetYaw - 5) && currentYaw < (targetYaw + 5))
+		if(currentYaw > (targetYaw - CrusaderCommon.NAVIGATION_TURNING_DEADZONE) && currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE))
 		{
 			return true;
 		}
@@ -104,6 +111,45 @@ public class Navigation {
 
 			return false;
 		}
+	}
+	
+	public double turningMotorValue(double targetYaw, double currentYaw, double motorValue)
+	{
+	  
+	  
+	  
+	  double yawPConstant = CrusaderCommon.NAVIGATION_P_VALUE;
+	  /*
+	   * This is for me to figure out if this math works
+	   * 
+	   * if:   targetYaw = 90 and currentYaw = 0
+	   * then: yawError = 90
+	   * 
+	   * if:   yawError = 90 and yawPConstant = 0.1 and motorValue = 0.5
+	   * then: yawCorrection = 4.5, but the Math.min caps the motorValue at whatever the motorValue is, usually 0.5 - 0.75, times a small amount
+	   *                             if the yawCorrection is less than the motorValue then we are moving slower and we should ease into the angle
+	   *                             the deadzone can now be tighter and it should fix itself if it overshoots
+	   * 
+	   * 
+	   * */
+	  double yawError = targetYaw - currentYaw;
+	  
+	  Logger.Log("Yaw Error : "+ yawError);
+	  
+	  double yawCorrection = yawPConstant * yawError * motorValue;
+	  
+	  Logger.Log("True Yaw Correction : "+ yawCorrection);
+	  
+	  yawCorrection = Math.min(yawCorrection, motorValue * CrusaderCommon.NAVIGATION_MAX_MOTOR_INCREMENT);
+	  
+	  Logger.Log("Used Yaw Correction : "+ yawCorrection);
+	  
+	  double finalMotorValue = motorValue + yawCorrection;
+	  
+	  Logger.Log("Final Motor Value : "+ finalMotorValue);
+	  
+	  return finalMotorValue;
+	  
 	}
 	
 }

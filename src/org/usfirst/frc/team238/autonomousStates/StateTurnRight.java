@@ -32,7 +32,7 @@ public class StateTurnRight implements AutonomousState {
 
   @Override
   public void process() {
-    Logger.logInt("StateTurnRight.Process()", count);
+    Logger.Log("StateTurnRight.Process() "+ count);
     count++;
     turnRightCommand.execute();
   }

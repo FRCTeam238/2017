@@ -27,7 +27,7 @@ public class CrusaderCommon {
 	public static final double DRIVETRAIN_MAX_RPM = 1500;
 	public static final double SHOOTER_MAX_RPM = 1500;
 	
-
+	public static final double AUTO_JSON_CREATOR_PARAM_LIMIT = 4;
 	
 	/*
 	 * The AUTO_DRIVE_* constants are the joystick positions when moving in the
@@ -38,23 +38,9 @@ public class CrusaderCommon {
 	public static final double AUTO_DRIVE_FORWARD = 0.75;
 	public static final double AUTO_DRIVE_BACKWARD = -0.75;
 	public static final double AUTO_DRIVE_IDLE = 0.0;
-	public static final int AUTO_JSON_CREATOR_PARAM_LIMIT = 4;
 	
-	//Test values
-  public static final int TEST_COUNT_CONDITION = 150;
 	
-	//Power Distribution Panel ID's UPDATE THESE USING CONTRACT!!!!!!!!!!!!!!
-  public static final int PDP_SERIALIZER_MOTOR_ID = 13;
-  public static final int PDP_ELEVATOR_MOTOR_ID = 3;
-	public static final int PDP_CLIMBER_MOTOR_ONE_ID = 11;
-  public static final int PDP_CLIMBER_MOTOR_TWO_ID = 10;
 	
-	//PDP Overload values
-	public static final int PDP_CURRENT_DRAW_LIMIT = 20;
-	
-	//Servo power setting
-  public static final int SERVO_ON = 1;
-  public static final int SERVO_OFF = 0;
 	
 	/*DO NOT NUKE*/
 	public static final int DRIVE_TRAIN_CMD_IDX = 0;
@@ -82,10 +68,10 @@ public class CrusaderCommon {
   public final static int SHOOTER_SLAVE_TALON = 2;
   public final static int ELEVATOR_TALON = 3;
   public final static int INTAKE_TALON = 4;
-	public final static int DRIVE_TRAIN_MASTER_RIGHT = 5;
-	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 6;
-	public final static int DRIVE_TRAIN_MASTER_LEFT = 7;
-	public final static int DRIVE_TRAIN_SLAVE_LEFT = 8;
+	public final static int DRIVE_TRAIN_MASTER_RIGHT = 7;
+	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 8;
+	public final static int DRIVE_TRAIN_MASTER_LEFT = 5;
+	public final static int DRIVE_TRAIN_SLAVE_LEFT = 6;
 	public final static int SERIALIZER_TALON = 9;
 //RENAME THIS IF IT IS USED!!!
   public final static int UNASSIGNED_TALON = 10;
@@ -103,5 +89,37 @@ public class CrusaderCommon {
 	public final static int HOPPER_DOOR_ID = 14;
 	public final static int SPROCKET_ONE = 15;
 	public final static int SPROCKET_TWO = 16;
+	
+	public final static double NAVIGATION_P_VALUE = 0.1;
+	public final static double NAVIGATION_MAX_MOTOR_INCREMENT = 0.2;
+	public final static double NAVIGATION_TURNING_DEADZONE = 1;
+	
+	public final static double DRIVE_FORWARD_P_VALUE = 0.015;
+	public final static double DRIVE_FORWARD_I_VALUE = 0;
+	public final static double DRIVE_FORWARD_MAX_YAW_PERCENT = 0.1;
+	
+	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 3900;
+	
+	public final static int SONIC_SENSOR_ACTIVATION_DISTANCE = 6840;
+	public final static int SONIC_INPUT_PORT = 8;
+	public final static int SONIC_OUTPUT_PORT = 9;
+	
+	public final static double CURRENT_DRAW_LIMIT = 20.0;
+	
+	public final static double SHOOTER_VISION_DEADZONE = 1;
+	
+	//Servo power setting
+  public static final int SERVO_ON = 1;
+  public static final int SERVO_OFF = 0;
+  
+  //Power Distribution Panel ID's
+  public static final int PDP_SERIALIZER_MOTOR_ID = 13;
+  public static final int PDP_ELEVATOR_MOTOR_ID = 3;
+	public static final int PDP_CLIMBER_MOTOR_ONE_ID = 11;
+  public static final int PDP_CLIMBER_MOTOR_TWO_ID = 10;
+
+	//Test values
+  public static final int TEST_COUNT_CONDITION = 150;
+	
 	
 }

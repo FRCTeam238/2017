@@ -93,9 +93,9 @@ public class Climber {
 
    TotalCurrentDraw = (ClimberMotorCurrentDrawOne+ClimberMotorCurrentDrawTwo)/2;
    
-   Logger.Log("Climber: TotalCurrentDraw is = "+TotalCurrentDraw);
+   Logger.Log("Elevator: TotalCurrentDraw is = "+TotalCurrentDraw);
   
-   if( TotalCurrentDraw > CrusaderCommon.PDP_CURRENT_DRAW_LIMIT) {
+   if( TotalCurrentDraw > CrusaderCommon.CURRENT_DRAW_LIMIT) {
    
      currentOverload = true; 
     

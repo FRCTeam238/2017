@@ -41,7 +41,7 @@ public class CommandResetTestDriveWithButtons extends AbstractCommand  {
 	
 	public void setParams(String params[])
 	{
-		Logger.logTwoString("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!" , params[0]);
+		Logger.Log("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!   " + params[0]);
 		
 		if ((params[0] != null) || (!params[0].isEmpty())){
 			targetValue = Double.parseDouble(params[0])* -1;

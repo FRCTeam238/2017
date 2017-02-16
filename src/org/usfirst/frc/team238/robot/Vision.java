@@ -2,6 +2,8 @@ package org.usfirst.frc.team238.robot;
 
 import org.usfirst.frc.team238.core.udpClient;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Vision {
 	
 	udpClient theClient;
@@ -12,10 +14,10 @@ public class Vision {
 	public void init()
 	{
 		
-		theClient = new udpClient();
+		/*theClient = new udpClient();
 		theClient.init();
 		theClient.enable();
-		theClient.start();
+		theClient.start();*/
 		
 	}
 	
@@ -65,11 +67,14 @@ public class Vision {
 	public double[] getTheData()
 	{
 		
-		double[] data = theClient.getData();
+		double[] data = null;
 		
+		data[0] = SmartDashboard.getNumber("Gear Horizontal");
+		data[1] = SmartDashboard.getNumber("Gear Vertical");
 		
 		
 		return data;
+		
 	}
 	
 	

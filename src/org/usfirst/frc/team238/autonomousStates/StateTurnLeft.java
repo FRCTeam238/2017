@@ -35,7 +35,7 @@ public class StateTurnLeft implements AutonomousState {
   @Override
   public void process() {
 
-    Logger.logInt("StateTurnLeft.Process()", count);
+    Logger.Log("StateTurnLeft.Process() "+ count);
     count++;
     turnLeftCommand.execute();
 

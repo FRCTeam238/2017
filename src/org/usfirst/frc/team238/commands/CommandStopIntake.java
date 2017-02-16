@@ -5,6 +5,8 @@ import org.usfirst.frc.team238.robot.Intake;
 
 public class CommandStopIntake implements Command {
 
+  //Repurpose this as a CommandReverseIntake
+  
   Intake myIntake;
   
   public CommandStopIntake (Intake theIntake){

@@ -36,6 +36,9 @@ public class AutonomousDataHandler implements AutonomousState{
 	//Holds the names for each autonomousMode
 	ArrayList<String> autonomousModeNames;
 	
+	//REMINDER: THIS LIMIT NEEDS TO BE CHANGED IF THE COMMAND'S PARAM ARRAY HAS MORE THAN 4 ELEMENTS.
+	private int paramLimit = 4;
+	
 	//Put's out all the autonomousModes for the user to choose from
 	SendableChooser aModeChooser; 
 	
@@ -121,15 +124,11 @@ public class AutonomousDataHandler implements AutonomousState{
 			//Path in which all states will be created
 			String classPath = "org.usfirst.frc.team238.autonomousStates.State";
 			
-			//Instead of doing this, seperate the file reader from the object
-			//Object obj = parser.parse(new FileReader("/home/lvuser/amode238.txt"));
-
-			//Create a FileReader to read and interpret the amode
 			FileReader amodeFile = new FileReader("/home/lvuser/amode238.txt");
 			
 			//Creates an object in which the file will be read
 			Object obj = parser.parse(amodeFile);
-			
+
 			//Converts the object into a JSONObject
 			JSONObject jsonObject = (JSONObject) obj;
 			
@@ -226,11 +225,10 @@ public class AutonomousDataHandler implements AutonomousState{
             	aModeIndexCounter++;
             }
 			
+			amodeFile.close();
+			
 			//Push the list of Amodes to the dashboard
 			SmartDashboard.putData("Choose Auto", aModeChooser);
-			
-			//Close the file after we're done reading
-			amodeFile.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -424,6 +422,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			count++;
 		}
 
+		//Kinda confused on what this is specifically used for
 		while(count < autonomousModeStates.size()){ 
 			
 			statesList = "AutoStateList " + count + " ";

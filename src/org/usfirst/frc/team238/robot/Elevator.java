@@ -5,19 +5,14 @@ import org.usfirst.frc.team238.robot.CrusaderCommon;
 
 import com.ctre.CANTalon;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
-
 public class Elevator {
- 
+
   CANTalon elevatorMotor;
   
   boolean elevatorInUse;
   
-  PowerDistributionPanel myPowerDistributionPanel;
-  
   public void init(){
     elevatorMotor = new CANTalon(CrusaderCommon.ELEVATOR_TALON);
-    myPowerDistributionPanel = new PowerDistributionPanel();
   }
   
   /**
@@ -26,9 +21,6 @@ public class Elevator {
   public void runElevator(){
     elevatorMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
     elevatorInUse = true;
-    if(currentOverLoad()){
-      stopElevator();
-    }
   }
   
   /**
@@ -68,30 +60,8 @@ public class Elevator {
     
   }
   
-  /**
-   * A function meant to check if the robot is running into a wall by checking the current output
-   * @return
-   */
-   private boolean currentOverLoad(){ 
-    boolean currentOverload = false;
-    
-    double TotalCurrentDraw = 0;
-    
-    double ElevatorMotorCurrentDrawOne = myPowerDistributionPanel.getCurrent(CrusaderCommon.PDP_ELEVATOR_MOTOR_ID);
-
-    TotalCurrentDraw = ElevatorMotorCurrentDrawOne;
-    
-    Logger.Log("Climber: TotalCurrentDraw is = "+TotalCurrentDraw);
-   
-    if( TotalCurrentDraw > CrusaderCommon.PDP_CURRENT_DRAW_LIMIT) {
-    
-      currentOverload = true; 
-     
-    }
-    
-   return currentOverload; 
-  }
-   
+  //ADD OVERLOAD FUNCTION
+  
   public boolean preFilled(){
     return false;
   }

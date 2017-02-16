@@ -32,7 +32,7 @@ public class StateDriveBackwards implements AutonomousState {
 
   @Override
   public void process() {
-    Logger.logInt("StateDriveBackwards.Process()  ", count);
+    Logger.Log("StateDriveBackwards.Process()  "+ count);
     count++;
     driveBackwards.execute();
   }

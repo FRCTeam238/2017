@@ -29,7 +29,7 @@ public class CommandIncrementOnePercent extends AbstractCommand {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		Logger.logTwoString("!!!!!DEBUG!!!!!!!!!!!!" , "Increment");
+		Logger.Log("!!!!!DEBUG!!!!!!!!!!!!   " + "Increment");
 		myRobotDrive.incrementMotorValue(8);
 	}
 

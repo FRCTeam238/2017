@@ -35,17 +35,17 @@ public class CommandDeccrementTestDriveWithButtons extends AbstractCommand  {
 	public void execute()  {
 		//Using -motorValues to spin the left motors backwards
 		//If that's how it works lol Maybe change this
-		Logger.logTwoString("!!!!!DEBUG!!!!!!!!!!!!" , "DECREMENT");
+		Logger.Log("!!!!!DEBUG!!!!!!!!!!!!   " + "DECREMENT");
 		myRobotDrive.decrementMotorValue(2);
 		
 		int encoder = myRobotDrive.getEncoderTicks();
-		Logger.logInt("encoder ", encoder);
+		Logger.Log("encoder "+ encoder);
 		
 	}
 	
 	public void setParams(String params[])
 	{
-		Logger.logTwoString("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!" , params[0]);
+		Logger.Log("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!   " + params[0]);
 		
 		if ((params[0] != null) || (!params[0].isEmpty())){
 			targetValue = Double.parseDouble(params[0])* -1;

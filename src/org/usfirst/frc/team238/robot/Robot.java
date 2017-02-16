@@ -123,6 +123,10 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
 				
+				int targetSolutionFromDS = myTargetingData.getTargetChooserSelection();
+				
+				SmartDashboard.putString("Chosen Targeting Data", String.valueOf(targetSolutionFromDS));
+				
 				/*if(update != 0)
 				{
 					theMACP.updateStateParameters(automousModeFromDS);
@@ -137,11 +141,11 @@ public class Robot extends IterativeRobot {
 				
 				myNavigation.navxValues();
 				
-				//Logger.logDouble("Distance ", dataFromVision[CrusaderCommon.VISION_DISTANCE_SLOT]);
+			  //dataFromVision = theVision.getTheData();
 				
-				dataFromVision = theVision.getTheData();
+				//Logger.logDouble("Distance ", dataFromVision[CrusaderCommon.VISION_DISTANCE_SLOT]);		
 				
-				Logger.Log("Angle "+ dataFromVision[CrusaderCommon.VISION_ANGLE_SLOT]);
+				//Logger.Log("Angle "+ dataFromVision[CrusaderCommon.VISION_ANGLE_SLOT]);
 				
 				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
@@ -197,8 +201,10 @@ public class Robot extends IterativeRobot {
 
 		try {
 			System.out.println("RobotInit()");
-	     
+      
       SmartDashboard.putBoolean("Output Log to File", false);
+			
+			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
 			SmartDashboard.putBoolean("Debug", true);
 			
@@ -229,16 +235,16 @@ public class Robot extends IterativeRobot {
 
 			//Create robot core objects 
 												              // Test Robot | Actual Robot
-			leftFrontDrive = new CANTalon(5);  //id =  1			 5
-			leftRearDrive = new CANTalon(6);   //id =  2			 6
-			rightFrontDrive = new CANTalon(7); //id =  3			 7
-			rightRearDrive = new CANTalon(8);  //id =  4			 8
+			leftFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);  //id =  1			 5
+			leftRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_LEFT);   //id =  2			 6
+			rightFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT); //id =  3			 7
+			rightRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_RIGHT);  //id =  4			 8
 			
 			//Setting the talons to follow master talons
 			rightRearDrive.changeControlMode(TalonControlMode.Follower);
 			leftRearDrive.changeControlMode(TalonControlMode.Follower);
-			rightRearDrive.set(7);
-			leftRearDrive.set(5);
+			rightRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT);
+			leftRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);
 			
 			theFuelHandler = new FuelHandler();
 			theFuelHandler.init();
@@ -269,7 +275,7 @@ public class Robot extends IterativeRobot {
 			
 			theVision = new Vision();
 			theVision.init();
-			theVision.startClient();
+			//theVision.startClient();
 			
 			theFuelHandler = new FuelHandler();
 			theFuelHandler.init();

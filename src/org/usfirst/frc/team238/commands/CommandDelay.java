@@ -15,6 +15,9 @@ public class CommandDelay extends AbstractCommand {
 
   int        count;
   int        targetValue;
+  double     start;
+  double     current;
+  double     elapsed;
   Drivetrain myRobotdrive;
   Navigation myNavigation;
 
@@ -34,9 +37,24 @@ public class CommandDelay extends AbstractCommand {
    */
   @Override
   public void execute() {
-    count++;
+    
     myRobotdrive.resetEncoders();
-    myNavigation.resetNAVX();
+    myNavigation.zeroYaw();
+    //This if else is used to have this delay work in time rather than iterations
+    if(count == 0)
+    {
+      
+      start = System.currentTimeMillis();
+      count++;
+      
+    }
+    else
+    {
+      current = System.currentTimeMillis();
+    }
+    
+    elapsed = current - start;
+    
   }
 
   /*
@@ -48,7 +66,7 @@ public class CommandDelay extends AbstractCommand {
   public void prepare() {
     // TODO Auto-generated method stub
     myRobotdrive.resetEncoders();
-    myNavigation.resetNAVX();
+    myNavigation.zeroYaw();
     count = 0;
   }
 
@@ -59,7 +77,7 @@ public class CommandDelay extends AbstractCommand {
   public boolean done() {
     boolean isDone = false;
 
-    if (count > targetValue) {
+    if (elapsed > targetValue) {
       isDone = true;
     }
 

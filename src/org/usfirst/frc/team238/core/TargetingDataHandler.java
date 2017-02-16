@@ -426,6 +426,7 @@ public class TargetingDataHandler implements AutonomousState{
 			count++;
 		}
 
+		//Kinda confused on what this is specifically used for
 		while(count < targetSolutionStates.size()){ 
 			
 			statesList = "AutoStateList " + count + " ";

@@ -100,7 +100,7 @@ public class Serializer {
 
    Logger.Log("Serializer: CurrentDraw is = "+SerializerCurrentDraw);
   
-   if( SerializerCurrentDraw > CrusaderCommon.PDP_CURRENT_DRAW_LIMIT) {
+   if( SerializerCurrentDraw > CrusaderCommon.CURRENT_DRAW_LIMIT) {
    
      currentOverload = true; 
     

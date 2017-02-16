@@ -31,7 +31,7 @@ public class StateDriveForward implements AutonomousState {
 
   @Override
   public void process() {
-    Logger.logInt("StateDriveForward.Process()  ", count);
+    Logger.Log("StateDriveForward.Process()  "+ count);
     count++;
     DriveForwardCommand.execute();
   }

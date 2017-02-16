@@ -187,7 +187,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.Log("Increment "+ protoCounter);
+			Logger.Log("Increment"+ protoCounter);
 		}
 	}
 	
@@ -249,7 +249,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.Log("Increment"+ protoCounter);
+			Logger.Log("Increment "+ protoCounter);
 		}
 	}
 	

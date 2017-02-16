@@ -17,9 +17,6 @@ public class CommandTrackTargetRight extends AbstractCommand {
 	double motorValue = 1;
 	
 	
-	
-	
-	
 	public CommandTrackTargetRight(Drivetrain robotDrive, Navigation myNavigationForTarget, Vision theVision) {
 		
 		// TODO Auto-generated constructor stub

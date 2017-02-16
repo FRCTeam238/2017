@@ -10,18 +10,10 @@ public class Logger {
   private static final String newline = "\n"; 
 	static Boolean isDebug;
 	static Boolean outputToLog;
-	
+	  
 	public Logger() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public static Boolean isWriteToFile(){
-	  
-	  outputToLog = SmartDashboard.getBoolean("Output Log to File");
-	  
-	  return outputToLog;
-	}
-	
 	public static Boolean isDebug()
 	{
 		
@@ -29,12 +21,21 @@ public class Logger {
 		
 		return isDebug;
 	}
-	
-	public static void Log(String comment)
-	{
-		if(isDebug())
-		{
-			System.out.println(comment);
+	 
+  public static Boolean isWriteToFile(){
+    
+    outputToLog = SmartDashboard.getBoolean("Output Log to File");
+    
+    return outputToLog;
+  }
+  
+  //clearLog()??
+  
+  public static void Log(String comment)
+  {
+    if(isDebug())
+    {
+      System.out.println(comment);
       
       if(isWriteToFile()){
         
@@ -42,38 +43,37 @@ public class Logger {
         
       }
       
-		}
-		
-	}
-
-	public static void writeToLogFile(String log){
+    }
     
-	  try{
-	  
+  }
+
+  public static void writeToLogFile(String log){
+    
+    try{
+    
     File logFile238 = new File("/home/lvuser/logFile238.txt");
-	  
-	    if(logFile238.exists()){
-	      
-	      FileWriter logFile = new FileWriter("/home/lvuser/logFile238.txt");
-	      logFile.write(newline+log);
-	      logFile.flush();
-	      logFile.close();
-	      
-	    }else{
-	     
-	      logFile238.createNewFile();
-	      FileWriter logFile = new FileWriter("/home/lvuser/logFile238.txt");
+    
+      if(logFile238.exists()){
+        
+        FileWriter logFile = new FileWriter("/home/lvuser/logFile238.txt",true);
         logFile.write(newline+log);
         logFile.flush();
         logFile.close();
         
-	    }
-	  }catch(Exception e){
-	    
-	    e.printStackTrace();
-	    Log("Logger: writeToLogFile has Failed!");
-	  
-	  }
-	}
-	
+      }else{
+       
+        logFile238.createNewFile();
+        FileWriter logFile = new FileWriter("/home/lvuser/logFile238.txt",true);
+        logFile.write(newline+log);
+        logFile.flush();
+        logFile.close();
+        
+      }
+    }catch(Exception e){
+      
+      e.printStackTrace();
+      Log("Logger: writeToLogFile has Failed!");
+    
+    }
+  }
 }
