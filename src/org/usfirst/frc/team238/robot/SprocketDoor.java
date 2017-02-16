@@ -14,8 +14,8 @@ public class SprocketDoor {
   public void init()
   {
     
-    sprocketServoOne = new Servo(CrusaderCommon.SPROCKET_ONE);
-    sprocketServoTwo = new Servo(CrusaderCommon.SPROCKET_TWO);
+    sprocketServoOne = new Servo(CrusaderCommon.SPROCKET_SERVO_ONE);
+    sprocketServoTwo = new Servo(CrusaderCommon.SPROCKET_SERVO_TWO);
     
   }
   

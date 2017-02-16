@@ -36,9 +36,6 @@ public class AutonomousDataHandler implements AutonomousState{
 	//Holds the names for each autonomousMode
 	ArrayList<String> autonomousModeNames;
 	
-	//REMINDER: THIS LIMIT NEEDS TO BE CHANGED IF THE COMMAND'S PARAM ARRAY HAS MORE THAN 4 ELEMENTS.
-	private int paramLimit = 4;
-	
 	//Put's out all the autonomousModes for the user to choose from
 	SendableChooser aModeChooser; 
 	
@@ -124,9 +121,10 @@ public class AutonomousDataHandler implements AutonomousState{
 			//Path in which all states will be created
 			String classPath = "org.usfirst.frc.team238.autonomousStates.State";
 			
+			//Open 
 			FileReader amodeFile = new FileReader("/home/lvuser/amode238.txt");
 			
-			//Creates an object in which the file will be read
+			//Use the parser to convert the file into an object
 			Object obj = parser.parse(amodeFile);
 
 			//Converts the object into a JSONObject
@@ -240,12 +238,14 @@ public class AutonomousDataHandler implements AutonomousState{
 	 * This function creates a string with the parameters given, and creates a new file from that given string
 	 */
 	public void save(){
-
-		//Creates the new json string with params given
-		String newAmode = BuildNewJson();
 		
 		try {
 			
+			Logger.Log("AutonomousDataHandler: Saving...");
+		
+			//Creates the new json string with params given
+			String newAmode = BuildNewJson();
+
 			//get the fileName instead of declaring it here.
 			String fileName = "amode238";
 			
@@ -258,6 +258,8 @@ public class AutonomousDataHandler implements AutonomousState{
 			
 			//Close it
 			file.close();
+			
+			logger.Log("AutonomousDataHandler: Saved!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();

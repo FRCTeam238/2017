@@ -13,7 +13,7 @@ public class HopperDoor {
   public void init()
   {
     
-    //hopperServo = new Servo(CrusaderCommon.HOPPER_DOOR_ID);
+    //hopperServo = new Servo(CrusaderCommon.HOPPER_DOOR_SERVO_ID);
     
   }
   
