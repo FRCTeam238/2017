@@ -259,7 +259,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			//Close it
 			file.close();
 			
-			logger.Log("AutonomousDataHandler: Saved!");
+			Logger.Log("AutonomousDataHandler: Saved!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();

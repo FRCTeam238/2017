@@ -42,14 +42,6 @@ public class TargetingDataHandler implements AutonomousState{
 	
 	//Put's out all the targetSolution for the user to choose from
 	SendableChooser<String> targetChooser; 
-
-	
-	/**
-	 * @return Returns an array of Arraylists that includes the autonomousStates in order. With the index being the AutoModes 'ID' 
-	 */
-	public ArrayList<AutonomousState>[] getAutonomousModeCommandList(){
-		return targetSolutionCommandList;
-	}
 	
 	
 	/**
@@ -131,8 +123,10 @@ public class TargetingDataHandler implements AutonomousState{
 			//Path in which all states will be created
 			String classPath = "org.usfirst.frc.team238.autonomousStates.State";
 			
+			FileReader TargetSolutionFile = new FileReader("/home/lvuser/TargetSolutionTable.txt");
+			
 			//Creates an object in which the file will be read
-			Object obj = parser.parse(new FileReader("/home/lvuser/TargetSolutionTable.txt"));
+			Object obj = parser.parse(TargetSolutionFile);
 
 			//Converts the object into a JSONObject
 			JSONObject jsonObject = (JSONObject) obj;
@@ -229,6 +223,8 @@ public class TargetingDataHandler implements AutonomousState{
             	}
             	targetSolutionsIteratorIndexCounter++;
             }
+			
+			TargetSolutionFile.close();
 			
 			//Push the list of Amodes to the dashboard
 			SmartDashboard.putData("Choose Target", targetChooser);
@@ -397,7 +393,7 @@ public class TargetingDataHandler implements AutonomousState{
 		String selection = (String) targetChooser.getSelected();
 		int targetSolutionSelection = Integer.parseInt(selection);
 		String name;
-		String statesList = String.valueOf(targetChooser.getSelected() + ": ");
+		String targetStatesList = String.valueOf(targetChooser.getSelected() + ": ");
 		
 		//Substitutes for the 'steps' variable from the AutonomousController
 		
@@ -410,8 +406,8 @@ public class TargetingDataHandler implements AutonomousState{
 			AutonomousState thisState = targetSolutionIterator.next();
 			name =  thisState.getClass().getName();
 			name = name.substring(41);
-			statesList = "TargetStateList " + count + " ";
-			SmartDashboard.putString( statesList, name);
+			targetStatesList = "TargetStateList " + count + " ";
+			SmartDashboard.putString( targetStatesList, name);
 			Logger.Log("TargetSolution DUMP " + name);
 		
 			//If this state was selected
@@ -426,16 +422,46 @@ public class TargetingDataHandler implements AutonomousState{
 			count++;
 		}
 
-		//Kinda confused on what this is specifically used for
+		
 		while(count < targetSolutionStates.size()){ 
 			
-			statesList = "AutoStateList " + count + " ";
-			SmartDashboard.putString( statesList, " ");
+		  targetStatesList = "AutoStateList " + count + " ";
+			SmartDashboard.putString( targetStatesList, " ");
 			count++;
 			
 		}
 	}
 
+	/**
+   * This cycles through every state until it gets to the selected state to be changed.
+   * Then applies the changes to the state object.
+   * THIS ISN'T THE SAME AS SAVING! THIS JUST UPDATES THE STATES WITH NEW PARAMS!
+   */
+  public void updateStateParameters(int selectedMode)
+  {
+    //Get the index of the state that's being modified
+    int index = (int) SmartDashboard.getNumber("AutoStateCmdIndex");
+    int count = 0;
+
+    targetSolutionStates = targetSolutionCommandList[selectedMode];
+    Iterator<AutonomousState> aModeIterator = targetSolutionStates.iterator();
+    
+    //Iterates through the mode's states until it finds the selected state
+    while(aModeIterator.hasNext()){
+      
+      AutonomousState thisState = aModeIterator.next();
+      Logger.Log("TARGETINGDATA Update State Params " + thisState.getClass().getName());
+      if ( count == index)
+      {
+        //Updates it (It grabs the data from the SmartDashboard and applies it)
+        thisState.updateParams();
+        
+      }
+      
+      //Increment counter as it goes through each states
+      count++;
+    }
+  }
 	
 	/**
 	 * Used to keep track of when the JSON was last saved.

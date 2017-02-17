@@ -69,11 +69,14 @@ public class Robot extends IterativeRobot {
 	private AutonomousController theMACP;
 	@SuppressWarnings("rawtypes")
   SendableChooser autonomousChooser;
-	@SuppressWarnings("rawtypes")
   SendableChooser autonomousSaveChooser;
+	SendableChooser targetingStateParamsUpdate;
+  SendableChooser targetingSaveChooser;
 	Logger myLogger;
 	@SuppressWarnings("rawtypes")
   SendableChooser autonomousStateParamsUpdate;
+	
+	
 	//Holds all the autonomous states
 	//and takes the data from the AutonomousController in order to
 	//transfer it to the JSONFactory
@@ -119,6 +122,12 @@ public class Robot extends IterativeRobot {
 				String saveParam = (String) autonomousSaveChooser.getSelected();
 				int save = Integer.parseInt(saveParam);
 				
+				String updateTargetingParams = (String) targetingStateParamsUpdate.getSelected();
+				int updateTargeting = Integer.parseInt(updateTargetingParams);
+				
+				String saveTargetingParam = (String) targetingSaveChooser.getSelected();
+				int saveTargeting = Integer.parseInt(saveTargetingParam);
+				
 				theMACP.pickAMode(automousModeFromDS);
 				
 				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
@@ -127,7 +136,19 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Chosen Targeting Data", String.valueOf(targetSolutionFromDS));
 				
-				/*if(update != 0)
+				if(updateTargeting != 0){
+				  
+				  myTargetingData.updateStateParameters(targetSolutionFromDS);
+				  
+				}
+				
+				if(saveTargeting != 0){
+				  
+				  myTargetingData.save();
+				  
+				}
+				
+				if(update != 0)
 				{
 					theMACP.updateStateParameters(automousModeFromDS);
 				}
@@ -135,9 +156,12 @@ public class Robot extends IterativeRobot {
 				if(save != 0)
 				{
 				  myAutonomousDataHandler.save();	
-				}*/
-
-				//myAutonomousDataHandler.dump();
+				}
+				
+				
+				myAutonomousDataHandler.dump();
+				
+				myTargetingData.dump();
 				
 				myNavigation.navxValues();
 				
@@ -202,7 +226,7 @@ public class Robot extends IterativeRobot {
 		try {
 			System.out.println("RobotInit()");
       
-      SmartDashboard.putBoolean("Output Log to File", false);
+      SmartDashboard.putBoolean("Output Log to File", true);
 			
 			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
 			
@@ -212,6 +236,15 @@ public class Robot extends IterativeRobot {
 			
 			SmartDashboard.putInt("AutoStateCmdIndex", 0);
 			
+			SmartDashboard.putInt("TargetStateCmdIndex", 0);
+			
+			targetingStateParamsUpdate = new SendableChooser();
+			targetingStateParamsUpdate.addDefault("Don't update", "0");
+			targetingStateParamsUpdate.addObject("Update State Target", "1");
+			
+			targetingSaveChooser = new SendableChooser();
+			targetingSaveChooser.addDefault("Don't Save Target Data", "0");
+			targetingSaveChooser.addObject("Save Target State Data", "1");
 			
 			//Sendable Chooser for the state update function
 			autonomousStateParamsUpdate = new SendableChooser();
@@ -222,6 +255,9 @@ public class Robot extends IterativeRobot {
 			autonomousSaveChooser = new SendableChooser();
 			autonomousSaveChooser.addDefault("DON'T Save", "0");
 			autonomousSaveChooser.addObject("Save", "1");
+			
+			SmartDashboard.putData("Edit Target Params", targetingStateParamsUpdate);
+			SmartDashboard.putData("Save Target Data", targetingSaveChooser);
 			
 			//Put sendableChoosers to the SmartDashboard
 			SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);

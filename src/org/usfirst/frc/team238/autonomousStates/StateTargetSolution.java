@@ -47,15 +47,28 @@ public class StateTargetSolution implements AutonomousState {
   @Override
   public void showParams() {
 
-    SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
-    SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
-    SmartDashboard.putString("Param 3 - rollValue", "0");
-    SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
+    SmartDashboard.putString("Tracking Param 1 - Angle", parameters[0]);
+    SmartDashboard.putString("Tracking Param 2 - Distance", parameters[1]);
+    SmartDashboard.putString("Tracking Param 3 - ...", "0");
+    SmartDashboard.putString("Tracking Param 4 - ...", "0");
   }
 
   @Override
   public void updateParams() {
     // TODO Auto-generated method stub
+    String param1;
+    String param2;
+    String param3;
+    String param4;
+
+    param1 = SmartDashboard.getString("Tracking Param 1 - Angle");
+    parameters[0] = param1;
+    param2 = SmartDashboard.getString("Tracking Param 2 - Distance");
+    parameters[1] = param2;
+    param3 = SmartDashboard.getString("Tracking Param 3 - ...");
+    parameters[2] = param3;
+    param4 = SmartDashboard.getString("Tracking Param 4 - ...");
+    parameters[3] = param4;
 
   }
 
