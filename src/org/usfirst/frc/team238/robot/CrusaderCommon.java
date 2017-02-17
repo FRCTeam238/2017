@@ -67,10 +67,10 @@ public class CrusaderCommon {
 	
 	public final static int INTAKE_TALON = 4;
 	
-	public final static int DRIVE_TRAIN_MASTER_LEFT = 5;
-	public final static int DRIVE_TRAIN_SLAVE_LEFT = 6;
-	public final static int DRIVE_TRAIN_MASTER_RIGHT = 7;
-	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 8;
+	public final static int DRIVE_TRAIN_MASTER_RIGHT = 5;
+	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 6;
+	public final static int DRIVE_TRAIN_MASTER_LEFT = 7;
+	public final static int DRIVE_TRAIN_SLAVE_LEFT = 8;
 	
 	public final static int SERIALIZER_TALON = 9;
 	

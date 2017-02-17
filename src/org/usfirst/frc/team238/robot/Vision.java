@@ -14,8 +14,8 @@ public class Vision {
 	public void init()
 	{
 		
-		/*theClient = new udpClient();
-		theClient.init();
+		theClient = new udpClient();
+		/*theClient.init();
 		theClient.enable();
 		theClient.start();*/
 		

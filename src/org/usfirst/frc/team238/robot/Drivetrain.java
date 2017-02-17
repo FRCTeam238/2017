@@ -135,7 +135,7 @@ public class Drivetrain {
 		
 	  /*the joystick value is multiplied by a target RPM so the 
 	  *robot works with the velocity tuning code*/
-		robotMotors.tankDrive(-leftMotorValue, -rightMotorValue);	
+		robotMotors.tankDrive(leftMotorValue, rightMotorValue);	
 	}
 	
 	public void driveBackwards(double leftMotorValue , double rightMotorValue)  {
