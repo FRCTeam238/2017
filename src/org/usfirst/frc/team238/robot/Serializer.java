@@ -54,14 +54,14 @@ public class Serializer {
    */
   public void startSpinning(){
     
-    serializerMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+    serializerMotor.set(CrusaderCommon.SERIALIZER_MOTOR_ON);
     spinning = true;
     
-    if(currentOverLoad()){
+    /*if(currentOverLoad()){
       
       stopSpinning();
       
-    }
+    }*/
     
   }
   
@@ -70,7 +70,7 @@ public class Serializer {
    */
   public void stopSpinning(){
     
-    serializerMotor.set(CrusaderCommon.INTAKE_MOTOR_OFF);
+    serializerMotor.set(CrusaderCommon.SERIALIZER_MOTOR_OFF);
     spinning = false;
     
   }

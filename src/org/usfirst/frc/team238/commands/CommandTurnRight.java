@@ -1,6 +1,7 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
@@ -27,16 +28,18 @@ public class CommandTurnRight extends AbstractCommand {
 
   public void prepare() {
 
+    myNavigation.resetNAVX();
     myNavigation.zeroYaw();
 
   }
 
   public void execute() {
-    // Using -motorValues to spin the right motors backwards
-    // If that's how it works lol Maybe change this
+
     currentYaw = myNavigation.getYaw();
-    finalMotorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
-    myRobotDrive.turnRight(finalMotorValue, finalMotorValue);
+   // finalMotorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
+    myRobotDrive.turnRight(motorValue, motorValue);
+    double yaw = myNavigation.getYaw();
+    Logger.Log("CommandTurnRight: Our yaw = "+yaw+"\n"+"Our Target yaw is = "+ targetValue);
     myNavigation.navxValues();
     
   }
@@ -79,4 +82,5 @@ public class CommandTurnRight extends AbstractCommand {
     }
 
   }
+  
 }

@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon;
@@ -48,6 +50,7 @@ public class Robot extends IterativeRobot {
 	CANTalon rightFrontDrive; //id = 3
 	CANTalon rightRearDrive; //id = 4
 	
+	Robot myRobot;
 	Preferences myPreferences;
 	ControlBoard myControlBoard;
 	CommandController theMCP;
@@ -60,6 +63,9 @@ public class Robot extends IterativeRobot {
 	FuelHandler theFuelHandler;
 	Climber theClimber;
 	SprocketDoor theSprocket;
+  
+  DriverStation myDriverStation;
+  Alliance myAllianceTeam;
 	
 	// Autonomous Mode Support
 	String autoMode;
@@ -84,6 +90,8 @@ public class Robot extends IterativeRobot {
 	//This holds the names of each mode
 	private ArrayList<String> AutoModeNames;
 	
+	 Alliance teamColor;
+	 
 	public void disabledInit() {
 		try {
 			// only use checkForSmartDashboardChanges function in init methods
@@ -165,7 +173,7 @@ public class Robot extends IterativeRobot {
 				
 				myNavigation.navxValues();
 				
-			  //dataFromVision = theVision.getTheData();
+			  dataFromVision = theVision.getTheData();
 				
 				//Logger.logDouble("Distance ", dataFromVision[CrusaderCommon.VISION_DISTANCE_SLOT]);		
 				
@@ -173,12 +181,15 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
+				Logger.Log("Vision Horizontal : " + dataFromVision[0]);
+				Logger.Log("Vision Vertical : " + dataFromVision[1]);
+				
 			}
 			
 			count++;
 			
 		} catch (Exception ex) {
-			Logger.Log("disabledPriodic exception" );
+			Logger.Log("disabledPriodic exception: " + ex );
 			ex.printStackTrace();
 		}
 
@@ -208,6 +219,8 @@ public class Robot extends IterativeRobot {
 				
 				myDriveTrain.getEncoderTicks();
 				
+				teamColor = DriverStation.getInstance().getAlliance();
+				
 			} catch (Exception ex) {
 				Logger.Log("AutononousInit:Something BAD happened");
 			}
@@ -225,7 +238,9 @@ public class Robot extends IterativeRobot {
 
 		try {
 			System.out.println("RobotInit()");
-      
+			
+			myRobot = Robot.this; 
+			
       SmartDashboard.putBoolean("Output Log to File", true);
 			
 			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
@@ -270,11 +285,11 @@ public class Robot extends IterativeRobot {
 			myControlBoard.controlBoardInit();
 
 			//Create robot core objects 
-												              // Test Robot | Actual Robot
-			leftFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);  //id =  1			 5
-			leftRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_LEFT);   //id =  2			 6
+			                                                                       // Test Robot | Actual Robot
+			leftFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);   //id =  1			 5
+			leftRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_LEFT);     //id =  2			 6
 			rightFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT); //id =  3			 7
-			rightRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_RIGHT);  //id =  4			 8
+			rightRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_RIGHT);   //id =  4			 8
 			
 			//Setting the talons to follow master talons
 			rightRearDrive.changeControlMode(TalonControlMode.Follower);
@@ -294,8 +309,6 @@ public class Robot extends IterativeRobot {
 			myNavigation = new Navigation();
 			myNavigation.init();
 			
-			myDriverstation = DriverStation.getInstance();
-		
 			SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
 			
 			myDriveTrain = new Drivetrain(myRobotDrive);
@@ -327,7 +340,7 @@ public class Robot extends IterativeRobot {
 			//Controller object for telop
 			theMCP = new CommandController();
 			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, 
-			    theFuelHandler, theClimber, theSprocket);
+			    theFuelHandler, theClimber, theSprocket, myRobot);
 			
 			//The handler that handles everything JSON related 
 			myAutonomousDataHandler = new AutonomousDataHandler();
@@ -344,6 +357,10 @@ public class Robot extends IterativeRobot {
       myTargetingData = new TargetingDataHandler();
       myTargetingData.init(theMCP);
 			
+      
+      
+      //SmartDashboard.putString("Team Side :",getAllianceTeam());
+      
 			Logger.Log("Fully Initialized");
 
 		} catch (Exception ex) {
@@ -358,6 +375,11 @@ public class Robot extends IterativeRobot {
 	{
 		return theMCP;
 	}
+  
+  public Alliance getAllianceTeam()
+  {
+    return teamColor; 
+  }
 
 	/**
 	 * This function is called periodically during autonomous
@@ -370,6 +392,10 @@ public class Robot extends IterativeRobot {
 			theMACP.process();
 			myNavigation.navxValues();
 			myNavigation.getDistanceFromUltrasonic();
+			
+			int currentYaw = (int) myNavigation.getYaw();
+			
+			SmartDashboard.putNumber("AutonomousPeriodic: The CurrentYaw ", currentYaw);
 			
 		} catch (Exception ex) {
 			Logger.Log("Autonomous exception");

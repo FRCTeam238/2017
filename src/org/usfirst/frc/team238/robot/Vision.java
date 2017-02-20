@@ -9,7 +9,7 @@ public class Vision {
 	udpClient theClient;
 	
 	
-	
+	double[] data = null;
 	
 	public void init()
 	{
@@ -18,6 +18,7 @@ public class Vision {
 		/*theClient.init();
 		theClient.enable();
 		theClient.start();*/
+		data = new double[2];
 		
 	}
 	
@@ -67,10 +68,10 @@ public class Vision {
 	public double[] getTheData()
 	{
 		
-		double[] data = null;
 		
-		data[0] = SmartDashboard.getNumber("Gear Horizontal");
-		data[1] = SmartDashboard.getNumber("Gear Vertical");
+		
+		data[0] = SmartDashboard.getNumber("Gear Horizontal", 0);
+		data[1] = SmartDashboard.getNumber("Gear Vertical", 0);
 		
 		
 		return data;

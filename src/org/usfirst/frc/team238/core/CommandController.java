@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
+import org.usfirst.frc.team238.robot.Robot;
 import org.usfirst.frc.team238.robot.SprocketDoor;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -28,12 +29,12 @@ public class CommandController {
 	
 	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ 
 	    Drivetrain driveTrain, Navigation myNavigation, Vision myVision, 
-	    FuelHandler theFuelHandler, Climber myClimber, SprocketDoor theSprocket)
+	    FuelHandler theFuelHandler, Climber myClimber, SprocketDoor theSprocket, Robot myRobot)
 	{
 		// populate the command lists
 		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber, theSprocket);
 		setupDriverCommands(myRobotDrive, driveTrain);
-		setupAutonomousCommands(driveTrain, myNavigation, myVision);
+		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot);
 		
 		commandValue = new HashMap<Integer, Command>(8);
 	}
@@ -46,11 +47,11 @@ public class CommandController {
 	}
 	
 	//loads all the autonomous commands from the auto factory
-	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision)
+	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, Robot myRobot)
 	{
 		theRouge = new AutonomousCmdFactory();
 		theRouge.init();
-		autoCmdList = theRouge.createAutonomousCommands(driveTrain, myNavigation, myVision);
+		autoCmdList = theRouge.createAutonomousCommands(driveTrain, myNavigation, myVision, myRobot);
 		
 	}
 	

@@ -5,6 +5,8 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class CommandTurnLeft extends AbstractCommand {
 
   Drivetrain myRobotDrive;
@@ -26,17 +28,19 @@ public class CommandTurnLeft extends AbstractCommand {
   }
 
   public void prepare() {
-
+  
     myNavigation.resetNAVX();
+    myNavigation.zeroYaw();
 
   }
 
   public void execute() {
-    // Using -motorValues to spin the left motors backwards
-    // If that's how it works lol Maybe change this
+  
     currentYaw = myNavigation.getYaw();
-    finalMotorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
-    myRobotDrive.turnLeft(finalMotorValue, finalMotorValue);
+   // finalMotorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
+    myRobotDrive.turnLeft(motorValue, motorValue);
+    double yaw = myNavigation.getYaw();
+    Logger.Log("CommandTurnLeft: Our yaw = "+yaw+"\n"+"Our Target yaw is = "+targetValue);
     myNavigation.navxValues();
 
   }

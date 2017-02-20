@@ -8,8 +8,8 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class Drivetrain {
 
@@ -38,9 +38,8 @@ public class Drivetrain {
 	}
 	
 	public void init(CANTalon leftFrontDriveTalon, CANTalon rightFrontDriveTalon)
-	{
+	{ 
 		//Have to find the values for Encoders- HS
-		
 		leftFrontDrive = leftFrontDriveTalon;
 		rightFrontDrive = rightFrontDriveTalon;
 		shifterSolenoid = new Solenoid (0);
@@ -56,12 +55,11 @@ public class Drivetrain {
 		configTalon(leftFrontDrive);
 		configTalon(rightFrontDrive);
 		
-		
-		
-		 btncounter = 0;
+		btncounter = 0;
 		btncounterDec = 0;
 		
 	}
+	
 	public int getEncoderTicks()
 	{
 		boolean debug;
@@ -135,7 +133,7 @@ public class Drivetrain {
 		
 	  /*the joystick value is multiplied by a target RPM so the 
 	  *robot works with the velocity tuning code*/
-		robotMotors.tankDrive(leftMotorValue, rightMotorValue);	
+		robotMotors.tankDrive(-leftMotorValue, -rightMotorValue);	
 	}
 	
 	public void driveBackwards(double leftMotorValue , double rightMotorValue)  {

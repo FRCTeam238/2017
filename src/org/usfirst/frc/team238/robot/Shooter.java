@@ -21,6 +21,8 @@ public class Shooter {
   
   Hood theHood;
   
+  int count = 0;
+  
   int encoderPosition;
   
   public Shooter() {
@@ -77,7 +79,7 @@ public class Shooter {
   public void execute()
   {
     
-    shooterMaster.set(CrusaderCommon.SHOOTER_MAX_RPM);
+    shooterMaster.set(1/*CrusaderCommon.SHOOTER_MAX_RPM*/);
     
   }
   
@@ -99,16 +101,16 @@ public class Shooter {
      
      /*This sets the FPID values to correct error in the motor's velocity
       * */
-     talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
+    /* talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
      talon.setF(CrusaderCommon.SHOOTER_TALON_F_VALUE); //.3113);
      talon.setP(CrusaderCommon.SHOOTER_TALON_P_VALUE); //.8);//064543);
      talon.setI(CrusaderCommon.SHOOTER_TALON_I_VALUE); 
-     talon.setD(CrusaderCommon.SHOOTER_TALON_D_VALUE);
+     talon.setD(CrusaderCommon.SHOOTER_TALON_D_VALUE);*/
      
      
      
      //this set the talon to use speed mode instead of voltage mode
-     talon.changeControlMode(TalonControlMode.Speed);
+     talon.changeControlMode(TalonControlMode.PercentVbus);
      
     
   }
@@ -173,7 +175,7 @@ public class Shooter {
   public void test()
   {
    
-    int count = 0;
+
     
     Logger.Log("Begining Shooter Test");
     

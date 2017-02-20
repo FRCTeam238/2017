@@ -46,6 +46,9 @@ public class CrusaderCommon {
 	public static final int AUTO_DRIVE_LIMIT = 15000;
 	
 	//Intake Motor Values
+	public final static double SERIALIZER_MOTOR_ON = 1.0;
+	public final static double SERIALIZER_MOTOR_OFF = 0;
+	
 	public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
 	public final static double INTAKE_MOTOR_ROTATE_OUT = -1.0;
 	public final static double INTAKE_MOTOR_OFF = 0;
@@ -60,29 +63,21 @@ public class CrusaderCommon {
 	public final static int TALON_NO_VALUE = 0;
 	
 	/*THESE ARE THE ALL THE TALON IDS FOR THE 2017 ROBOT*/
-	public final static int SHOOTER_MASTER_TALON = 1;
-	public final static int SHOOTER_SLAVE_TALON = 2;
-	
+	public final static int SHOOTER_MASTER_TALON = 11;
+	public final static int SHOOTER_SLAVE_TALON = 12;
 	public final static int ELEVATOR_TALON = 3;
-	
-	public final static int INTAKE_TALON = 4;
-	
-	public final static int DRIVE_TRAIN_MASTER_RIGHT = 5;
-	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 6;
-	public final static int DRIVE_TRAIN_MASTER_LEFT = 7;
-	public final static int DRIVE_TRAIN_SLAVE_LEFT = 8;
-	
-	public final static int SERIALIZER_TALON = 9;
-	
-	public final static int UNASSIGNED_TALON = 10;
-	
-	public final static int CLIMBER_TALON_ONE = 11;
-	public final static int CLIMBER_TALON_TWO = 12;
+	public final static int INTAKE_TALON = 2;
+	public final static int DRIVE_TRAIN_MASTER_RIGHT = 7;
+	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 8;
+	public final static int DRIVE_TRAIN_MASTER_LEFT = 5;
+	public final static int DRIVE_TRAIN_SLAVE_LEFT = 6;
+	public final static int SERIALIZER_TALON = 4;
+	public final static int UNASSIGNED_TALON = 1;
+	public final static int CLIMBER_TALON_ONE = 9;
+	public final static int CLIMBER_TALON_TWO = 10;
 	
 	public final static int HOOD_SERVO_ID = 13;
-	
 	public final static int HOPPER_DOOR_SERVO_ID = 14;
-	
 	public final static int SPROCKET_SERVO_ONE = 15;
 	public final static int SPROCKET_SERVO_TWO = 16;
 	
@@ -91,10 +86,10 @@ public class CrusaderCommon {
 	public static final int SERVO_OFF = 0;
   
 	//Power Distribution Panel (PDP) ID's
-	public static final int PDP_SERIALIZER_MOTOR_ID = 13;
+	public static final int PDP_SERIALIZER_MOTOR_ID = 2;
 	public static final int PDP_ELEVATOR_MOTOR_ID = 3;
-	public static final int PDP_CLIMBER_MOTOR_ONE_ID = 11;
-	public static final int PDP_CLIMBER_MOTOR_TWO_ID = 10;
+	public static final int PDP_CLIMBER_MOTOR_ONE_ID = 12;
+	public static final int PDP_CLIMBER_MOTOR_TWO_ID = 13;
 	
 	//CurrentDraw variable
 	public final static double CURRENT_DRAW_LIMIT = 20.0;
@@ -110,7 +105,7 @@ public class CrusaderCommon {
 
 	public final static double NAVIGATION_P_VALUE = 0.1;
 	public final static double NAVIGATION_MAX_MOTOR_INCREMENT = 0.2;
-	public final static double NAVIGATION_TURNING_DEADZONE = 1;
+	public final static double NAVIGATION_TURNING_DEADZONE = 3;
 	
 	public final static double DRIVE_FORWARD_P_VALUE = 0.015;
 	public final static double DRIVE_FORWARD_I_VALUE = 0;

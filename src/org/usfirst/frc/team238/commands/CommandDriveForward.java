@@ -42,6 +42,7 @@ public class CommandDriveForward extends AbstractCommand {
 
   public void prepare() {
 
+    myNavigation.resetNAVX();
     myNavigation.zeroYaw();
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
