@@ -21,6 +21,8 @@ public class Shooter {
   
   Hood theHood;
   
+  public double talonSpeed;
+  
   int count = 0;
   
   int encoderPosition;
@@ -206,6 +208,15 @@ public class Shooter {
     Logger.Log("Shooter Test Sucessful!");
   }
   
+  
+  public void setTalonSpeed(double speed)
+  {
+    
+    talonSpeed = speed;
+    
+    shooterMaster.set(talonSpeed);
+    
+  }
   
 
 }

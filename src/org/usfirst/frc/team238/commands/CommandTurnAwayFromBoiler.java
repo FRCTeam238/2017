@@ -1,11 +1,13 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandTurnAwayFromBoiler extends AbstractCommand {
 
@@ -29,15 +31,19 @@ public class CommandTurnAwayFromBoiler extends AbstractCommand {
   
   @Override
   public void execute() {
-
+    
+    double calculatedMotorValue;
+    calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
+        targetValue, CrusaderCommon.TURN_MAX_ERROR);
+    
     switch(direction){
       
       case "Left":
-        myRobotDrive.turnLeft(motorValue, motorValue);
+        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
         break;
      
       case "Right":
-        myRobotDrive.turnRight(motorValue, motorValue);
+        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
         break;
         
       default:
@@ -96,14 +102,30 @@ public class CommandTurnAwayFromBoiler extends AbstractCommand {
 
   @Override
   public boolean done() {
+    double currentYaw;
+    currentYaw = myNavigation.getYaw();
     if (myNavigation.areWeThereYet() == true) {
       myRobotDrive.driveForward(0, 0);
+      
+      SmartDashboard.putNumber("FINAL YAW", currentYaw);
+      
       return true;
     }
 
     else {
       return false;
     }
+  }
+  
+//THIS ALSO EXISTS IN TURN TO FROM BOILER
+  public double getError()
+  {
+    double error;
+    double currentYaw = Math.abs(myNavigation.getYaw());
+    
+    error = targetValue - currentYaw;
+    
+    return error;
   }
 
 }

@@ -71,7 +71,7 @@ public class Navigation {
 	public void setTargetValues(double targetValue)
 	{
 		
-		targetYaw = targetValue;
+		targetYaw = Math.abs(targetValue);
 		
 	}
 	
@@ -99,10 +99,11 @@ public class Navigation {
 	public boolean areWeThereYet()
 	{
 		currentYaw = ahrs.getYaw();
+		currentYaw = Math.abs(currentYaw);
 		
 		Logger.Log("Current Yaw is : "+ currentYaw+ " \n Target is : "+ targetYaw);
 		
-		if(currentYaw > (targetYaw - CrusaderCommon.NAVIGATION_TURNING_DEADZONE) && currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE))
+		if((currentYaw >= targetYaw) && (currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE)))
 		{
 			return true;
 		}
@@ -112,6 +113,23 @@ public class Navigation {
 			return false;
 		}
 	}
+	
+	/*public boolean areWeThereYet()
+  {
+    currentYaw = ahrs.getYaw();
+    
+    Logger.Log("Current Yaw is : "+ currentYaw+ " \n Target is : "+ targetYaw);
+    
+    if(currentYaw > (targetYaw - CrusaderCommon.NAVIGATION_TURNING_DEADZONE) && currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE))
+    {
+      return true;
+    }
+    else
+    {
+
+      return false;
+    }
+  }*/
 	
 	public double turningMotorValue(double targetYaw, double currentYaw, double motorValue)
 	{

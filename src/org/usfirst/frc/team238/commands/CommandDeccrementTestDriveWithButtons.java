@@ -6,6 +6,7 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.ControlBoard;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Navigation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,16 +14,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CommandDeccrementTestDriveWithButtons extends AbstractCommand  {
 
 	Drivetrain myRobotDrive;
+	FuelHandler myFuelHandler;
 	
-	double motorValue;
+	double motorValue = 0;
 	double targetValue;
 	double newTargetYaw;
 	int count;
+  boolean weIncreased = false;
+  int increaseCount = 0;
 	
-	public CommandDeccrementTestDriveWithButtons(Drivetrain theRobotDrive)
+	public CommandDeccrementTestDriveWithButtons(Drivetrain theRobotDrive, FuelHandler theFuelHandler)
 	{
 		
 		this.myRobotDrive = theRobotDrive;
+		this.myFuelHandler = theFuelHandler;
 		count = 0;
 
 	}
@@ -35,11 +40,21 @@ public class CommandDeccrementTestDriveWithButtons extends AbstractCommand  {
 	public void execute()  {
 		//Using -motorValues to spin the left motors backwards
 		//If that's how it works lol Maybe change this
-		Logger.Log("!!!!!DEBUG!!!!!!!!!!!!   " + "DECREMENT");
-		myRobotDrive.decrementMotorValue(2);
+		//Logger.Log("!!!!!DEBUG!!!!!!!!!!!!   " + motorValue);
 		
-		int encoder = myRobotDrive.getEncoderTicks();
-		Logger.Log("encoder "+ encoder);
+
+		
+		if(increaseCount > 40)
+		{
+		  myFuelHandler.decreaseTen();
+		  increaseCount = 0;
+		}
+		else
+		{
+	    increaseCount++;
+		}
+		//int encoder = myRobotDrive.getEncoderTicks();
+		//Logger.Log("encoder "+ encoder);
 		
 	}
 	

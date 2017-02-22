@@ -47,6 +47,12 @@ public class AutonomousDataHandler implements AutonomousState{
 		return autonomousModeCommandList;
 	}
 	
+	public Integer getModeSelectionFromDashboard(){
+	  int selection;
+	  selection = (int) SmartDashboard.getNumber("Chosen Auto Mode", 0);
+	  //selection = Integer.parseInt(SmartDashboard.getString("Choosen Auto Mode","0"));
+	  return selection;
+	}
 	
 	/**
 	 * @return An Integer on what AutoMode was selected on the Smartdashboard 
@@ -80,9 +86,9 @@ public class AutonomousDataHandler implements AutonomousState{
 	 * Starts up the JSONHandler
 	 * @param theMCP (The control scheme that's being used)
 	 */
-	public void init(CommandController theMCP)
+	public void init(CommandController theMCP, SendableChooser theAutoChooser)
 	{
-		aModeChooser = new SendableChooser();
+		aModeChooser = theAutoChooser;
 		readJson(theMCP);
 	}
 	
@@ -172,6 +178,8 @@ public class AutonomousDataHandler implements AutonomousState{
             	else{
             		aModeChooser.addObject(name,String.valueOf(aModeIndexCounter));
             	}
+            	
+            	SmartDashboard.putString("Amode "+aModeIndexCounter,name);
             	
             	//Create an array/iterator of commands from the AutoMode it's currently cycling through
             	JSONArray commandArrayList = (JSONArray) autoModeX.get("Commands");
@@ -384,16 +392,68 @@ public class AutonomousDataHandler implements AutonomousState{
 		return newAmode238String;
 	}
 	
-	
+	 /**
+   * Goes through each AutonomousMode and prints out each state and it's parameters
+   */
+  public void dump(){
+    
+    int index = (int) SmartDashboard.getNumber("Chosen Auto Mode");
+    int count = 0;
+   // String selection = (String) aModeChooser.getSelected();
+    int aModeSelection =  index; //Integer.parseInt(selection);
+    
+    
+    String name;
+    //String statesList = String.valueOf(aModeChooser.getSelected() + ": ");
+    
+    //Substitutes for the 'steps' variable from the AutonomousController
+    
+    autonomousModeStates = autonomousModeCommandList[aModeSelection];
+    Iterator<AutonomousState> aModeIterator = autonomousModeStates.iterator();
+    
+    while(aModeIterator.hasNext()){
+      
+      //Outputs every state name to the dashboard
+      AutonomousState thisState = aModeIterator.next();
+      name =  thisState.getClass().getName();
+      name = name.substring(41);
+      //statesList = "AutoStateList " + count + " ";
+      //SmartDashboard.putString( statesList, name);
+      Logger.Log("AUTONOMOUS DUMP " + name);
+    
+      //If this state was selected
+      if ( count == index){
+        
+        //Show params of the selected state
+        SmartDashboard.putString("AutoStateName", name);
+        thisState.showParams();
+
+      }
+      
+      count++;
+    }
+
+    //Kinda confused on what this is specifically used for
+//    while(count < autonomousModeStates.size()){ 
+//      
+//      statesList = "AutoStateList " + count + " ";
+//      SmartDashboard.putString( statesList, " ");
+//      count++;
+//      
+//    }
+  }
+
 	/**
 	 * Goes through each AutonomousMode and prints out each state and it's parameters
-	 */
+	 
 	public void dump(){
 		
 		int index = (int) SmartDashboard.getNumber("AutoStateCmdIndex");
 		int count = 0;
 		String selection = (String) aModeChooser.getSelected();
 		int aModeSelection = Integer.parseInt(selection);
+		
+		
 		String name;
 		String statesList = String.valueOf(aModeChooser.getSelected() + ": ");
 		
@@ -434,7 +494,7 @@ public class AutonomousDataHandler implements AutonomousState{
 		}
 	}
 
-	
+	*/
 	/**
 	 * Used to keep track of when the JSON was last saved.
 	 * @return The date is in the format of MM/dd/yyyy hh:mm:ss (PM/AM)

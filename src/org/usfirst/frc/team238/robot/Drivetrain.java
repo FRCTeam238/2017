@@ -32,6 +32,8 @@ public class Drivetrain {
 	int btncounter;
 	int btncounterDec;
 	
+	boolean weAreBroken = false;
+	
 	public Drivetrain(RobotDrive theRobotDrive)
 	{
 		this.robotMotors = theRobotDrive;
@@ -62,25 +64,32 @@ public class Drivetrain {
 	
 	public int getEncoderTicks()
 	{
-		boolean debug;
+		int encoderAverage;
+		encoderLeft = leftFrontDrive.getEncPosition();
+		encoderRight = rightFrontDrive.getEncPosition();
 		
-		debug = SmartDashboard.getBoolean("Debug");
-		
-		if(debug == true)// normally false
+		//if((encoderLeft == 0) && (encoderRight > 0))
+		//{
+		  weAreBroken = false;
+		  return -encoderRight;
+		/*}
+		else if((encoderLeft < 0) && (encoderRight == 0))
 		{
-			encoderLeft = leftFrontDrive.getEncPosition();
-			encoderRight = rightFrontDrive.getEncPosition();
-			return encoderRight;
+		  weAreBroken = false;
+		  return -encoderLeft;
 		}
-		else 
+		else if((encoderLeft == 0) && (encoderRight == 0))
 		{
-			
-			counter++;
-			encoderRight = counter * 1000;
-			return encoderRight;
-			
+		  weAreBroken = true;
 		}
-		
+		else
+		{
+		  encoderAverage = encoderRight + (encoderLeft * - 1);
+		  encoderAverage = encoderAverage / 2;
+		  weAreBroken = false;
+		  return encoderAverage;
+		}*/
+		//return encoderRight;
 		
 	}
 	

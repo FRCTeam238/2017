@@ -1,11 +1,13 @@
 package org.usfirst.frc.team238.robot;
 
 import org.usfirst.frc.team238.robot.Serializer;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Elevator;
 import org.usfirst.frc.team238.robot.Intake;
 
 import org.usfirst.frc.team238.robot.Shooter;
 import org.usfirst.frc.team238.robot.HopperDoor;
+
 
 public class FuelHandler {
 
@@ -14,6 +16,19 @@ public class FuelHandler {
   public Intake theIntake;
   public Shooter theShooter;
   public HopperDoor theHopperDoor;
+  
+  
+  int counter;
+  double protoCounter;
+  int delayCounter;
+  // need turn left turn right
+  int lastBtnPressed;
+  int scalefactor;
+  int scalefactorOnePercent;
+  int btncounter;
+  int btncounterDec;
+  double talonSpeed = 0;
+  double serializerSpeed = 0;
   
   public void init(){
     
@@ -32,6 +47,8 @@ public class FuelHandler {
     theHopperDoor = new HopperDoor();
     theHopperDoor.init();
     
+
+    
   }
   
   public void test(){
@@ -47,8 +64,11 @@ public class FuelHandler {
    *  This is the function that has the logic for shooting*/
   public void shoot()
   {
+    
+    theShooter.execute();
+    theSerializer.runSerializer();
         //check to see if we are aligned with the targer
-        if(theShooter.targetAcquired())
+       /* if(theShooter.targetAcquired())
         {
           //runs the shooter motors
           theShooter.execute();
@@ -67,7 +87,7 @@ public class FuelHandler {
             }
             
           }
-        }
+        }*/
   }
   
   //Stops  all motors
@@ -92,6 +112,90 @@ public class FuelHandler {
   {
     
     theHopperDoor.closeDoor();
+    
+  }
+  
+  public void increaseTen()
+  {
+    
+    
+    talonSpeed = talonSpeed + 0.1;
+    
+    theShooter.setTalonSpeed(talonSpeed);
+    
+    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    
+    
+  }
+  
+  public void increaseOne()
+  {
+    
+    talonSpeed = talonSpeed + 0.01;
+    
+    theShooter.setTalonSpeed(talonSpeed);
+    
+    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    
+  }
+  
+  public void decreaseTen()
+  {
+    
+    
+    talonSpeed = talonSpeed - 0.1;
+    
+    theShooter.setTalonSpeed(talonSpeed);
+    
+    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    
+    
+  }
+  
+  public void decreaseOne()
+  {
+    
+    talonSpeed = talonSpeed - 0.01;   
+    
+    theShooter.setTalonSpeed(talonSpeed);
+    
+    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+  }
+  
+  public void serialDecreaseTen()
+  {
+    
+    serializerSpeed = serializerSpeed - 0.7;
+    
+    theSerializer.setTalonSpeed(serializerSpeed);
+    
+    Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
+    
+  }
+  
+  public void serialIncreaseTen()
+  {
+    
+    serializerSpeed = serializerSpeed + 0.7;
+    
+    theSerializer.setTalonSpeed(serializerSpeed);
+    
+    Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
+    
+  }
+  
+  public void resetMotor()
+  {
+    
+    talonSpeed = 0;
+    serializerSpeed = 0;
+    
+    theShooter.setTalonSpeed(talonSpeed);
+    theSerializer.setTalonSpeed(serializerSpeed);
+    
+    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
+    
     
   }
   

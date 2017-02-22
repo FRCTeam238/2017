@@ -1,5 +1,7 @@
 package org.usfirst.frc.team238.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class CrusaderCommon {
 	
 	/*DO NOT NUKE*/
@@ -105,13 +107,13 @@ public class CrusaderCommon {
 
 	public final static double NAVIGATION_P_VALUE = 0.1;
 	public final static double NAVIGATION_MAX_MOTOR_INCREMENT = 0.2;
-	public final static double NAVIGATION_TURNING_DEADZONE = 3;
+	public final static double NAVIGATION_TURNING_DEADZONE = 6;
 	
 	public final static double DRIVE_FORWARD_P_VALUE = 0.015;
 	public final static double DRIVE_FORWARD_I_VALUE = 0;
 	public final static double DRIVE_FORWARD_MAX_YAW_PERCENT = 0.1;
 	
-	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 3900;
+	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 4983;//3900;
 	
 	public final static int SONIC_SENSOR_ACTIVATION_DISTANCE = 6840;
 	public final static int SONIC_INPUT_PORT = 8;
@@ -121,7 +123,12 @@ public class CrusaderCommon {
 	
 	public final static double SHOOTER_VISION_DEADZONE = 1;
 	
-	
+	public final static double TURN_P_VALUE = 0.005;//SmartDashboard.getNumber("Turn P Value",0.005);//0.005;
+	public final static double TURN_DEAD_STOP = 0.5;//SmartDashboard.getNumber("Turn Dead Stop", 0.42);//0.42;
+	public final static double TURN_MAX_ERROR = 45;//SmartDashboard.getNumber("Turn Max Error",45);//45;
+	public final static double STRAIGHT_P_VALUE = 0.000055;//0.00003512;
+	public final static double STRAIGHT_DEAD_STOP = 0.39;
+	public final static double STRAIGHT_MAX_ERROR = 9966;
 	
 	
 }

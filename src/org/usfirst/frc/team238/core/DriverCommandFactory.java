@@ -58,11 +58,6 @@ public class DriverCommandFactory {
 		driverRightCommands.put(0, NoDriveCommand);
 		
 		commandShiftHigh = new CommandShiftHigh(driveTrain);
-		cmdReset = new CommandResetTestDriveWithButtons(driveTrain);
-		cmdDecrement = new CommandDeccrementTestDriveWithButtons(driveTrain) ;
-		cmdIncrement = new CommandIncrementTestDriveWithButtons(driveTrain) ;
-		cmdIncrementOne = new CommandIncrementOnePercent(driveTrain);
-		cmdDecrementOne = new CommandDecrementOnePercent(driveTrain);
 		driverRightCommands.put(1, commandShiftHigh);
 		driverRightCommands.put(2, cmdReset);
 		driverRightCommands.put(3, cmdDecrement);

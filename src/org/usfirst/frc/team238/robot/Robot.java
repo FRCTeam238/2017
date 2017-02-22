@@ -74,13 +74,15 @@ public class Robot extends IterativeRobot {
 	private TargetingDataHandler myTargetingData;
 	private AutonomousController theMACP;
 	@SuppressWarnings("rawtypes")
-  SendableChooser autonomousChooser;
-  SendableChooser autonomousSaveChooser;
-	SendableChooser targetingStateParamsUpdate;
-  SendableChooser targetingSaveChooser;
+  SendableChooser<String> autonomousChooser;
+  SendableChooser<String> autonomousSaveChooser;
+	SendableChooser<String> targetingStateParamsUpdate;
+  SendableChooser<String> targetingSaveChooser;
+  SendableChooser<String> aModeSelector;
+  
 	Logger myLogger;
 	@SuppressWarnings("rawtypes")
-  SendableChooser autonomousStateParamsUpdate;
+  SendableChooser<String> autonomousStateParamsUpdate;
 	
 	
 	//Holds all the autonomous states
@@ -120,8 +122,10 @@ public class Robot extends IterativeRobot {
 				debug = SmartDashboard.getBoolean("Debug");
 				//Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
-				int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection();
-				//Logger.logTwoString("The chosen One =  " , String.valueOf(automousModeFromDS));
+				int autoModeSelection = myAutonomousDataHandler.getModeSelectionFromDashboard();
+				
+				//int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection();
+				Logger.Log("The chosen One =  " + String.valueOf(autoModeSelection));
 			
 				//see if we need to modify the params on a state
 				String updateParams = (String) autonomousStateParamsUpdate.getSelected();
@@ -136,9 +140,9 @@ public class Robot extends IterativeRobot {
 				String saveTargetingParam = (String) targetingSaveChooser.getSelected();
 				int saveTargeting = Integer.parseInt(saveTargetingParam);
 				
-				theMACP.pickAMode(automousModeFromDS);
+				theMACP.pickAMode(autoModeSelection);
 				
-				SmartDashboard.putString("Chosen Auto Mode", String.valueOf(automousModeFromDS));
+				//theMACP.pickAMode(automousModeFromDS);
 				
 				int targetSolutionFromDS = myTargetingData.getTargetChooserSelection();
 				
@@ -158,7 +162,7 @@ public class Robot extends IterativeRobot {
 				
 				if(update != 0)
 				{
-					theMACP.updateStateParameters(automousModeFromDS);
+					//theMACP.updateStateParameters(automousModeFromDS);
 				}
 				
 				if(save != 0)
@@ -171,7 +175,7 @@ public class Robot extends IterativeRobot {
 				
 				myTargetingData.dump();
 				
-				myNavigation.navxValues();
+				//myNavigation.navxValues();
 				
 			  dataFromVision = theVision.getTheData();
 				
@@ -213,13 +217,17 @@ public class Robot extends IterativeRobot {
 
 			try {
 			
-				int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection(); //controller
+				//int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection(); //controller
+				int automousModeFromDS =  myAutonomousDataHandler.getModeSelectionFromDashboard(); //controller
+				
+			
 				Logger.Log("The chosen One =  " + String.valueOf(automousModeFromDS));
 				theMACP.pickAMode(automousModeFromDS);
 				
 				myDriveTrain.getEncoderTicks();
 				
 				teamColor = DriverStation.getInstance().getAlliance();
+				SmartDashboard.putString("Alliance Color", teamColor.toString());
 				
 			} catch (Exception ex) {
 				Logger.Log("AutononousInit:Something BAD happened");
@@ -241,6 +249,12 @@ public class Robot extends IterativeRobot {
 			
 			myRobot = Robot.this; 
 			
+			/*SmartDashboard.putNumber("Turn P Value", 0.005);
+			SmartDashboard.putNumber("Turn Dead Stop", 0.42);
+			SmartDashboard.putNumber("Turn Max Error", 45);*/
+			
+     // SmartDashboard.putNumber("Chosen Auto Mode", 0);
+			
       SmartDashboard.putBoolean("Output Log to File", true);
 			
 			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
@@ -253,23 +267,25 @@ public class Robot extends IterativeRobot {
 			
 			SmartDashboard.putInt("TargetStateCmdIndex", 0);
 			
-			targetingStateParamsUpdate = new SendableChooser();
+			targetingStateParamsUpdate = new SendableChooser<String>();
 			targetingStateParamsUpdate.addDefault("Don't update", "0");
 			targetingStateParamsUpdate.addObject("Update State Target", "1");
 			
-			targetingSaveChooser = new SendableChooser();
+			targetingSaveChooser = new SendableChooser<String>();
 			targetingSaveChooser.addDefault("Don't Save Target Data", "0");
 			targetingSaveChooser.addObject("Save Target State Data", "1");
 			
 			//Sendable Chooser for the state update function
-			autonomousStateParamsUpdate = new SendableChooser();
+			autonomousStateParamsUpdate = new SendableChooser<String>();
 			autonomousStateParamsUpdate.addDefault("As Received", "0");
 			autonomousStateParamsUpdate.addObject("UPDATE", "1");
 			
 			//Create a new SendableChooser for the save function
-			autonomousSaveChooser = new SendableChooser();
+			autonomousSaveChooser = new SendableChooser<String>();
 			autonomousSaveChooser.addDefault("DON'T Save", "0");
 			autonomousSaveChooser.addObject("Save", "1");
+			
+			aModeSelector = new SendableChooser<String>();
 			
 			SmartDashboard.putData("Edit Target Params", targetingStateParamsUpdate);
 			SmartDashboard.putData("Save Target Data", targetingSaveChooser);
@@ -346,7 +362,7 @@ public class Robot extends IterativeRobot {
 			myAutonomousDataHandler = new AutonomousDataHandler();
 			
 		  //Takes the CommandController in order to create AutonomousStates that work with the control scheme
-			myAutonomousDataHandler.init(theMCP);
+			myAutonomousDataHandler.init(theMCP, aModeSelector);
 			
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
@@ -378,6 +394,9 @@ public class Robot extends IterativeRobot {
   
   public Alliance getAllianceTeam()
   {
+    
+    
+    
     return teamColor; 
   }
 
@@ -385,8 +404,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		//SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
-		//SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
+		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		try {
 			
 			theMACP.process();

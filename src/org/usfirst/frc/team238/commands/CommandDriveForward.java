@@ -54,6 +54,9 @@ public class CommandDriveForward extends AbstractCommand {
 
   public void execute() {
 
+    motorValue = pidCalc(CrusaderCommon.STRAIGHT_P_VALUE, CrusaderCommon.STRAIGHT_DEAD_STOP,
+        targetValue, CrusaderCommon.STRAIGHT_MAX_ERROR);
+    
     double currentYaw = myNavigation.getYaw();
     double yawError = currentYaw - yawValue; // Positive yaw is right turn so
                                              // positive error is right turn
@@ -74,6 +77,8 @@ public class CommandDriveForward extends AbstractCommand {
     
     Logger.Log("FINAL LEFT MOTOR "+ finalMotorValueLeft);
     Logger.Log("FINAL RIGHT MOTOR "+ finalMotorValueRight);
+    
+
     
     myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight); // If
                                                                           // yaw
@@ -237,5 +242,13 @@ public class CommandDriveForward extends AbstractCommand {
    * 
    * return currentOverload; }
    */
-
+  public double getError()
+  {
+    double error;
+    double amountOfTicks = myRobotDrive.getEncoderTicks();
+    
+    error = targetValue - amountOfTicks;
+    
+    return error;
+  }
 }

@@ -13,6 +13,8 @@ public class Serializer {
 
   public boolean spinning;
   
+  double talonSpeed;
+  
   public void init(){
     
     serializerMotor = new CANTalon (CrusaderCommon.SERIALIZER_TALON);
@@ -111,6 +113,15 @@ public class Serializer {
   
   public boolean complete(){
     return true;
+  }
+  
+  public void setTalonSpeed(double speed)
+  {
+    
+    talonSpeed = speed;
+    
+    serializerMotor.set(talonSpeed);
+    
   }
   
 }

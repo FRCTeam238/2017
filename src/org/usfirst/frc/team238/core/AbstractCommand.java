@@ -29,5 +29,34 @@ public class AbstractCommand implements Command {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public double pidCalc(double pValue, double deadStop, double targetValue, double maxError)
+	{
+	  double motorValue = 0;
+	  double error;
+	  
+	  
+	  error = getError();
+	  if(error < maxError)
+	  {
+	    
+	    motorValue = (error * pValue) + deadStop;
+	    
+	  }
+	  else
+	  {
+	    motorValue = 1;
+	  }
+	  
+	  return motorValue;
+	  
+	}
+	
+	public double getError()
+	{
+	  double error = 0;
+	  return error;
+	  
+	}
 
 }
