@@ -94,10 +94,10 @@ public class FuelHandler {
   public void stopEverything()
   {
     
-    theElevator.stopElevator();
+    //theElevator.stopElevator();
     theIntake.IntakeStop();
-    theShooter.stopShooter();
-    theSerializer.stopSpinning();
+    //theShooter.stopShooter();
+    // theSerializer.stopSpinning();
     
   }
   

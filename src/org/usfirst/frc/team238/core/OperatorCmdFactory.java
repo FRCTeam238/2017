@@ -95,20 +95,20 @@ public class OperatorCmdFactory {
 	    Navigation theNavigation, Vision theVision, FuelHandler myFuelHandler,
 	    Climber theClimber, SprocketDoor theSprocket){
 	
-		/*commandStopEverything = new CommandStopEverything(myFuelHandler, theClimber);
-		operatorCommands.put(0, commandStopEverything);*/
+		commandStopEverything = new CommandStopEverything(myFuelHandler, theClimber);
+		operatorCommands.put(0, commandStopEverything);
 	  
 	  /*commandRunShooter = new CommandRunShooter(myFuelHandler);
 		operatorCommands.put(1, commandRunShooter);*/
 		
-		/*commandRunClimber = new CommandStartClimber(theClimber);
-		operatorCommands.put(2, commandRunClimber);*/
+		commandRunClimber = new CommandStartClimber(theClimber);
+		operatorCommands.put(2, commandRunClimber);
 		
 		/*commandStopClimber = new CommandStopClimber(theClimber);
 		operatorCommands.put(3, commandStopClimber);*/
 		
-		/*commandRunIntake = new CommandStartIntake(myFuelHandler.theIntake);
-		operatorCommands.put(4, commandRunIntake);*/
+		commandRunIntake = new CommandStartIntake(myFuelHandler.theIntake);
+		operatorCommands.put(4, commandRunIntake);
 		
 		/*commandOpenHopper = new CommandOpenHopper(myFuelHandler);
 		operatorCommands.put(5, commandOpenHopper);*/
