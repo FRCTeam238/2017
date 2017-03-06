@@ -27,8 +27,8 @@ public class Climber {
    */
   public void StartClimbing(){
     
-    climberMotorOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
-    climberMotorTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+    climberMotorOne.set(-CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+    climberMotorTwo.set(-CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
     
     currentlyClimbing = true;
     
@@ -36,6 +36,14 @@ public class Climber {
       StopClimbing();
     }
     */
+  }
+  
+  public void reverseClimbing()
+  {
+    
+    climberMotorOne.set(-1);
+    climberMotorTwo.set(-1);
+    
   }
   
   /**

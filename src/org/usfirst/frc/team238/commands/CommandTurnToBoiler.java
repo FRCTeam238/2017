@@ -41,12 +41,15 @@ public class CommandTurnToBoiler extends AbstractCommand {
     
     switch(direction){
       
+      //FIX BEFORE WEEK THREE
       case "Left":
-        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
+        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
+        Logger.Log("We Are Going Left");
         break;
      
       case "Right":
-        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
+        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
+        Logger.Log("We Are Going Right");
         break;
         
       default:
@@ -68,6 +71,8 @@ public class CommandTurnToBoiler extends AbstractCommand {
 
     
     teamColor = theRobot.getAllianceTeam();
+    
+    Logger.Log("Team Color is : " + teamColor);
     
     if (teamColor == Alliance.Red)
     {

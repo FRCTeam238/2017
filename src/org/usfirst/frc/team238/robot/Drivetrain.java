@@ -71,7 +71,7 @@ public class Drivetrain {
 		//if((encoderLeft == 0) && (encoderRight > 0))
 		//{
 		  weAreBroken = false;
-		  return -encoderRight;
+		  return encoderRight;
 		/*}
 		else if((encoderLeft < 0) && (encoderRight == 0))
 		{
@@ -152,12 +152,12 @@ public class Drivetrain {
 	
 	public void turnLeft (double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
+		robotMotors.tankDrive(leftJsValue * -1, rightJsValue);
 	}
 	
 	public void turnRight(double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue * -1, rightJsValue);
+		robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
 	}
 	
 	public boolean complete() {

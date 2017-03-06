@@ -48,10 +48,10 @@ public class CommandTrackTarget extends AbstractCommand {
 		//Logger.logDouble("Real Angle Is = ", realAngle);
 		
 		myNavigation.setTargetValues(realAngle);
-		
+		 
 		Logger.Log("Target Value is = "+ realAngle);
 		
-		if(visionAngle[CrusaderCommon.VISION_ANGLE_SLOT] == 127)
+		if(visionAngle[CrusaderCommon.VISION_ANGLE_SLOT] == Double.MAX_VALUE)
 		{
 			//If we don't see the target, a param will tell us which way to look
 			if(pickASide == 0)

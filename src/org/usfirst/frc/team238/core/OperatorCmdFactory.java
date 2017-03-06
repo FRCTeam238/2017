@@ -11,18 +11,16 @@ import org.usfirst.frc.team238.robot.FuelHandler;
 
 import org.usfirst.frc.team238.commands.CommandResetPcm;
 import org.usfirst.frc.team238.commands.CommandResetTestDriveWithButtons;
-import org.usfirst.frc.team238.commands.CommandRunElevator;
+import org.usfirst.frc.team238.commands.CommandReverseClimber;
+import org.usfirst.frc.team238.commands.CommandReverseIntake;
 import org.usfirst.frc.team238.commands.CommandTrackTargetRight;
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
 import org.usfirst.frc.team238.commands.CommandRunShooter;
 import org.usfirst.frc.team238.commands.CommandStartClimber;
 import org.usfirst.frc.team238.commands.CommandStartIntake;
 import org.usfirst.frc.team238.commands.CommandStartSerializer;
-import org.usfirst.frc.team238.commands.CommandStopClimber;
-import org.usfirst.frc.team238.commands.CommandStopElevator;
-import org.usfirst.frc.team238.commands.CommandStopIntake;
-import org.usfirst.frc.team238.commands.CommandStopSerializer;
 import org.usfirst.frc.team238.commands.CommandStopEverything;
+import org.usfirst.frc.team238.commands.CommandAlignToBoiler;
 import org.usfirst.frc.team238.commands.CommandCloseHopper;
 import org.usfirst.frc.team238.commands.CommandCloseSprocket;
 import org.usfirst.frc.team238.commands.CommandDeccrementSerializer;
@@ -44,19 +42,11 @@ public class OperatorCmdFactory {
 
 	CommandStartClimber commandRunClimber;
 	
-	CommandStopClimber commandStopClimber;
+	CommandReverseClimber commandReverseClimber;
 	
 	CommandStartIntake commandRunIntake;
 	
-	CommandStopIntake commandStopIntake;
-	
-	CommandRunElevator commandRunElevator;
-	
-	CommandStopElevator commandStopElevator;
-	
 	CommandStartSerializer commandRunSerializer;
-	
-	CommandStopSerializer commandStopSerializer;
 	
 	CommandStopEverything commandStopEverything;
 	
@@ -82,6 +72,10 @@ public class OperatorCmdFactory {
 	
 	CommandIncrementSerialaizer commandIncSerial;
 	
+	CommandAlignToBoiler commandAlignToBoiler;
+	
+	CommandReverseIntake commandReverseIntake;
+	
 	HashMap <Integer, Command> operatorCommands;
 	
 	
@@ -98,29 +92,44 @@ public class OperatorCmdFactory {
 		commandStopEverything = new CommandStopEverything(myFuelHandler, theClimber);
 		operatorCommands.put(0, commandStopEverything);
 	  
-	  /*commandRunShooter = new CommandRunShooter(myFuelHandler);
-		operatorCommands.put(1, commandRunShooter);*/
+	  commandRunShooter = new CommandRunShooter(myFuelHandler, theVision);
+		operatorCommands.put(1, commandRunShooter);
+		
+    commandAlignToBoiler = new CommandAlignToBoiler(driveTrain, theVision, theNavigation, myFuelHandler);
+    operatorCommands.put(3, commandAlignToBoiler);
+    
+    commandRunIntake = new CommandStartIntake(myFuelHandler.theIntake);
+    operatorCommands.put(6, commandRunIntake);
+    
+    commandReverseIntake = new CommandReverseIntake(myFuelHandler.theIntake);
+    operatorCommands.put(7, commandReverseIntake);
+    
+    commandRunSerializer = new CommandStartSerializer(myFuelHandler.theSerializer);
+    operatorCommands.put(8, commandRunSerializer);
 		
 		commandRunClimber = new CommandStartClimber(theClimber);
-		operatorCommands.put(2, commandRunClimber);
+		operatorCommands.put(10, commandRunClimber);
 		
+		/*commandReverseClimber = new CommandReverseClimber(theClimber);
+		operatorCommands.put(11, commandReverseClimber);
+		*/
 		/*commandStopClimber = new CommandStopClimber(theClimber);
 		operatorCommands.put(3, commandStopClimber);*/
 		
-		commandRunIntake = new CommandStartIntake(myFuelHandler.theIntake);
-		operatorCommands.put(4, commandRunIntake);
+
 		
-		/*commandOpenHopper = new CommandOpenHopper(myFuelHandler);
-		operatorCommands.put(5, commandOpenHopper);*/
+		commandOpenHopper = new CommandOpenHopper(myFuelHandler);
+		operatorCommands.put(11, commandOpenHopper);
 		
+		
+
 		/*commandRunElevator = new CommandRunElevator(myFuelHandler.theElevator);
 		operatorCommands.put(6, commandRunElevator);*/
+/*
+		commandCloseHopper = new CommandCloseHopper(myFuelHandler);
+		operatorCommands.put(7, commandCloseHopper);
+	*/	
 
-		/*commandCloseHopper = new CommandCloseHopper(myFuelHandler);
-		operatorCommands.put(7, commandCloseHopper);*/
-		
-		/*commandRunSerializer = new CommandStartSerializer(myFuelHandler.theSerializer);
-		operatorCommands.put(8, commandRunSerializer);*/
 	
 		/*commandOpenSprocket = new CommandOpenSprocket(theSprocket);
 		operatorCommands.put(9, commandOpenSprocket);*/
@@ -128,6 +137,7 @@ public class OperatorCmdFactory {
 		/*commandTrackTarget = new CommandTrackTarget(driveTrain, theNavigation, theVision);
 		operatorCommands.put(10, commandTrackTarget);*/
 		
+		/*
 		commandIncreaseOne = new CommandIncrementOnePercent(driveTrain, myFuelHandler);
 		operatorCommands.put(3, commandIncreaseOne);
 		
@@ -148,6 +158,7 @@ public class OperatorCmdFactory {
 		
 		commandReset = new CommandResetTestDriveWithButtons(driveTrain, myFuelHandler);
 		operatorCommands.put(10, commandReset);
+		*/
 		
 		return operatorCommands;
 	

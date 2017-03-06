@@ -3,14 +3,18 @@ package org.usfirst.frc.team238.core;
 import java.util.HashMap;
 
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
 import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.commands.CommandDriveForward;
+import org.usfirst.frc.team238.commands.CommandOpenHopper;
+import org.usfirst.frc.team238.commands.CommandRunShooter;
 import org.usfirst.frc.team238.commands.CommandDriveBackwards;
 import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
 import org.usfirst.frc.team238.commands.CommandTurnToBoiler;
+import org.usfirst.frc.team238.commands.CommandCloseHopper;
 import org.usfirst.frc.team238.commands.CommandDelay;
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
 import org.usfirst.frc.team238.commands.CommandTurnAwayFromBoiler;
@@ -25,6 +29,9 @@ public class AutonomousCmdFactory {
 	CommandTrackTarget trackTargetCommand;
 	CommandTurnAwayFromBoiler turnAwayFromBoiler;
 	CommandTurnToBoiler turnToBoiler;
+	CommandRunShooter runShooter;
+	CommandOpenHopper openHopper;
+	CommandCloseHopper closeHopper;
 	
 	HashMap <String, Command> autonomousCommands;
 	//TODO change that static 10
@@ -33,7 +40,8 @@ public class AutonomousCmdFactory {
 	}
 	
 	
-	public HashMap<String, Command> createAutonomousCommands(Drivetrain robotDrive, Navigation myNavigation, Vision myVision, Robot myRobot){
+	public HashMap<String, Command> createAutonomousCommands(Drivetrain robotDrive, Navigation myNavigation, Vision myVision,
+	        Robot myRobot,FuelHandler theFuelHandler){
 		
 		autoDriveForward = new CommandDriveForward(robotDrive, myNavigation);
 		autonomousCommands.put("CommandDriveForward", autoDriveForward);
@@ -51,6 +59,12 @@ public class AutonomousCmdFactory {
 		autonomousCommands.put("CommandTurnAwayFromBoiler", turnAwayFromBoiler);
 		turnToBoiler = new CommandTurnToBoiler(robotDrive, myNavigation, myRobot);
 		autonomousCommands.put("CommandTurnToBoiler", turnToBoiler);
+		runShooter = new CommandRunShooter(theFuelHandler, myVision);
+		autonomousCommands.put("CommandRunShooter", runShooter);
+		openHopper = new CommandOpenHopper(theFuelHandler);
+		autonomousCommands.put("CommandOpenHopper", openHopper);
+		closeHopper = new CommandCloseHopper(theFuelHandler);
+		autonomousCommands.put("CommandCloseHopper", closeHopper);
 		
 		return autonomousCommands;
 		

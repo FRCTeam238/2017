@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
 	FuelHandler theFuelHandler;
 	Climber theClimber;
 	SprocketDoor theSprocket;
-  
+  Logger myLogger;
   DriverStation myDriverStation;
   Alliance myAllianceTeam;
 	
@@ -73,15 +73,13 @@ public class Robot extends IterativeRobot {
 	private AutonomousDataHandler myAutonomousDataHandler;
 	private TargetingDataHandler myTargetingData;
 	private AutonomousController theMACP;
+	
 	@SuppressWarnings("rawtypes")
   SendableChooser<String> autonomousChooser;
   SendableChooser<String> autonomousSaveChooser;
 	SendableChooser<String> targetingStateParamsUpdate;
   SendableChooser<String> targetingSaveChooser;
   SendableChooser<String> aModeSelector;
-  
-	Logger myLogger;
-	@SuppressWarnings("rawtypes")
   SendableChooser<String> autonomousStateParamsUpdate;
 	
 	
@@ -92,10 +90,11 @@ public class Robot extends IterativeRobot {
 	//This holds the names of each mode
 	private ArrayList<String> AutoModeNames;
 	
-	 Alliance teamColor;
+	Alliance teamColor;
 	 
 	public void disabledInit() {
 		try {
+		  
 			// only use checkForSmartDashboardChanges function in init methods
 			// or you will smoke the roborio into a useless pile of silicon
 			//checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
@@ -253,7 +252,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("Turn Dead Stop", 0.42);
 			SmartDashboard.putNumber("Turn Max Error", 45);*/
 			
-     // SmartDashboard.putNumber("Chosen Auto Mode", 0);
+      SmartDashboard.putNumber("Chosen Auto Mode", 0);
 			
       SmartDashboard.putBoolean("Output Log to File", true);
 			
@@ -313,8 +312,8 @@ public class Robot extends IterativeRobot {
 			rightRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT);
 			leftRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);
 			
-			theFuelHandler = new FuelHandler();
-			theFuelHandler.init();
+			//theFuelHandler = new FuelHandler();
+			//theFuelHandler.init();
 			
 			myRobotDrive = new RobotDrive(leftFrontDrive,rightFrontDrive);
 			myRobotDrive.setSafetyEnabled(false);
@@ -373,9 +372,10 @@ public class Robot extends IterativeRobot {
       myTargetingData = new TargetingDataHandler();
       myTargetingData.init(theMCP);
 			
-      
+      SmartDashboard.putNumber("TESTING RPM", 1625);
       
       //SmartDashboard.putString("Team Side :",getAllianceTeam());
+      SmartDashboard.putNumber("SHOOTER RPM",0);
       
 			Logger.Log("Fully Initialized");
 

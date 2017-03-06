@@ -218,11 +218,9 @@ public class TargetingDataHandler implements AutonomousState{
     				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
     					e.printStackTrace();
     				}
-            		//Probably don't need this
-            		//autonomousModeStates.add(arg0);
-            	}
+          }
             	targetSolutionsIteratorIndexCounter++;
-            }
+        }
 			
 			TargetSolutionFile.close();
 			

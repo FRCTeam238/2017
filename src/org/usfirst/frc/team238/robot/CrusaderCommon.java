@@ -23,11 +23,11 @@ public class CrusaderCommon {
 
 
 	/*DO NOT NUKE*/
-	public static final boolean SHIFTER_HIGH_GEAR = true;
-	public static final boolean SHIFTER_LOW_GEAR = false;
+	public static final boolean SHIFTER_HIGH_GEAR = false;
+	public static final boolean SHIFTER_LOW_GEAR = true;
 	
 	public static final double DRIVETRAIN_MAX_RPM = 1500;
-	public static final double SHOOTER_MAX_RPM = 1500;
+	public static final double SHOOTER_MAX_RPM = SmartDashboard.getNumber("SHOOTER RPM", 0);//1500;
 	
 	public static final double AUTO_JSON_CREATOR_PARAM_LIMIT = 4;
 	
@@ -48,7 +48,7 @@ public class CrusaderCommon {
 	public static final int AUTO_DRIVE_LIMIT = 15000;
 	
 	//Intake Motor Values
-	public final static double SERIALIZER_MOTOR_ON = 1.0;
+	public final static double SERIALIZER_MOTOR_ON = 0.77;
 	public final static double SERIALIZER_MOTOR_OFF = 0;
 	
 	public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
@@ -100,10 +100,10 @@ public class CrusaderCommon {
 	public static final int TEST_COUNT_CONDITION = 150;
 	
 	//FPID VALUES FOR SHOOTER
-	public final static double SHOOTER_TALON_F_VALUE = 0;
-	public final static double SHOOTER_TALON_P_VALUE = 0;
+	public final static double SHOOTER_TALON_F_VALUE = 0.0480;
+	public final static double SHOOTER_TALON_P_VALUE = 0.2;
 	public final static double SHOOTER_TALON_I_VALUE = 0;
-	public final static double SHOOTER_TALON_D_VALUE = 0;
+	public final static double SHOOTER_TALON_D_VALUE = 1.333;
 
 	public final static double NAVIGATION_P_VALUE = 0.1;
 	public final static double NAVIGATION_MAX_MOTOR_INCREMENT = 0.2;
@@ -113,7 +113,7 @@ public class CrusaderCommon {
 	public final static double DRIVE_FORWARD_I_VALUE = 0;
 	public final static double DRIVE_FORWARD_MAX_YAW_PERCENT = 0.1;
 	
-	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 4983;//3900;
+	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 3900;//4983;//3900;
 	
 	public final static int SONIC_SENSOR_ACTIVATION_DISTANCE = 6840;
 	public final static int SONIC_INPUT_PORT = 8;
@@ -124,11 +124,20 @@ public class CrusaderCommon {
 	public final static double SHOOTER_VISION_DEADZONE = 1;
 	
 	public final static double TURN_P_VALUE = 0.005;//SmartDashboard.getNumber("Turn P Value",0.005);//0.005;
-	public final static double TURN_DEAD_STOP = 0.5;//SmartDashboard.getNumber("Turn Dead Stop", 0.42);//0.42;
+	public final static double TURN_DEAD_STOP = 0.35;//SmartDashboard.getNumber("Turn Dead Stop", 0.42);//0.42;
 	public final static double TURN_MAX_ERROR = 45;//SmartDashboard.getNumber("Turn Max Error",45);//45;
 	public final static double STRAIGHT_P_VALUE = 0.000055;//0.00003512;
 	public final static double STRAIGHT_DEAD_STOP = 0.39;
 	public final static double STRAIGHT_MAX_ERROR = 9966;
+	
+	public final static int SHOOTER_COUNT_DELAY = 5;
+	public final static int SHOOTER_PROCESSING_COUNT=10;
+	
+	public final static int ACCEPTABLE_RPM_ERROR = 1500;
+	
+	public final static double RING_LIGHT_DELAY = 0.25;
+	public final static double ALIGN_IMAGE_DELAY = 0.25;
+	public final static double ALIGN_ANGLE_BUFFER = 2;
 	
 	
 }

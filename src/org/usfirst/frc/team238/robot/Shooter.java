@@ -2,11 +2,14 @@ package org.usfirst.frc.team238.robot;
 
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.VelocityMeasurementPeriod;
 import com.ctre.CANTalon;
 import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Hood;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Solenoid;
+
 
 
 /**THIS IS THE CLASS THAT THE SHOOTER MECHANISM IS USING
@@ -19,6 +22,8 @@ public class Shooter {
   
   Vision shooterVision;
   
+  Solenoid shooterRingLight;
+  
   Hood theHood;
   
   public double talonSpeed;
@@ -26,6 +31,7 @@ public class Shooter {
   int count = 0;
   
   int encoderPosition;
+  public boolean isRingLightOn = false;
   
   public Shooter() {
     // TODO Auto-generated constructor stub
@@ -41,13 +47,16 @@ public class Shooter {
    shooterVision = new Vision();
    
    theHood = new Hood();
+   shooterRingLight = new Solenoid(3);
    
    //sets up slave talon to follow master
    shooterSlave.changeControlMode(TalonControlMode.Follower);
    shooterSlave.set(CrusaderCommon.SHOOTER_MASTER_TALON);
    
    //sets the feedback device to Quad Encoders
-   shooterMaster.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+   shooterMaster.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+   
+   
    
    //configures master talon to use PID values
    configShooterTalons(shooterMaster);
@@ -78,23 +87,33 @@ public class Shooter {
   }
   
   //Moves the shooter motors
-  public void execute()
+  public void execute(double shooterRPM)
   {
+    shooterMaster.enableControl();
+    //shooterSlave.enableControl();
     
-    shooterMaster.set(1/*CrusaderCommon.SHOOTER_MAX_RPM*/);
+    shooterMaster.set(shooterRPM);//(CrusaderCommon.SHOOTER_MAX_RPM);
     
   }
   
   public void stopShooter()
   {
     
-    shooterMaster.set(0);
+    //THIS LINE DOES NOT WORK DONT KNOW WHY!!!!!!!!
+    //shooterMaster.set(0);
+    shooterMaster.disableControl();
+    //shooterSlave.disableControl();
+    //Logger.Log("We Are STOPPING!!!!!!!");
+    shooterRingLight.set(false); 
+    isRingLightOn = false;
     
   }
   
   //configures the talons for velocity tuning code
   public void configShooterTalons(CANTalon talon)
   {
+    
+    talon.reverseSensor(true);
     
     /*This sets the voltage range the talon can use; should be 
      *set at +12.0f and -12.0f*/
@@ -103,16 +122,17 @@ public class Shooter {
      
      /*This sets the FPID values to correct error in the motor's velocity
       * */
-    /* talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
+     talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
      talon.setF(CrusaderCommon.SHOOTER_TALON_F_VALUE); //.3113);
      talon.setP(CrusaderCommon.SHOOTER_TALON_P_VALUE); //.8);//064543);
      talon.setI(CrusaderCommon.SHOOTER_TALON_I_VALUE); 
-     talon.setD(CrusaderCommon.SHOOTER_TALON_D_VALUE);*/
+     talon.setD(CrusaderCommon.SHOOTER_TALON_D_VALUE);
      
-     
+     talon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
+     talon.SetVelocityMeasurementWindow(20);
      
      //this set the talon to use speed mode instead of voltage mode
-     talon.changeControlMode(TalonControlMode.PercentVbus);
+     talon.changeControlMode(TalonControlMode.Speed);
      
     
   }
@@ -146,19 +166,21 @@ public class Shooter {
     }
     else
     {
-      return false;
+      return true;
     }
     
   }
   
-  public boolean isShooterAtSpeed()
+  public boolean isShooterAtSpeed(double shooterRPM)
   {
     
     double talonMasterSpeed;
-    
+    double talonMasterError;
     talonMasterSpeed = shooterMaster.getSpeed();
+    talonMasterError = shooterMaster.getError();
     
-    if(talonMasterSpeed == CrusaderCommon.SHOOTER_MAX_RPM)
+    
+    if(talonMasterError <= CrusaderCommon.ACCEPTABLE_RPM_ERROR)
     {
       
       return true;
@@ -187,7 +209,7 @@ public class Shooter {
       if(count < CrusaderCommon.TEST_COUNT_CONDITION)
       {
         
-        execute();
+        execute(3500);
         
         Logger.Log("Shooter Encoder Position"+ encoderPosition);
         
@@ -215,6 +237,14 @@ public class Shooter {
     talonSpeed = speed;
     
     shooterMaster.set(talonSpeed);
+    
+  }
+  
+  public void turnOnRingLight()
+  {
+    
+   shooterRingLight.set(true); 
+   isRingLightOn = true;
     
   }
   

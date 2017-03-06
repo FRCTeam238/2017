@@ -1,6 +1,7 @@
 package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
+import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
@@ -36,14 +37,19 @@ public class CommandTurnAwayFromBoiler extends AbstractCommand {
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
         targetValue, CrusaderCommon.TURN_MAX_ERROR);
     
+    Logger.Log("Calculated Motor Value is " + calculatedMotorValue);
+    
     switch(direction){
       
-      case "Left":
+      //THIS NEEDS TO BE FIXED
+      case "Right":
         myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
+        Logger.Log("We Are Turning Right");
         break;
      
-      case "Right":
+      case "Left":
         myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
+        Logger.Log("We Are Turning Left");
         break;
         
       default:

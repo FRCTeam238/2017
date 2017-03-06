@@ -29,6 +29,8 @@ public class FuelHandler {
   int btncounterDec;
   double talonSpeed = 0;
   double serializerSpeed = 0;
+  int count = 0;
+  double delayMotorStart = 0;
   
   public void init(){
     
@@ -62,32 +64,44 @@ public class FuelHandler {
   
   /**
    *  This is the function that has the logic for shooting*/
-  public void shoot()
+  public void shoot(double shooterRPM,double serializerDelay)
   {
+    double counterCurrentTime;
+    double delayCount;
     
-    theShooter.execute();
-    theSerializer.runSerializer();
-        //check to see if we are aligned with the targer
-       /* if(theShooter.targetAcquired())
+      //runs the shooter motors
+      theShooter.execute(shooterRPM);
+      
+      //Checks to see if the shooter is at speed before firing      
+      if (delayMotorStart == 0)
+      {
+        delayMotorStart = System.currentTimeMillis();
+      }
+
+      counterCurrentTime = System.currentTimeMillis();
+      delayCount = counterCurrentTime - delayMotorStart;
+      
+      //if(theShooter.isShooterAtSpeed(shooterRPM))
+      //{
+        //runs the serializer if we are not experiencing a current overload
+        
+        Logger.Log("Delay Count Is : " + delayCount);
+        Logger.Log("SerializerDelay Is : "+ serializerDelay);
+        
+        boolean delayTimer = delayCount >= serializerDelay;
+        
+        
+        if(delayTimer)
         {
-          //runs the shooter motors
-          theShooter.execute();
-          //Checks to see if the shooter is at speed before firing
-          if(theShooter.isShooterAtSpeed())
-          {
-            //runs the elevator
-            theElevator.runElevator();
-            //makes sure the elevator is on before turning on the serializer
-            if(theElevator.elevatorInUse)
-            {
-              
-              //runs the serializer if we are not experiencing a current overload
-              theSerializer.runSerializer();
-              
-            }
-            
-          }
-        }*/
+          
+          theSerializer.runSerializer();
+          Logger.Log("We Are Serializing!");
+          
+        }
+        
+          
+      //}
+    //}
   }
   
   //Stops  all motors
@@ -96,8 +110,11 @@ public class FuelHandler {
     
     //theElevator.stopElevator();
     theIntake.IntakeStop();
-    //theShooter.stopShooter();
-    // theSerializer.stopSpinning();
+    theShooter.stopShooter();
+    theSerializer.stopSpinning();
+    
+    delayMotorStart = 0;
+   
     
   }
   
@@ -195,6 +212,29 @@ public class FuelHandler {
     
     Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
     Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
+    
+    
+  }
+  
+  public boolean isRingLightOn()
+  {
+    
+    if(theShooter.isRingLightOn == true)
+    {
+      
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+    
+  }
+  
+  public void turnOnRingLight()
+  {
+    
+    theShooter.turnOnRingLight();
     
     
   }

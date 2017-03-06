@@ -7,6 +7,8 @@ public class CommandOpenHopper implements Command {
 
   FuelHandler theFuelHandler;
   
+  boolean isDone = false;
+  
   public CommandOpenHopper(FuelHandler theFuelHandler) {
     // TODO Auto-generated constructor stub
     this.theFuelHandler = theFuelHandler;
@@ -16,12 +18,13 @@ public class CommandOpenHopper implements Command {
   public void execute() {
     // TODO Auto-generated method stub
     theFuelHandler.openHopper();
+    isDone = true;
   }
 
   @Override
   public void prepare() {
     // TODO Auto-generated method stub
-
+    isDone = false;
   }
 
   @Override
@@ -33,7 +36,7 @@ public class CommandOpenHopper implements Command {
   @Override
   public boolean done() {
     // TODO Auto-generated method stub
-    return false;
+    return isDone;
   }
 
 }

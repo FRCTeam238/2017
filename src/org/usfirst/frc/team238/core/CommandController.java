@@ -34,7 +34,7 @@ public class CommandController {
 		// populate the command lists
 		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber, theSprocket);
 		setupDriverCommands(myRobotDrive, driveTrain);
-		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot);
+		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot, theFuelHandler);
 		
 		commandValue = new HashMap<Integer, Command>(8);
 	}
@@ -47,11 +47,11 @@ public class CommandController {
 	}
 	
 	//loads all the autonomous commands from the auto factory
-	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, Robot myRobot)
+	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, Robot myRobot,FuelHandler theFuelHandler)
 	{
 		theRouge = new AutonomousCmdFactory();
 		theRouge.init();
-		autoCmdList = theRouge.createAutonomousCommands(driveTrain, myNavigation, myVision, myRobot);
+		autoCmdList = theRouge.createAutonomousCommands(driveTrain, myNavigation, myVision, myRobot,theFuelHandler);
 		
 	}
 	

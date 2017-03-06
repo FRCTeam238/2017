@@ -78,6 +78,51 @@ public class Vision {
 		
 	}
 	
+	public double getShooterDistance()
+	{
+	  
+	  double shooterDistance;
+	  
+	  shooterDistance = SmartDashboard.getNumber("Shooter Distance",0);
+	  
+	  return shooterDistance;
+	  
+	  
+	}
+	
+	public double shooterHorizontal()
+	{
+	  double horizontal;
+	  
+	  horizontal = SmartDashboard.getNumber("Shooter Horizontal",0);
+	  
+	  return horizontal;
+	  
+	}
+	
+	public double shooterVertical()
+	{
+	  
+	  double vertical;
+	  
+	  vertical = SmartDashboard.getNumber("Shooter Vertical",0);
+	  
+	  return vertical;
+	  
+	}
+	
+	public double getBoilerAngle()
+	{
+	  
+	  double boilerAngle;
+	  
+	  boilerAngle = 0;//SmartDashboard.getNumber("Boiler Angle",0);
+	  
+	  return boilerAngle;
+	  
+	  
+	}
+	
 	
 	
 }

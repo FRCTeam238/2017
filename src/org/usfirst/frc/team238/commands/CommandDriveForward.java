@@ -54,6 +54,8 @@ public class CommandDriveForward extends AbstractCommand {
 
   public void execute() {
 
+    //myRobotDrive.shiftLow();
+    
     motorValue = pidCalc(CrusaderCommon.STRAIGHT_P_VALUE, CrusaderCommon.STRAIGHT_DEAD_STOP,
         targetValue, CrusaderCommon.STRAIGHT_MAX_ERROR);
     
