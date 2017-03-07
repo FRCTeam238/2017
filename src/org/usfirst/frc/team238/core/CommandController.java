@@ -7,7 +7,6 @@ import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
-import org.usfirst.frc.team238.robot.SprocketDoor;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import org.usfirst.frc.team238.robot.FuelHandler;
@@ -29,10 +28,10 @@ public class CommandController {
 	
 	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ 
 	    Drivetrain driveTrain, Navigation myNavigation, Vision myVision, 
-	    FuelHandler theFuelHandler, Climber myClimber, SprocketDoor theSprocket, Robot myRobot)
+	    FuelHandler theFuelHandler, Climber myClimber, Robot myRobot)
 	{
 		// populate the command lists
-		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber, theSprocket);
+		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot, theFuelHandler);
 		
@@ -78,13 +77,13 @@ public class CommandController {
 	}
 	
 	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision,
-	    FuelHandler theFuelHandler, Climber theClimber, SprocketDoor theSprocket)
+	    FuelHandler theFuelHandler, Climber theClimber)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
 		
 		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision, 
-		                                              theFuelHandler, theClimber, theSprocket);
+		                                              theFuelHandler, theClimber);
 	}
 
 	/*

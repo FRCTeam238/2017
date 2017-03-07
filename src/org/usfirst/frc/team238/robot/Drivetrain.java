@@ -142,22 +142,31 @@ public class Drivetrain {
 		
 	  /*the joystick value is multiplied by a target RPM so the 
 	  *robot works with the velocity tuning code*/
-		robotMotors.tankDrive(-leftMotorValue, -rightMotorValue);	
+		//robotMotors.tankDrive(-leftMotorValue, -rightMotorValue);
+		leftFrontDrive.set(-leftMotorValue);
+    rightFrontDrive.set(-rightMotorValue);
 	}
 	
 	public void driveBackwards(double leftMotorValue , double rightMotorValue)  {
 		
-		robotMotors.tankDrive(leftMotorValue, rightMotorValue);
+		//robotMotors.tankDrive(leftMotorValue, rightMotorValue);
+    leftFrontDrive.set(leftMotorValue);
+    rightFrontDrive.set(rightMotorValue);
 	}
 	
 	public void turnLeft (double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue * -1, rightJsValue);
+		//robotMotors.tankDrive(leftJsValue * -1, rightJsValue);
+
+    leftFrontDrive.set(-leftJsValue);
+    rightFrontDrive.set(rightJsValue);
 	}
 	
 	public void turnRight(double leftJsValue, double rightJsValue){
 		
-		robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
+		//robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
+    leftFrontDrive.set(leftJsValue);
+    rightFrontDrive.set(-rightJsValue);
 	}
 	
 	public boolean complete() {

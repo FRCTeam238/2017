@@ -15,7 +15,6 @@ import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Climber;
-import org.usfirst.frc.team238.robot.SprocketDoor;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Preferences;
@@ -62,7 +61,6 @@ public class Robot extends IterativeRobot {
 	Shooter theShooter;
 	FuelHandler theFuelHandler;
 	Climber theClimber;
-	SprocketDoor theSprocket;
   Logger myLogger;
   DriverStation myDriverStation;
   Alliance myAllianceTeam;
@@ -347,15 +345,12 @@ public class Robot extends IterativeRobot {
 			theClimber = new Climber();
 			theClimber.init();
 			
-			theSprocket = new SprocketDoor();
-			theSprocket.init();
-			
 			myDriveTrain.resetEncoders();
 			
 			//Controller object for telop
 			theMCP = new CommandController();
 			theMCP.init(myRobotDrive, myDriveTrain, myNavigation, theVision, 
-			    theFuelHandler, theClimber, theSprocket, myRobot);
+			    theFuelHandler, theClimber, myRobot);
 			
 			//The handler that handles everything JSON related 
 			myAutonomousDataHandler = new AutonomousDataHandler();

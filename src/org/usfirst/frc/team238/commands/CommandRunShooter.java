@@ -5,7 +5,6 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Shooter;
 import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
-import org.usfirst.frc.team238.robot.Elevator;
 import org.usfirst.frc.team238.robot.Vision;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -15,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CommandRunShooter extends AbstractCommand {
   
   FuelHandler myFuelHandler;
-  Elevator myElevator;
   Vision myVision;
   
   double shooterSpeed;
@@ -150,7 +148,7 @@ public class CommandRunShooter extends AbstractCommand {
     if(elapsed >= maxShootTime)
     {
       myFuelHandler.shoot(0, 0);
-      myFuelHandler.stopEverything();+
+      myFuelHandler.stopEverything();
       return true;
     }
     else

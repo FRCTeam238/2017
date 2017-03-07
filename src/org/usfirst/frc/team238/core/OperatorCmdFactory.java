@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
-import org.usfirst.frc.team238.robot.SprocketDoor;
 import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.robot.FuelHandler;
 
@@ -22,10 +21,8 @@ import org.usfirst.frc.team238.commands.CommandStartSerializer;
 import org.usfirst.frc.team238.commands.CommandStopEverything;
 import org.usfirst.frc.team238.commands.CommandAlignToBoiler;
 import org.usfirst.frc.team238.commands.CommandCloseHopper;
-import org.usfirst.frc.team238.commands.CommandCloseSprocket;
 import org.usfirst.frc.team238.commands.CommandDeccrementSerializer;
 import org.usfirst.frc.team238.commands.CommandOpenHopper;
-import org.usfirst.frc.team238.commands.CommandOpenSprocket;
 import org.usfirst.frc.team238.commands.CommandIncrementTestDriveWithButtons;
 import org.usfirst.frc.team238.commands.CommandIncrementOnePercent;
 import org.usfirst.frc.team238.commands.CommandIncrementSerialaizer;
@@ -53,10 +50,6 @@ public class OperatorCmdFactory {
 	CommandOpenHopper commandOpenHopper;
 	
 	CommandCloseHopper commandCloseHopper;
-	
-	CommandOpenSprocket commandOpenSprocket;
-	
-	CommandCloseSprocket commandCloseSprocket;
 	
 	CommandIncrementTestDriveWithButtons commandIncreaseTen;
 	
@@ -87,7 +80,7 @@ public class OperatorCmdFactory {
 	
 	public HashMap<Integer, Command> createOperatorCommands(Drivetrain driveTrain,
 	    Navigation theNavigation, Vision theVision, FuelHandler myFuelHandler,
-	    Climber theClimber, SprocketDoor theSprocket){
+	    Climber theClimber){
 	
 		commandStopEverything = new CommandStopEverything(myFuelHandler, theClimber);
 		operatorCommands.put(0, commandStopEverything);
