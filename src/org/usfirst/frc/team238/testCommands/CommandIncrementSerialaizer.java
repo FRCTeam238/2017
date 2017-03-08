@@ -1,4 +1,4 @@
-package org.usfirst.frc.team238.commands;
+package org.usfirst.frc.team238.testCommands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
@@ -11,7 +11,7 @@ import org.usfirst.frc.team238.robot.Navigation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandDeccrementSerializer extends AbstractCommand  {
+public class CommandIncrementSerialaizer extends AbstractCommand  {
 
 	Drivetrain myRobotDrive;
 	FuelHandler myFuelHandler;
@@ -20,10 +20,9 @@ public class CommandDeccrementSerializer extends AbstractCommand  {
 	double targetValue;
 	double newTargetYaw;
 	int count;
-  boolean weIncreased = false;
-  int increaseCount = 0;
+	int increaseCount = 0;
 	
-	public CommandDeccrementSerializer(Drivetrain theRobotDrive, FuelHandler theFuelHandler)
+	public CommandIncrementSerialaizer(Drivetrain theRobotDrive, FuelHandler theFuelHandler)
 	{
 		
 		this.myRobotDrive = theRobotDrive;
@@ -41,21 +40,15 @@ public class CommandDeccrementSerializer extends AbstractCommand  {
 		//Using -motorValues to spin the left motors backwards
 		//If that's how it works lol Maybe change this
 		//Logger.Log("!!!!!DEBUG!!!!!!!!!!!!   " + motorValue);
-		
-
-		
-		if(increaseCount > 40)
-		{
-		  myFuelHandler.serialDecreaseTen();
-		  increaseCount = 0;
-		}
-		else
-		{
-	    increaseCount++;
-		}
-		//int encoder = myRobotDrive.getEncoderTicks();
-		//Logger.Log("encoder "+ encoder);
-		
+    if(increaseCount > 40)
+    {
+      myFuelHandler.serialIncreaseTen();
+      increaseCount = 0;
+    }
+    else
+    {
+      increaseCount++;
+    }
 	}
 	
 	public void setParams(String params[])

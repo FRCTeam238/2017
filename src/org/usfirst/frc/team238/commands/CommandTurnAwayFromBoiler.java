@@ -43,12 +43,12 @@ public class CommandTurnAwayFromBoiler extends AbstractCommand {
       
       //THIS NEEDS TO BE FIXED
       case "Right":
-        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
+        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
         Logger.Log("We Are Turning Right");
         break;
      
       case "Left":
-        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
+        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
         Logger.Log("We Are Turning Left");
         break;
         

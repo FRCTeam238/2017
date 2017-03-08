@@ -77,10 +77,8 @@ public class CommandDriveForward extends AbstractCommand {
     double finalMotorValueLeft = motorValue - yawCorrection;
     double finalMotorValueRight = motorValue + yawCorrection;
     
-    Logger.Log("FINAL LEFT MOTOR "+ finalMotorValueLeft);
-    Logger.Log("FINAL RIGHT MOTOR "+ finalMotorValueRight);
-    
-
+    Logger.Log("CommandDriveForward: leftMotorValue = "
+    + finalMotorValueLeft + "/n"+"RightMotorValue = " + finalMotorValueRight);
     
     myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight); // If
                                                                           // yaw

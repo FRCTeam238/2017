@@ -2,16 +2,16 @@ package org.usfirst.frc.team238.core;
 
 import java.util.HashMap;
 
-import org.usfirst.frc.team238.commands.CommandDeccrementTestDriveWithButtons;
-import org.usfirst.frc.team238.commands.CommandIncrementTestDriveWithButtons;
-import org.usfirst.frc.team238.commands.CommandDecrementOnePercent;
-import org.usfirst.frc.team238.commands.CommandIncrementOnePercent;
-import org.usfirst.frc.team238.commands.CommandResetTestDriveWithButtons;
 import org.usfirst.frc.team238.commands.CommandShiftHigh;
 import org.usfirst.frc.team238.commands.CommandShiftLow;
 import org.usfirst.frc.team238.commands.CommandTankDrive;
 import org.usfirst.frc.team238.commands.NoDriverCommand;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.testCommands.CommandDeccrementTestDriveWithButtons;
+import org.usfirst.frc.team238.testCommands.CommandDecrementOnePercent;
+import org.usfirst.frc.team238.testCommands.CommandIncrementOnePercent;
+import org.usfirst.frc.team238.testCommands.CommandIncrementTestDriveWithButtons;
+import org.usfirst.frc.team238.testCommands.CommandResetTestDriveWithButtons;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 

@@ -1,4 +1,4 @@
-package org.usfirst.frc.team238.commands;
+package org.usfirst.frc.team238.testCommands;
 
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.Intake;

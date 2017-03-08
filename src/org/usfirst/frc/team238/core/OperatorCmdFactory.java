@@ -6,13 +6,16 @@ import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Vision;
+import org.usfirst.frc.team238.testCommands.CommandDeccrementSerializer;
+import org.usfirst.frc.team238.testCommands.CommandDeccrementTestDriveWithButtons;
+import org.usfirst.frc.team238.testCommands.CommandDecrementOnePercent;
+import org.usfirst.frc.team238.testCommands.CommandIncrementOnePercent;
+import org.usfirst.frc.team238.testCommands.CommandIncrementSerialaizer;
+import org.usfirst.frc.team238.testCommands.CommandIncrementTestDriveWithButtons;
+import org.usfirst.frc.team238.testCommands.CommandResetTestDriveWithButtons;
+import org.usfirst.frc.team238.testCommands.CommandReverseIntake;
 import org.usfirst.frc.team238.robot.FuelHandler;
 
-import org.usfirst.frc.team238.commands.CommandResetPcm;
-import org.usfirst.frc.team238.commands.CommandResetTestDriveWithButtons;
-import org.usfirst.frc.team238.commands.CommandReverseClimber;
-import org.usfirst.frc.team238.commands.CommandReverseIntake;
-import org.usfirst.frc.team238.commands.CommandTrackTargetRight;
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
 import org.usfirst.frc.team238.commands.CommandRunShooter;
 import org.usfirst.frc.team238.commands.CommandStartClimber;
@@ -21,25 +24,15 @@ import org.usfirst.frc.team238.commands.CommandStartSerializer;
 import org.usfirst.frc.team238.commands.CommandStopEverything;
 import org.usfirst.frc.team238.commands.CommandAlignToBoiler;
 import org.usfirst.frc.team238.commands.CommandCloseHopper;
-import org.usfirst.frc.team238.commands.CommandDeccrementSerializer;
 import org.usfirst.frc.team238.commands.CommandOpenHopper;
-import org.usfirst.frc.team238.commands.CommandIncrementTestDriveWithButtons;
-import org.usfirst.frc.team238.commands.CommandIncrementOnePercent;
-import org.usfirst.frc.team238.commands.CommandIncrementSerialaizer;
-import org.usfirst.frc.team238.commands.CommandDeccrementTestDriveWithButtons;
-import org.usfirst.frc.team238.commands.CommandDecrementOnePercent;
 
 public class OperatorCmdFactory {
 
-	CommandResetPcm commandResetPcm;
-	
 	CommandTrackTarget commandTrackTarget;
 	
 	CommandRunShooter commandRunShooter;
 
 	CommandStartClimber commandRunClimber;
-	
-	CommandReverseClimber commandReverseClimber;
 	
 	CommandStartIntake commandRunIntake;
 	

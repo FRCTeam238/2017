@@ -19,38 +19,38 @@ public class Drivetrain {
 	CANTalon leftFrontDrive;
 	CANTalon rightFrontDrive;
 
+	//Encoder tick variables
 	int encoderLeft;
 	int encoderRight;
 	
+	//A function that 
 	int counter;
+	
+	//Test function variables
 	double protoCounter;
 	int delayCounter;
-	// need turn left turn right
 	int lastBtnPressed;
 	int scalefactor;
 	int scalefactorOnePercent;
 	int btncounter;
 	int btncounterDec;
 	
-	boolean weAreBroken = false;
+	
 	
 	public Drivetrain(RobotDrive theRobotDrive)
 	{
 		this.robotMotors = theRobotDrive;
 	}
 	
+	
+	
 	public void init(CANTalon leftFrontDriveTalon, CANTalon rightFrontDriveTalon)
 	{ 
-		//Have to find the values for Encoders- HS
+
 		leftFrontDrive = leftFrontDriveTalon;
 		rightFrontDrive = rightFrontDriveTalon;
 		shifterSolenoid = new Solenoid (0);
 		
-		lastBtnPressed = 0;
-		protoCounter = 0;
-		scalefactor = 5;
-		scalefactorOnePercent = 1;
-		counter = 0;
 		leftFrontDrive.configEncoderCodesPerRev(256);
 		rightFrontDrive.configEncoderCodesPerRev(256);
 		
@@ -59,65 +59,82 @@ public class Drivetrain {
 		
 		btncounter = 0;
 		btncounterDec = 0;
+		lastBtnPressed = 0;
+		protoCounter = 0;
+		scalefactor = 5;
+		scalefactorOnePercent = 1;
+		counter = 0;
 		
 	}
 	
+	
+	/**
+	 * Gets the average number of encoder ticks and 
+	 * only returns one encoder if one of them returns 0
+	 * @return
+	 */
 	public int getEncoderTicks()
 	{
-		int encoderAverage;
+	  
+	  //What if we're going backwards?
+	  //What if an encoder is not 0 but hasn't changed?
+	  
+	  int encoderNumber=0;
+		int encoderAverage=0;
+		
 		encoderLeft = leftFrontDrive.getEncPosition();
 		encoderRight = rightFrontDrive.getEncPosition();
 		
-		//if((encoderLeft == 0) && (encoderRight > 0))
-		//{
-		  weAreBroken = false;
-		  return encoderRight;
-		/*}
-		else if((encoderLeft < 0) && (encoderRight == 0))
+		Logger.Log("DriveTrain: Left Encoder = " + encoderLeft);
+		Logger.Log("DriveTrain: Right Encoder = " + encoderRight);
+		
+		//If the left encoder isn't reading, return the right encoder
+		if((encoderLeft == 0) && (encoderRight != 0))
 		{
-		  weAreBroken = false;
-		  return -encoderLeft;
+
+		  encoderNumber = encoderRight;
+		  
 		}
+		//If the right encoder isn't reading, return the left encoder
+		else if((encoderLeft != 0) && (encoderRight == 0))
+		{
+
+		  encoderNumber = -encoderLeft;
+		  
+		}
+		//If neither of them are reading, return 0
 		else if((encoderLeft == 0) && (encoderRight == 0))
 		{
-		  weAreBroken = true;
+		  Logger.Log("DriveTrain: Encoders are broken!!!! HELP!!");
+		  encoderNumber = 0;
+		  
 		}
-		else
+		else//If none of the above conditions are true, average both of the encoders
 		{
-		  encoderAverage = encoderRight + (encoderLeft * - 1);
-		  encoderAverage = encoderAverage / 2;
-		  weAreBroken = false;
-		  return encoderAverage;
-		}*/
-		//return encoderRight;
+		  
+		  encoderAverage = Math.abs(encoderRight) + Math.abs(encoderLeft);
+		  encoderNumber = encoderAverage / 2;
+		  
+		}
+		
+		return encoderNumber;
+	}
+	
+	
+	/**
+	 * Resets the encoders by setting them to 0
+	 */
+	public void resetEncoders(){
+		
+	  leftFrontDrive.setPosition(0);
+    rightFrontDrive.setPosition(0);
+    
+    encoderLeft = leftFrontDrive.getEncPosition();
+    encoderRight = rightFrontDrive.getEncPosition();
 		
 	}
 	
-	public void resetEncoders(){
-		counter=0;
-		
-		boolean debug;
-		
-			debug = SmartDashboard.getBoolean("Debug");
-		
-			if(debug == true)
-			{
-				leftFrontDrive.setPosition(0);
-				rightFrontDrive.setPosition(0);
-				
-				encoderLeft = leftFrontDrive.getEncPosition();
-				encoderRight = rightFrontDrive.getEncPosition();
-			}
-			else 
-			{
-				encoderLeft = 0;
-				encoderRight = 0;
-			}
-		
-
-		
-		Logger.Log("ENCODER LEFT : " + encoderLeft + "ENCODER RIGHT : " + encoderRight);
-	}
+	
 	
 	public int getEncoderCount(int count)
 	{
@@ -126,54 +143,129 @@ public class Drivetrain {
 		
 	}
 	
+	
+	/**
+	 * Shifts solenoids into high gear
+	 */
 	public void shiftHigh()
 	{
+	  
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
-		Logger.Log("!!!!!!!!!!DEBUGHIGH!!!!!!!!!!");
+		Logger.Log("!!!!!!!!!!WE'RE IN HIGH GEAR!!!!!!!!!!");
+		
 	}
 	
+	
+	/**
+	 * Shifts solenoids into low gear
+	 */
 	public void shiftLow()
 	{
+	  
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_LOW_GEAR);
-		Logger.Log("!!!!!!!!!!DEBUGLOW!!!!!!!!!!");
+		Logger.Log("!!!!!!!!!!WE'RE IN LOW GEAR!!!!!!!!!!");
+		
 	}
+	
+	
+	
 	/*These four functions are used in autonomous to drive the robot*/
+	
+	/**
+	 * A drive forward function used in Autonomous
+	 * @param leftMotorValue
+	 * @param rightMotorValue
+	 */
 	public void driveForward(double leftMotorValue, double rightMotorValue)  {
 		
 	  /*the joystick value is multiplied by a target RPM so the 
 	  *robot works with the velocity tuning code*/
 		//robotMotors.tankDrive(-leftMotorValue, -rightMotorValue);
 		leftFrontDrive.set(-leftMotorValue);
-    rightFrontDrive.set(-rightMotorValue);
+    rightFrontDrive.set(rightMotorValue);
 	}
 	
+	
+	/**
+	 * A drive backwards function used in Autonomous
+	 * @param leftMotorValue
+	 * @param rightMotorValue
+	 */
 	public void driveBackwards(double leftMotorValue , double rightMotorValue)  {
 		
 		//robotMotors.tankDrive(leftMotorValue, rightMotorValue);
     leftFrontDrive.set(leftMotorValue);
-    rightFrontDrive.set(rightMotorValue);
+    rightFrontDrive.set(-rightMotorValue);
 	}
 	
+	
+	/**
+	 * A turn left function used in Autonomous
+	 * @param leftJsValue
+	 * @param rightJsValue
+	 */
 	public void turnLeft (double leftJsValue, double rightJsValue){
 		
 		//robotMotors.tankDrive(leftJsValue * -1, rightJsValue);
-
-    leftFrontDrive.set(-leftJsValue);
+	  
+    leftFrontDrive.set(leftJsValue);
     rightFrontDrive.set(rightJsValue);
+    
+    Logger.Log("DriveTrain: TurnLeft: leftMotorValue = " + leftJsValue + "/n"+"RightMotorValue = " + rightJsValue);
+    
 	}
 	
+	
+	/**
+	 * A turn right function used in Autonomous
+	 * @param leftJsValue
+	 * @param rightJsValue
+	 */
 	public void turnRight(double leftJsValue, double rightJsValue){
 		
 		//robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
-    leftFrontDrive.set(leftJsValue);
+    leftFrontDrive.set(-leftJsValue);
     rightFrontDrive.set(-rightJsValue);
 	}
 	
+	
+	/**configTalon  is used to configure the master talons for velocity tuning
+   * so they can be set to go to a specific velocity rather than just 
+   * use a voltage percentage
+   * This can be found in the CTRE Talon SRX Software Reference Manual 
+   * Section 12.4: Velocity Closed-Loop Walkthrough Java */
+  public void configTalon(CANTalon talon)
+  {
+    /*This sets the voltage range the talon can use; should be 
+    *set at +12.0f and -12.0f*/
+    //talon.configNominalOutputVoltage(+0.0f, -0.0f);
+    //talon.configPeakOutputVoltage(+12.0f, -12.0f);
+    
+    /*This sets the FPID values to correct error in the motor's velocity
+     * */
+   /* talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
+    talon.setF(CrusaderCommon.TALON_F_VALUE); //.3113);
+    talon.setP(CrusaderCommon.TALON_P_VALUE); //.8);//064543);
+    talon.setI(CrusaderCommon.TALON_NO_VALUE); 
+    talon.setD(CrusaderCommon.TALON_NO_VALUE);*/
+    
+    //this set the talon to use speed mode instead of voltage mode
+    talon.changeControlMode(TalonControlMode.PercentVbus);
+    
+  }
+	
+  
+  //A complete function that only gets used in CommandShiftHigh and CommandShiftLow
 	public boolean complete() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	
+	/**
+	 * Motor Test function
+	 * @param currentBtn
+	 */
 	public void incrementMotorValue(int currentBtn)
 	{
 		//Logger.logDouble("Button = ", currentBtn);
@@ -207,6 +299,11 @@ public class Drivetrain {
 		}
 	}
 	
+	
+	/**
+   * Motor Test function
+   * @param currentBtn
+   */
 	public void decrementMotorValue(int currentBtn)
 	{
 		if(btncounterDec < 7)
@@ -236,6 +333,11 @@ public class Drivetrain {
 		}
 	}
 	
+	
+	/**
+   * Motor Test function
+   * @param currentBtn
+   */
 	public void incrementMotorValueOnePercent(int currentBtn)
 	{
 		//Logger.logDouble("Button = ", currentBtn);
@@ -269,6 +371,11 @@ public class Drivetrain {
 		}
 	}
 	
+	
+	/**
+   * Motor Test function
+   * @param currentBtn
+   */
 	public void decrementMotorValueOnePercent(int currentBtn)
 	{
 		if(btncounterDec < 7)
@@ -298,6 +405,11 @@ public class Drivetrain {
 		}
 	}
 	
+	
+	/**
+   * Motor Test function
+   * @param currentBtn
+   */
 	public void resetMotorValue()
 	{
 		protoCounter = 0;
@@ -305,11 +417,18 @@ public class Drivetrain {
 		robotMotors.tankDrive(0, 0);
 		Logger.Log("Reset "+ protoCounter);
 	}
+	
+	
+	/**
+   * Motor Test function
+   * @param currentBtn
+   */
 	public void nobtnPressed()
 	{
 		lastBtnPressed = 1;
 		//Logger.logDouble("Reset", lastBtnPressed);
-		}
+	}
+	
 	/*
 	 * public void incrementMotorValue()
 	{
@@ -348,47 +467,4 @@ public class Drivetrain {
 		}
 	}
 	 */
-	/*configTalon  is used to configure the master talons for velocity tuning
-	 * so they can be set to go to a specific velocity rather than just 
-	 * use a voltage percentage
-	 * This can be found in the CTRE Talon SRX Software Reference Manual 
-	 * Section 12.4: Velocity Closed-Loop Walkthrough Java */
-	public void configTalon(CANTalon talon)
-	{
-	  /*This sets the voltage range the talon can use; should be 
-	  *set at +12.0f and -12.0f*/
-	  //talon.configNominalOutputVoltage(+0.0f, -0.0f);
-	  //talon.configPeakOutputVoltage(+12.0f, -12.0f);
-    
-	  /*This sets the FPID values to correct error in the motor's velocity
-	   * */
-   /* talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
-    talon.setF(CrusaderCommon.TALON_F_VALUE); //.3113);
-    talon.setP(CrusaderCommon.TALON_P_VALUE); //.8);//064543);
-    talon.setI(CrusaderCommon.TALON_NO_VALUE); 
-    talon.setD(CrusaderCommon.TALON_NO_VALUE);*/
-    
-    //this set the talon to use speed mode instead of voltage mode
-    talon.changeControlMode(TalonControlMode.PercentVbus);
-    
-	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

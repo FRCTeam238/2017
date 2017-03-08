@@ -43,12 +43,12 @@ public class CommandTurnToBoiler extends AbstractCommand {
       
       //FIX BEFORE WEEK THREE
       case "Left":
-        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
+        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
         Logger.Log("We Are Going Left");
         break;
      
       case "Right":
-        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
+        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
         Logger.Log("We Are Going Right");
         break;
         

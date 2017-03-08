@@ -7,13 +7,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Logger {
 	
+  
   private static final String newline = "\n"; 
 	static Boolean isDebug;
 	static Boolean outputToLog;
 	  
+	
 	public Logger() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	/**
+	 * Checks on the SmartDashboard on if debug is true
+	 * @return
+	 */
 	public static Boolean isDebug()
 	{
 		
@@ -21,23 +29,35 @@ public class Logger {
 		
 		return isDebug;
 	}
-	 
-  public static Boolean isWriteToFile(){
+	
+	
+	/**
+	 * Checks on the SmartDashboard on if "Output Log to File" is true
+	 * @return
+	 */
+  public static Boolean writeToFile(){
     
     outputToLog = SmartDashboard.getBoolean("Output Log to File");
     
     return outputToLog;
   }
   
+  
   //clearLog()??
   
+  
+  /**
+   * Logs a string to the system log
+   * Also writes it to a file if writeToFile is true on the SmartDashboard
+   * @param comment
+   */
   public static void Log(String comment)
   {
     if(isDebug())
     {
       System.out.println(comment);
       
-      if(isWriteToFile()){
+      if(writeToFile()){
         
         writeToLogFile(comment);
         
@@ -47,19 +67,26 @@ public class Logger {
     
   }
 
+  
+  /**
+   * Writes the log into a file
+   * @param log
+   */
   public static void writeToLogFile(String log){
     
     try{
     
     File logFile238 = new File("/home/lvuser/logFile238.txt");
     
+    //If the file already exists, open the file and write the string to it 
       if(logFile238.exists()){
         
         FileWriter logFile = new FileWriter("/home/lvuser/logFile238.txt",true);
         logFile.write(newline+log);
         logFile.flush();
         logFile.close();
-        
+     
+    //If the file doesn't already exists, create a new one and write the string to it
       }else{
        
         logFile238.createNewFile();

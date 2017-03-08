@@ -1,4 +1,4 @@
-package org.usfirst.frc.team238.commands;
+package org.usfirst.frc.team238.testCommands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Command;
@@ -11,17 +11,19 @@ import org.usfirst.frc.team238.robot.Navigation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandResetTestDriveWithButtons extends AbstractCommand  {
+public class CommandDeccrementSerializer extends AbstractCommand  {
 
 	Drivetrain myRobotDrive;
 	FuelHandler myFuelHandler;
 	
-	double motorValue;
+	double motorValue = 0;
 	double targetValue;
 	double newTargetYaw;
 	int count;
+  boolean weIncreased = false;
+  int increaseCount = 0;
 	
-	public CommandResetTestDriveWithButtons(Drivetrain theRobotDrive, FuelHandler theFuelHandler)
+	public CommandDeccrementSerializer(Drivetrain theRobotDrive, FuelHandler theFuelHandler)
 	{
 		
 		this.myRobotDrive = theRobotDrive;
@@ -38,7 +40,21 @@ public class CommandResetTestDriveWithButtons extends AbstractCommand  {
 	public void execute()  {
 		//Using -motorValues to spin the left motors backwards
 		//If that's how it works lol Maybe change this
-		myFuelHandler.resetMotor();
+		//Logger.Log("!!!!!DEBUG!!!!!!!!!!!!   " + motorValue);
+		
+
+		
+		if(increaseCount > 40)
+		{
+		  myFuelHandler.serialDecreaseTen();
+		  increaseCount = 0;
+		}
+		else
+		{
+	    increaseCount++;
+		}
+		//int encoder = myRobotDrive.getEncoderTicks();
+		//Logger.Log("encoder "+ encoder);
 		
 	}
 	
