@@ -372,7 +372,7 @@ public class Robot extends IterativeRobot {
       myTargetingData = new TargetingDataHandler();
       myTargetingData.init(theMCP);
 			
-      SmartDashboard.putNumber("TESTING RPM", 1850);
+      SmartDashboard.putNumber("TESTING RPM", 650);
       
       //SmartDashboard.putString("Team Side :",getAllianceTeam());
       //SmartDashboard.putNumber("SHOOTER RPM",0);

@@ -433,6 +433,7 @@ public class Drivetrain {
 	public void nobtnPressed()
 	{
 		lastBtnPressed = 1;
+		shiftLow();
 		//Logger.logDouble("Reset", lastBtnPressed);
 	}
 	

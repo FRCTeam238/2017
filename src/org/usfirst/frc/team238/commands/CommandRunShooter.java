@@ -67,12 +67,12 @@ public class CommandRunShooter extends AbstractCommand {
     {
       
       
-      //shooterSpeed = SmartDashboard.getNumber("TESTING RPM",0); //calculateRPM();
-      shooterSpeed = calculateRPM();
+      shooterSpeed = SmartDashboard.getNumber("TESTING RPM",0); //calculateRPM();
+     // shooterSpeed = calculateRPM();
       myFuelHandler.theShooter.isShooterAtSpeed(shooterSpeed);
       
       SmartDashboard.putNumber("CommandRunShooter: Calculated Shooter Speed", shooterSpeed);
-      //myFuelHandler.shoot(SmartDashboard.getNumber("TESTING RPM",1600)/*shooterSpeed*/,shooterDelayTime);//shooterSpeed);
+      //myFuelHandler.shoot(SmartDashboard.getNumber("TESTING RPM",1600),shooterDelayTime);//shooterSpeed);
       myFuelHandler.shoot(shooterSpeed,shooterDelayTime);
     }
 

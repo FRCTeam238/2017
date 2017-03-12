@@ -27,8 +27,9 @@ public class Climber {
    */
   public void StartClimbing(){
     
-    climberMotorOne.set(-CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
-    climberMotorTwo.set(-CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+    //note original code had a negative sign but practice robot was wired differently
+    climberMotorOne.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+    climberMotorTwo.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
     
     currentlyClimbing = true;
     
