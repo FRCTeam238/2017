@@ -31,7 +31,7 @@ public class CommandController {
 	    FuelHandler theFuelHandler, Climber myClimber, Robot myRobot)
 	{
 		// populate the command lists
-		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber);
+		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber, myRobot);
 		setupDriverCommands(myRobotDrive, driveTrain);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot, theFuelHandler);
 		
@@ -77,13 +77,13 @@ public class CommandController {
 	}
 	
 	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision,
-	    FuelHandler theFuelHandler, Climber theClimber)
+	    FuelHandler theFuelHandler, Climber theClimber, Robot myRobot)
 	{
 		theOperatorCmdFactory = new OperatorCmdFactory();
 		theOperatorCmdFactory.init();
 		
 		operatorCmdList = theOperatorCmdFactory.createOperatorCommands(driveTrain, myNavigation, myVision, 
-		                                              theFuelHandler, theClimber);
+		                                              theFuelHandler, theClimber, myRobot);
 	}
 
 	/*

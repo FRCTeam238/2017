@@ -10,7 +10,7 @@ import org.usfirst.frc.team238.robot.Robot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandTurnToBoiler extends AbstractCommand {
+public class CommandTargetBoiler extends AbstractCommand {
 
   String direction="";
   Alliance teamColor;
@@ -22,7 +22,7 @@ public class CommandTurnToBoiler extends AbstractCommand {
   double targetValue;
   double newTargetYaw;
   
-  public CommandTurnToBoiler(Drivetrain theRobotDrive, Navigation myNavigationForTarget, Robot myRobot){
+  public CommandTargetBoiler(Drivetrain theRobotDrive, Navigation myNavigationForTarget, Robot myRobot){
     
     this.myRobotDrive = theRobotDrive;
     this.myNavigation = myNavigationForTarget;
@@ -35,20 +35,21 @@ public class CommandTurnToBoiler extends AbstractCommand {
     
     double calculatedMotorValue;
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
-        targetValue, CrusaderCommon.TURN_MAX_ERROR, .7);
+        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
     
     Logger.Log("Calculated Motor Value is " + calculatedMotorValue);
     
+    //this is different than turning to/from boiler cmd as it's the 
+    //opposite direction but only on one side so the robot pivots on the side that doesn't move
+    
     switch(direction){
-      
-      
-      case "Left":
-        myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
+       case "Left":
+        myRobotDrive.turnLeft(calculatedMotorValue, 0);
         Logger.Log("We Are Going Left");
         break;
      
       case "Right":
-        myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
+        myRobotDrive.turnRight(0, calculatedMotorValue);
         Logger.Log("We Are Going Right");
         break;
         
@@ -74,11 +75,13 @@ public class CommandTurnToBoiler extends AbstractCommand {
     
     Logger.Log("Team Color is : " + teamColor);
     
+    //this is different than turning to/from boiler cmd as it's the 
+    //opposite direction but only on one side so the robot pivots on the side that doesn't move
     if (teamColor == Alliance.Red)
     {
-      direction = "Right";
-    }else{
       direction = "Left";
+    }else{
+      direction = "Right";
     }
     
     Logger.Log("CommandTurnToBoiler: Direction is: "+direction);

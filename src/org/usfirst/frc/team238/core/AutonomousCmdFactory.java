@@ -10,6 +10,7 @@ import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.commands.CommandDriveForward;
 import org.usfirst.frc.team238.commands.CommandOpenHopper;
 import org.usfirst.frc.team238.commands.CommandRunShooter;
+import org.usfirst.frc.team238.commands.CommandTargetBoiler;
 import org.usfirst.frc.team238.commands.CommandDriveBackwards;
 import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
@@ -32,6 +33,7 @@ public class AutonomousCmdFactory {
 	CommandRunShooter runShooter;
 	CommandOpenHopper openHopper;
 	CommandCloseHopper closeHopper;
+	CommandTargetBoiler targetBoiler;
 	
 	HashMap <String, Command> autonomousCommands;
 	//TODO change that static 10
@@ -65,7 +67,9 @@ public class AutonomousCmdFactory {
 		autonomousCommands.put("CommandOpenHopper", openHopper);
 		closeHopper = new CommandCloseHopper(theFuelHandler);
 		autonomousCommands.put("CommandCloseHopper", closeHopper);
-		
+    targetBoiler = new CommandTargetBoiler(robotDrive, myNavigation, myRobot);
+    autonomousCommands.put("CommandTargetBoiler", targetBoiler);
+    
 		return autonomousCommands;
 		
 	}
