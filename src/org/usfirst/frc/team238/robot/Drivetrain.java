@@ -65,6 +65,7 @@ public class Drivetrain {
 		scalefactorOnePercent = 1;
 		counter = 0;
 		
+		shiftLow();
 	}
 	
 	
@@ -85,6 +86,8 @@ public class Drivetrain {
 		encoderLeft = leftFrontDrive.getEncPosition();
 		encoderRight = rightFrontDrive.getEncPosition();
 		
+		encoderLeft = Math.abs(encoderLeft);
+		
 		Logger.Log("DriveTrain: Left Encoder = " + encoderLeft);
 		Logger.Log("DriveTrain: Right Encoder = " + encoderRight);
 		
@@ -99,7 +102,7 @@ public class Drivetrain {
 		else if((encoderLeft != 0) && (encoderRight == 0))
 		{
 
-		  encoderNumber = -encoderLeft;
+		  encoderNumber = encoderLeft;
 		  
 		}
 		//If neither of them are reading, return 0
@@ -116,6 +119,10 @@ public class Drivetrain {
 		  encoderNumber = encoderAverage / 2;
 		  
 		}
+
+		
+		SmartDashboard.putNumber("DriveTrain: EncoderAverage", encoderAverage);
+
 		
 		return encoderNumber;
 	}

@@ -22,7 +22,7 @@ public class CommandStopEverything implements Command {
     // TODO Auto-generated method stub
     myFuelHandler.stopEverything();
     myClimber.StopClimbing();
-    myFuelHandler.closeHopper();
+    myFuelHandler.openHopper();
   }
 
   @Override

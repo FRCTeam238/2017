@@ -30,7 +30,7 @@ public class AbstractCommand implements Command {
 		return false;
 	}
 	
-	public double pidCalc(double pValue, double deadStop, double targetValue, double maxError)
+	public double pidCalc(double pValue, double deadStop, double targetValue, double maxError, double maxMotorValue)
 	{
 	  double motorValue = 0;
 	  double error;
@@ -45,7 +45,7 @@ public class AbstractCommand implements Command {
 	  }
 	  else
 	  {
-	    motorValue = 1;
+	    motorValue = maxMotorValue; //.7;
 	  }
 	  
 	  return motorValue;

@@ -90,9 +90,20 @@ public class Shooter {
   public void execute(double shooterRPM)
   {
     shooterMaster.enableControl();
-    //shooterSlave.enableControl();
+   
+    smahtDashboard();
     
     shooterMaster.set(shooterRPM);//(CrusaderCommon.SHOOTER_MAX_RPM);
+    
+  }
+  
+  private void smahtDashboard(){
+    double test = SmartDashboard.getNumber("Shooter F Value",0.427);
+    Logger.Log("test: " +  test);
+    shooterMaster.setF(test); 
+    shooterMaster.setP(SmartDashboard.getNumber("Shooter P Value", 0.2)); 
+    shooterMaster.setI(SmartDashboard.getNumber("Shooter I Value", 0)); 
+    shooterMaster.setD(SmartDashboard.getNumber("Shooter D Value", 1.33));
     
   }
   
@@ -123,10 +134,12 @@ public class Shooter {
      /*This sets the FPID values to correct error in the motor's velocity
       * */
      talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
-     talon.setF(CrusaderCommon.SHOOTER_TALON_F_VALUE); //.3113);
-     talon.setP(CrusaderCommon.SHOOTER_TALON_P_VALUE); //.8);//064543);
-     talon.setI(CrusaderCommon.SHOOTER_TALON_I_VALUE); 
-     talon.setD(CrusaderCommon.SHOOTER_TALON_D_VALUE);
+     double test = SmartDashboard.getNumber("Shooter F Value",0.427);
+     Logger.Log("test: " +  test);
+     talon.setF(test); /*CrusaderCommon.SHOOTER_TALON_F_VALUE */ //.3113);
+     talon.setP(SmartDashboard.getNumber("Shooter P Value", 0.2)/*CrusaderCommon.SHOOTER_TALON_P_VALUE*/); //.8);//064543);
+     talon.setI(SmartDashboard.getNumber("Shooter I Value", 0) /*CrusaderCommon.SHOOTER_TALON_I_VALUE*/); 
+     talon.setD(SmartDashboard.getNumber("Shooter D Value", 1.33)/*CrusaderCommon.SHOOTER_TALON_D_VALUE*/);
      
      talon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
      talon.SetVelocityMeasurementWindow(20);
@@ -179,6 +192,7 @@ public class Shooter {
     talonMasterSpeed = shooterMaster.getSpeed();
     talonMasterError = shooterMaster.getError();
     
+    SmartDashboard.putNumber("Shooter: Shooter Error", talonMasterError);
     
     if(talonMasterError <= CrusaderCommon.ACCEPTABLE_RPM_ERROR)
     {

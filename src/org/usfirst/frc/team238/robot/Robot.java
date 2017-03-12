@@ -170,7 +170,7 @@ public class Robot extends IterativeRobot {
 				
 				myAutonomousDataHandler.dump();
 				
-				myTargetingData.dump();
+				//myTargetingData.dump();
 				
 				//myNavigation.navxValues();
 				
@@ -245,6 +245,11 @@ public class Robot extends IterativeRobot {
 			System.out.println("RobotInit()");
 			
 			myRobot = Robot.this; 
+			
+//			SmartDashboard.putNumber("Shooter P Value",0);
+//			SmartDashboard.putNumber("Shooter I Value", 0);
+//			SmartDashboard.putNumber("Shooter D Value", 0);
+//			SmartDashboard.putNumber("Shooter F Value", 0.0);
 			
 			/*SmartDashboard.putNumber("Turn P Value", 0.005);
 			SmartDashboard.putNumber("Turn Dead Stop", 0.42);
@@ -367,10 +372,10 @@ public class Robot extends IterativeRobot {
       myTargetingData = new TargetingDataHandler();
       myTargetingData.init(theMCP);
 			
-      SmartDashboard.putNumber("TESTING RPM", 1625);
+      SmartDashboard.putNumber("TESTING RPM", 1850);
       
       //SmartDashboard.putString("Team Side :",getAllianceTeam());
-      SmartDashboard.putNumber("SHOOTER RPM",0);
+      //SmartDashboard.putNumber("SHOOTER RPM",0);
       
 			Logger.Log("Fully Initialized");
 

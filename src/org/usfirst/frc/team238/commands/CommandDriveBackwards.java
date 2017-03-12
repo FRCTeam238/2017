@@ -28,6 +28,7 @@ public class CommandDriveBackwards extends AbstractCommand {
 
   public void execute() {
 
+    myRobotDrive.shiftLow();
     myRobotDrive.driveBackwards(motorValue, motorValue);
 
   }

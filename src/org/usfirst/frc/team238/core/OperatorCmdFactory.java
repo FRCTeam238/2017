@@ -111,10 +111,10 @@ public class OperatorCmdFactory {
 
 		/*commandRunElevator = new CommandRunElevator(myFuelHandler.theElevator);
 		operatorCommands.put(6, commandRunElevator);*/
-/*
+
 		commandCloseHopper = new CommandCloseHopper(myFuelHandler);
-		operatorCommands.put(7, commandCloseHopper);
-	*/	
+		operatorCommands.put(9, commandCloseHopper);
+		
 
 	
 		/*commandOpenSprocket = new CommandOpenSprocket(theSprocket);

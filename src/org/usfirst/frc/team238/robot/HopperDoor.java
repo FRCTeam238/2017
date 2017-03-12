@@ -20,8 +20,8 @@ public class HopperDoor {
   {
     
     hopperSolenoid = new Solenoid(4);
-    //hopperServo = new Servo(CrusaderCommon.HOPPER_DOOR_SERVO_ID);
-    
+   
+    openDoor();
   }
   
   /*THIS WILL NEED TO BE A SOLENOID!!!*/
@@ -29,14 +29,14 @@ public class HopperDoor {
   {
     
     //hopperServo.set(CrusaderCommon.SERVO_ON);
-   hopperSolenoid.set(true);
+   hopperSolenoid.set(false);
   }
   
   public void closeDoor()
   {
    // hopperServo.set(CrusaderCommon.SERVO_OFF);
-    hopperSolenoid.set(false);
-    Logger.Log("We Are CLOSED!!!!");
+    hopperSolenoid.set(true);
+    //Logger.Log("We Are CLOSED!!!!");
   }
 
 }

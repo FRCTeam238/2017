@@ -106,7 +106,7 @@ public class FuelHandler {
     theIntake.IntakeStop();
     theShooter.stopShooter();
     theSerializer.stopSpinning();
-    
+    openHopper();
     delayMotorStart = 0;
    
     

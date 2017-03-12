@@ -23,8 +23,8 @@ public class CrusaderCommon {
 
 
 	/*DO NOT NUKE*/
-	public static final boolean SHIFTER_HIGH_GEAR = false;
-	public static final boolean SHIFTER_LOW_GEAR = true;
+	public static final boolean SHIFTER_HIGH_GEAR = true;
+	public static final boolean SHIFTER_LOW_GEAR = false;
 	
 	public static final double DRIVETRAIN_MAX_RPM = 1500;
 	public static final double SHOOTER_MAX_RPM = SmartDashboard.getNumber("SHOOTER RPM", 0);//1500;
@@ -123,13 +123,16 @@ public class CrusaderCommon {
 	
 	public final static double SHOOTER_VISION_DEADZONE = 1;
 	
-	public final static double TURN_P_VALUE = 0.005;//SmartDashboard.getNumber("Turn P Value",0.005);//0.005;
-	public final static double TURN_DEAD_STOP = 0.35;//SmartDashboard.getNumber("Turn Dead Stop", 0.42);//0.42;
-	public final static double TURN_MAX_ERROR = 45;//SmartDashboard.getNumber("Turn Max Error",45);//45;
+	public final static double TURN_P_VALUE = 0.003;//SmartDashboard.getNumber("Turn P Value",0.005);//0.005;
+	public final static double TURN_DEAD_STOP = 0.25;//SmartDashboard.getNumber("Turn Dead Stop", 0.42);//0.42;
+	public final static double TURN_MAX_ERROR = 80;//SmartDashboard.getNumber("Turn Max Error",45);//45;
+	public final static double TURN_MAX_MOTOR_VALUE = .7;//SmartDashboard.getNumber("Turn Max Error",45);//45;
+	  
 	public final static double STRAIGHT_P_VALUE = 0.000055;//0.00003512;
 	public final static double STRAIGHT_DEAD_STOP = 0.39;
 	public final static double STRAIGHT_MAX_ERROR = 9966;
-	
+	 public final static double STRAIGHT_MAX_MOTOR_VALUE  = 1;//SmartDashboard.getNumber("Turn Max Error",45);//45;
+	  
 	public final static int SHOOTER_COUNT_DELAY = 5;
 	public final static int SHOOTER_PROCESSING_COUNT=10;
 	

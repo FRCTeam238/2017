@@ -52,7 +52,7 @@ public class CommandRunShooter extends AbstractCommand {
     {
       
       start = System.currentTimeMillis();
-      count++;
+      count++; 
     }
     else
     {
@@ -66,10 +66,16 @@ public class CommandRunShooter extends AbstractCommand {
     if(Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY)
     {
       
-      //shooterSpeed = calculateRPM();
-    
-      myFuelHandler.shoot(SmartDashboard.getNumber("TESTING RPM",1600)/*shooterSpeed*/,shooterDelayTime);//shooterSpeed);
+      
+      //shooterSpeed = SmartDashboard.getNumber("TESTING RPM",0); //calculateRPM();
+      shooterSpeed = calculateRPM();
+      myFuelHandler.theShooter.isShooterAtSpeed(shooterSpeed);
+      
+      SmartDashboard.putNumber("CommandRunShooter: Calculated Shooter Speed", shooterSpeed);
+      //myFuelHandler.shoot(SmartDashboard.getNumber("TESTING RPM",1600)/*shooterSpeed*/,shooterDelayTime);//shooterSpeed);
+      myFuelHandler.shoot(shooterSpeed,shooterDelayTime);
     }
+
     
   }
   
@@ -123,7 +129,7 @@ public class CommandRunShooter extends AbstractCommand {
     distance = myVision.getShooterDistance();
     if(distance != Double.MAX_VALUE)
     {
-      newRPM = (((0.597 * (distance * distance)) - (0.4533 * distance) + (2751)) * 0.5);
+      newRPM = (((0.0579 * (distance * distance)) - (0.4533 * distance) + (2751)) * 0.5);
     }
     else
     {

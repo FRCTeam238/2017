@@ -103,7 +103,7 @@ public class Navigation {
 		
 		Logger.Log("Current Yaw is : "+ currentYaw+ " \n Target is : "+ targetYaw);
 		
-		if((currentYaw >= targetYaw) && (currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE)))
+		if((currentYaw >= targetYaw)) // && (currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE)))
 		{
 			return true;
 		}

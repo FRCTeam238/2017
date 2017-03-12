@@ -54,10 +54,10 @@ public class CommandDriveForward extends AbstractCommand {
 
   public void execute() {
 
-    //myRobotDrive.shiftLow();
+    myRobotDrive.shiftLow();
     
-    motorValue = pidCalc(CrusaderCommon.STRAIGHT_P_VALUE, CrusaderCommon.STRAIGHT_DEAD_STOP,
-        targetValue, CrusaderCommon.STRAIGHT_MAX_ERROR);
+   motorValue = pidCalc(CrusaderCommon.STRAIGHT_P_VALUE, CrusaderCommon.STRAIGHT_DEAD_STOP,
+        targetValue, CrusaderCommon.STRAIGHT_MAX_ERROR, CrusaderCommon.STRAIGHT_MAX_MOTOR_VALUE);
     
     double currentYaw = myNavigation.getYaw();
     double yawError = currentYaw - yawValue; // Positive yaw is right turn so
