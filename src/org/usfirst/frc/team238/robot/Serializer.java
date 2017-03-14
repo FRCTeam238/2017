@@ -80,14 +80,15 @@ public class Serializer {
   public void runSerializer()
   {
     
-    if(currentOverLoad())
-    {
-      stopSpinning();
-    }
-    else
-    {
+//    if(currentOverLoad())
+//    {
+//      stopSpinning();
+//    }
+//    else
+//    {
       startSpinning();
-    }
+//   }
+    
     
   }
   

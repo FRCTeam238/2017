@@ -7,7 +7,10 @@ import org.usfirst.frc.team238.robot.Intake;
 import org.usfirst.frc.team238.robot.Shooter;
 import org.usfirst.frc.team238.robot.HopperDoor;
 
-
+/**
+ * this is the FuelHandler class.
+ * @author Crusader
+ */
 public class FuelHandler {
 
   public Serializer theSerializer;
@@ -15,7 +18,7 @@ public class FuelHandler {
   public Shooter theShooter;
   public HopperDoor theHopperDoor;
   
-  
+  //------------------ Instance Variables------------------//
   int counter;
   double protoCounter;
   int delayCounter;
@@ -29,7 +32,9 @@ public class FuelHandler {
   double serializerSpeed = 0;
   int count = 0;
   double delayMotorStart = 0;
-  
+  /**
+   * 
+   */
   public void init(){
     
     theSerializer = new Serializer();
@@ -47,7 +52,9 @@ public class FuelHandler {
 
     
   }
-  
+  /**
+   * this method tests the intake, the serializer, and the shooter.
+   */
   public void test(){
     
     theSerializer.test();
@@ -57,7 +64,10 @@ public class FuelHandler {
   }
   
   /**
-   *  This is the function that has the logic for shooting*/
+   *  This is the function that has the logic for shooting
+   *  @param shooterRPM double.
+   *  @param serializerDelayy double.
+   */
   public void shoot(double shooterRPM,double serializerDelay)
   {
     double counterCurrentTime;
@@ -98,7 +108,9 @@ public class FuelHandler {
     //}
   }
   
-  //Stops  all motors
+  /**
+   * Stops  all motors
+   */
   public void stopEverything()
   {
     
@@ -111,14 +123,18 @@ public class FuelHandler {
    
     
   }
-  
+  /** 
+   * opens the hopper door.
+   */
   public void openHopper()
   {
     
     theHopperDoor.openDoor();
     
   }
-  
+  /**
+   * closes the hopper door.
+   */
   public void closeHopper()
   {
     
@@ -194,7 +210,9 @@ public class FuelHandler {
     Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
     
   }
-  
+  /**
+   * this method resets the motor.
+   */
   public void resetMotor()
   {
     
@@ -209,7 +227,10 @@ public class FuelHandler {
     
     
   }
-  
+  /**
+   * this method checks if the ring light is on.
+   * @return
+   */
   public boolean isRingLightOn()
   {
     
@@ -224,7 +245,9 @@ public class FuelHandler {
     }
     
   }
-  
+  /**
+   * this method turns the ring light on.
+   */
   public void turnOnRingLight()
   {
     

@@ -37,7 +37,9 @@ public class CommandRunShooter extends AbstractCommand {
     this.myVision = theVision;
     
   }
-  
+  /**
+   * this is the execute method.
+   */
   public void execute()
   {
  
@@ -78,7 +80,9 @@ public class CommandRunShooter extends AbstractCommand {
 
     
   }
-  
+  /**
+   * this is the prepare method.
+   */
   public void prepare()
   {
     
@@ -96,7 +100,10 @@ public class CommandRunShooter extends AbstractCommand {
 
     
   }
-  
+  /**
+   * this is the setParams method.
+   * @param params String
+   */
   public void setParams(String params[])
   {
     
@@ -118,7 +125,7 @@ public class CommandRunShooter extends AbstractCommand {
   
   /**
    * This is the function that calculates our RPM based on our distance in inches
-   * @return
+   * @return newRPM
    */
   public double calculateRPM()
   {
