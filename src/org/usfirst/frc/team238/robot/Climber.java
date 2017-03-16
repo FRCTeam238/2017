@@ -2,15 +2,18 @@ package org.usfirst.frc.team238.robot;
 
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
+import org.usfirst.frc.team238.robot.ControlBoard;
 
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber {
 
   CANTalon climberMotorOne;
   CANTalon climberMotorTwo;
+  ControlBoard controlBoard;
   
   public boolean currentlyClimbing;
   
@@ -41,10 +44,15 @@ public class Climber {
   
   public void reverseClimbing()
   {
-    
-    climberMotorOne.set(-1);
-    climberMotorTwo.set(-1);
-    
+    if(SmartDashboard.getBoolean("CLIMBDEBUG", false))
+    {
+      if(controlBoard.overRide())
+      {
+      
+        climberMotorOne.set(-1);
+        climberMotorTwo.set(-1);
+      }
+    }
   }
   
   /**

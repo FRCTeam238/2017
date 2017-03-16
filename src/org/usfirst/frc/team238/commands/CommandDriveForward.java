@@ -48,7 +48,7 @@ public class CommandDriveForward extends AbstractCommand {
     yawValue = myNavigation.getYaw();
     SmartDashboard.putNumber("Starting Yaw", yawValue);
     yawErrorTotal = 0;
-    Logger.Log("CommandDriveForward.prepare");
+    //Logger.Log("CommandDriveForward.prepare");
 
   }
 
@@ -148,7 +148,7 @@ public class CommandDriveForward extends AbstractCommand {
 
     amountOfTicks = myRobotDrive.getEncoderTicks();
     Logger.Log("Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
-    Logger.Log("RollValue : "+ rollValue+ "CurrentRollValue : "+ currnetRollValue);
+    //Logger.Log("RollValue : "+ rollValue+ "CurrentRollValue : "+ currnetRollValue);
     Logger.Log("Ultrasonic : "+ ultrasonicTarget);
 
     if (rollValue > 0) {

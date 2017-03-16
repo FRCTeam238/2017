@@ -4,6 +4,7 @@ import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
 
@@ -17,15 +18,17 @@ public class CommandTargetBoiler extends AbstractCommand {
   Robot theRobot;
   Drivetrain myRobotDrive;
   Navigation myNavigation;
+  FuelHandler myFuelHandler;
   
   double motorValue;
   double targetValue;
   double newTargetYaw;
   
-  public CommandTargetBoiler(Drivetrain theRobotDrive, Navigation myNavigationForTarget, Robot myRobot){
+  public CommandTargetBoiler(Drivetrain theRobotDrive, Navigation theNavigation, Robot myRobot, FuelHandler theFuelHandler){
     
+    this.myFuelHandler = theFuelHandler;
     this.myRobotDrive = theRobotDrive;
-    this.myNavigation = myNavigationForTarget;
+    this.myNavigation = theNavigation;
     this.theRobot = myRobot;
     
   }
@@ -116,11 +119,15 @@ public class CommandTargetBoiler extends AbstractCommand {
 
   @Override
   public boolean done() {
+   
     double currentYaw;
+    
     currentYaw = myNavigation.getYaw();
+    
     if (myNavigation.areWeThereYet() == true) {
-      myRobotDrive.driveForward(0, 0);
       
+      myFuelHandler.shoot(CrusaderCommon.BOILER_TARGET_RPM, CrusaderCommon.BOILER_TARGET_SERIALIZER_DELAY);
+      myRobotDrive.driveForward(0, 0);  
       SmartDashboard.putNumber("FINAL YAW", currentYaw);
       
       return true;

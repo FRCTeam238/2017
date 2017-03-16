@@ -77,37 +77,37 @@ public class OperatorCmdFactory {
 	}
 	
 	public HashMap<Integer, Command> createOperatorCommands(Drivetrain driveTrain,
-	    Navigation theNavigation, Vision theVision, FuelHandler myFuelHandler,
+	    Navigation theNavigation, Vision theVision, FuelHandler theFuelHandler,
 	    Climber theClimber, Robot theRobot){
 	
-		commandStopEverything = new CommandStopEverything(myFuelHandler, theClimber);
+		commandStopEverything = new CommandStopEverything(theFuelHandler, theClimber);
 		operatorCommands.put(0, commandStopEverything);
 	  
-	  commandRunShooter = new CommandRunShooter(myFuelHandler, theVision);
+	  commandRunShooter = new CommandRunShooter(theFuelHandler, theVision);
 		operatorCommands.put(1, commandRunShooter);
 		
-    commandAlignToBoiler = new CommandAlignToBoiler(driveTrain, theVision, theNavigation, myFuelHandler);
+    commandAlignToBoiler = new CommandAlignToBoiler(driveTrain, theVision, theNavigation, theFuelHandler);
     operatorCommands.put(3, commandAlignToBoiler);
     
-    commandTargetBoiler = new CommandTargetBoiler(driveTrain,theNavigation, theRobot);
+    commandTargetBoiler = new CommandTargetBoiler(driveTrain,theNavigation, theRobot, theFuelHandler);
     operatorCommands.put(5, commandTargetBoiler);
     
-    commandRunIntake = new CommandStartIntake(myFuelHandler.theIntake);
+    commandRunIntake = new CommandStartIntake(theFuelHandler.theIntake);
     operatorCommands.put(6, commandRunIntake);
     
-    commandReverseIntake = new CommandReverseIntake(myFuelHandler.theIntake);
+    commandReverseIntake = new CommandReverseIntake(theFuelHandler.theIntake);
     operatorCommands.put(7, commandReverseIntake);
     
-    commandRunSerializer = new CommandStartSerializer(myFuelHandler.theSerializer);
+    commandRunSerializer = new CommandStartSerializer(theFuelHandler.theSerializer);
     operatorCommands.put(8, commandRunSerializer);
 		
-		commandCloseHopper = new CommandCloseHopper(myFuelHandler);
+		commandCloseHopper = new CommandCloseHopper(theFuelHandler);
 		operatorCommands.put(9, commandCloseHopper);
 		
 		commandRunClimber = new CommandStartClimber(theClimber);
     operatorCommands.put(10, commandRunClimber);
         
-    commandOpenHopper = new CommandOpenHopper(myFuelHandler);
+    commandOpenHopper = new CommandOpenHopper(theFuelHandler);
     operatorCommands.put(11, commandOpenHopper);
     
 		return operatorCommands;

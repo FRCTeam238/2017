@@ -6,12 +6,14 @@ import org.usfirst.frc.team238.commands.CommandShiftHigh;
 import org.usfirst.frc.team238.commands.CommandShiftLow;
 import org.usfirst.frc.team238.commands.CommandTankDrive;
 import org.usfirst.frc.team238.commands.NoDriverCommand;
+import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.testCommands.CommandDeccrementTestDriveWithButtons;
 import org.usfirst.frc.team238.testCommands.CommandDecrementOnePercent;
 import org.usfirst.frc.team238.testCommands.CommandIncrementOnePercent;
 import org.usfirst.frc.team238.testCommands.CommandIncrementTestDriveWithButtons;
 import org.usfirst.frc.team238.testCommands.CommandResetTestDriveWithButtons;
+import org.usfirst.frc.team238.testCommands.CommandReverseClimber;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -25,6 +27,7 @@ public class DriverCommandFactory {
 	CommandIncrementTestDriveWithButtons cmdIncrement;
 	CommandDecrementOnePercent cmdDecrementOne;
 	CommandIncrementOnePercent cmdIncrementOne;
+	CommandReverseClimber cmdReverseClimb;
 	
 	HashMap <Integer, Command> driverLeftCommands;
 	HashMap <Integer, Command> driverRightCommands;
@@ -37,7 +40,7 @@ public class DriverCommandFactory {
 	}
 	
 	
-	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain){
+	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain, Climber theClimber){
 		
 		NoDriveCommand = new NoDriverCommand(driveTrain);
 		
@@ -46,6 +49,10 @@ public class DriverCommandFactory {
 		commandShiftLow = new CommandShiftLow(driveTrain);
 		
 		driverLeftCommands.put(1, commandShiftLow);
+		
+		cmdReverseClimb = new CommandReverseClimber(theClimber);
+		
+		driverLeftCommands.put(10, cmdReverseClimb);
 		
 		return driverLeftCommands;
 		

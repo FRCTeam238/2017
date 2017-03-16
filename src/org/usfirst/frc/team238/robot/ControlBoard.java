@@ -153,7 +153,7 @@ public class ControlBoard {
 	
 	
 	
-	public static boolean overRide(){
+	public boolean overRide(){
 		boolean overRide = operatorJs.getRawButton(10);
 		
 		return overRide;

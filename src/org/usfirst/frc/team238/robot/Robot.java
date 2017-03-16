@@ -72,7 +72,6 @@ public class Robot extends IterativeRobot {
 	private TargetingDataHandler myTargetingData;
 	private AutonomousController theMACP;
 	
-	@SuppressWarnings("rawtypes")
   SendableChooser<String> autonomousChooser;
   SendableChooser<String> autonomousSaveChooser;
 	SendableChooser<String> targetingStateParamsUpdate;
@@ -80,16 +79,12 @@ public class Robot extends IterativeRobot {
   SendableChooser<String> aModeSelector;
   SendableChooser<String> autonomousStateParamsUpdate;
 	
-	
-	//Holds all the autonomous states
-	//and takes the data from the AutonomousController in order to
-	//transfer it to the JSONFactory
-	private ArrayList<AutonomousState>[] autonomousModeList;
-	//This holds the names of each mode
-	private ArrayList<String> AutoModeNames;
-	
 	Alliance teamColor;
-	 
+	
+	
+	/**
+	 * Called when the robot is disabled
+	 */
 	public void disabledInit() {
 		try {
 		  
@@ -104,6 +99,9 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
+	/**
+	 * Called periodically when the robot is disabled
+	 */
 	public void disabledPeriodic() {
 		boolean debug;
 		try {
@@ -238,63 +236,15 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	@SuppressWarnings({ "deprecation", "unchecked", "rawtypes" })
+	@SuppressWarnings({ "deprecation"})
 	public void robotInit() {
 
 		try {
 			System.out.println("RobotInit()");
 			
 			myRobot = Robot.this; 
-			
-//			SmartDashboard.putNumber("Shooter P Value",0);
-//			SmartDashboard.putNumber("Shooter I Value", 0);
-//			SmartDashboard.putNumber("Shooter D Value", 0);
-//			SmartDashboard.putNumber("Shooter F Value", 0.0);
-			
-			/*SmartDashboard.putNumber("Turn P Value", 0.005);
-			SmartDashboard.putNumber("Turn Dead Stop", 0.42);
-			SmartDashboard.putNumber("Turn Max Error", 45);*/
-			
-      SmartDashboard.putNumber("Chosen Auto Mode", 0);
-			
-      SmartDashboard.putBoolean("Output Log to File", true);
-			
-			//SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
-			
-			SmartDashboard.putBoolean("Debug", true);
-			
-			SmartDashboard.putBoolean("Match Time Flag", false);
-			
-			SmartDashboard.putInt("AutoStateCmdIndex", 0);
-			
-			SmartDashboard.putInt("TargetStateCmdIndex", 0);
-			
-			targetingStateParamsUpdate = new SendableChooser<String>();
-			targetingStateParamsUpdate.addDefault("Don't update", "0");
-			targetingStateParamsUpdate.addObject("Update State Target", "1");
-			
-			targetingSaveChooser = new SendableChooser<String>();
-			targetingSaveChooser.addDefault("Don't Save Target Data", "0");
-			targetingSaveChooser.addObject("Save Target State Data", "1");
-			
-			//Sendable Chooser for the state update function
-			autonomousStateParamsUpdate = new SendableChooser<String>();
-			autonomousStateParamsUpdate.addDefault("As Received", "0");
-			autonomousStateParamsUpdate.addObject("UPDATE", "1");
-			
-			//Create a new SendableChooser for the save function
-			autonomousSaveChooser = new SendableChooser<String>();
-			autonomousSaveChooser.addDefault("DON'T Save", "0");
-			autonomousSaveChooser.addObject("Save", "1");
-			
-			aModeSelector = new SendableChooser<String>();
-			
-			SmartDashboard.putData("Edit Target Params", targetingStateParamsUpdate);
-			SmartDashboard.putData("Save Target Data", targetingSaveChooser);
-			
-			//Put sendableChoosers to the SmartDashboard
-			SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
-			SmartDashboard.putData("Save Changes", autonomousSaveChooser);
+		
+			InitSmartDashboardObjects();
 			
 			myLogger = new Logger();
 			
@@ -302,8 +252,7 @@ public class Robot extends IterativeRobot {
 			myControlBoard = new ControlBoard();
 			myControlBoard.controlBoardInit();
 
-			//Create robot core objects 
-			                                                                       // Test Robot | Actual Robot
+			//Create robot core objects                                          // Test Robot | Actual Robot
 			leftFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);   //id =  1			 5
 			leftRearDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_SLAVE_LEFT);     //id =  2			 6
 			rightFrontDrive = new CANTalon(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT); //id =  3			 7
@@ -326,8 +275,6 @@ public class Robot extends IterativeRobot {
 			
 			myNavigation = new Navigation();
 			myNavigation.init();
-			
-			SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
 			
 			myDriveTrain = new Drivetrain(myRobotDrive);
 			myDriveTrain.init(leftFrontDrive, rightFrontDrive);
@@ -371,11 +318,6 @@ public class Robot extends IterativeRobot {
       
       myTargetingData = new TargetingDataHandler();
       myTargetingData.init(theMCP);
-			
-      SmartDashboard.putNumber("TESTING RPM", 650);
-      
-      //SmartDashboard.putString("Team Side :",getAllianceTeam());
-      //SmartDashboard.putNumber("SHOOTER RPM",0);
       
 			Logger.Log("Fully Initialized");
 
@@ -387,6 +329,72 @@ public class Robot extends IterativeRobot {
 		}
 	}
 
+	/**
+	 * Creates all the objects to be used on the SmartDashboard
+	 */
+	public void InitSmartDashboardObjects(){
+	  
+//  SmartDashboard.putNumber("Shooter P Value",0);
+//  SmartDashboard.putNumber("Shooter I Value", 0);
+//  SmartDashboard.putNumber("Shooter D Value", 0);
+//  SmartDashboard.putNumber("Shooter F Value", 0.0);
+  
+  /*SmartDashboard.putNumber("Turn P Value", 0.005);
+  SmartDashboard.putNumber("Turn Dead Stop", 0.42);
+  SmartDashboard.putNumber("Turn Max Error", 45);*/
+  
+  SmartDashboard.putNumber("Chosen Auto Mode", 0);
+  
+  SmartDashboard.putBoolean("Output Log to File", true);
+  
+  //SmartDashboard.putString(CrusaderCommon.PREFVALUE_OP_AUTO, "");
+  
+  SmartDashboard.putBoolean("Debug", true);
+  
+  SmartDashboard.putBoolean("Match Time Flag", false);
+  
+  SmartDashboard.putInt("AutoStateCmdIndex", 0);
+  
+  SmartDashboard.putInt("TargetStateCmdIndex", 0);
+  
+  targetingStateParamsUpdate = new SendableChooser<String>();
+  targetingStateParamsUpdate.addDefault("Don't update", "0");
+  targetingStateParamsUpdate.addObject("Update State Target", "1");
+  
+  targetingSaveChooser = new SendableChooser<String>();
+  targetingSaveChooser.addDefault("Don't Save Target Data", "0");
+  targetingSaveChooser.addObject("Save Target State Data", "1");
+  
+  //Sendable Chooser for the state update function
+  autonomousStateParamsUpdate = new SendableChooser<String>();
+  autonomousStateParamsUpdate.addDefault("As Received", "0");
+  autonomousStateParamsUpdate.addObject("UPDATE", "1");
+  
+  //Create a new SendableChooser for the save function
+  autonomousSaveChooser = new SendableChooser<String>();
+  autonomousSaveChooser.addDefault("DON'T Save", "0");
+  autonomousSaveChooser.addObject("Save", "1");
+  
+  aModeSelector = new SendableChooser<String>();
+  
+  SmartDashboard.putData("Edit Target Params", targetingStateParamsUpdate);
+  SmartDashboard.putData("Save Target Data", targetingSaveChooser);
+  
+  //Put sendableChoosers to the SmartDashboard
+  SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
+  SmartDashboard.putData("Save Changes", autonomousSaveChooser);
+  
+  SmartDashboard.putNumber("TESTING RPM", 650);
+
+  SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
+  
+  SmartDashboard.putBoolean("CLIMBDEBUG", false);
+  
+  //SmartDashboard.putString("Team Side :",getAllianceTeam());
+  //SmartDashboard.putNumber("SHOOTER RPM",0);
+	  
+	}
+	
 	public CommandController getTheMCP()
 	{
 		return theMCP;
@@ -394,9 +402,6 @@ public class Robot extends IterativeRobot {
   
   public Alliance getAllianceTeam()
   {
-    
-    
-    
     return teamColor; 
   }
 

@@ -43,7 +43,7 @@ public class AutonomousCmdFactory {
 	
 	
 	public HashMap<String, Command> createAutonomousCommands(Drivetrain robotDrive, Navigation myNavigation, Vision myVision,
-	        Robot myRobot,FuelHandler theFuelHandler){
+	        Robot myRobot,FuelHandler myFuelHandler){
 		
 		autoDriveForward = new CommandDriveForward(robotDrive, myNavigation);
 		autonomousCommands.put("CommandDriveForward", autoDriveForward);
@@ -61,13 +61,13 @@ public class AutonomousCmdFactory {
 		autonomousCommands.put("CommandTurnAwayFromBoiler", turnAwayFromBoiler);
 		turnToBoiler = new CommandTurnToBoiler(robotDrive, myNavigation, myRobot);
 		autonomousCommands.put("CommandTurnToBoiler", turnToBoiler);
-		runShooter = new CommandRunShooter(theFuelHandler, myVision);
+		runShooter = new CommandRunShooter(myFuelHandler, myVision);
 		autonomousCommands.put("CommandRunShooter", runShooter);
-		openHopper = new CommandOpenHopper(theFuelHandler);
+		openHopper = new CommandOpenHopper(myFuelHandler);
 		autonomousCommands.put("CommandOpenHopper", openHopper);
-		closeHopper = new CommandCloseHopper(theFuelHandler);
+		closeHopper = new CommandCloseHopper(myFuelHandler);
 		autonomousCommands.put("CommandCloseHopper", closeHopper);
-    targetBoiler = new CommandTargetBoiler(robotDrive, myNavigation, myRobot);
+    targetBoiler = new CommandTargetBoiler(robotDrive, myNavigation, myRobot, myFuelHandler);
     autonomousCommands.put("CommandTargetBoiler", targetBoiler);
     
 		return autonomousCommands;
