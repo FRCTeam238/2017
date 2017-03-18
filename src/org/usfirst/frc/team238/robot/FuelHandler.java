@@ -70,6 +70,7 @@ public class FuelHandler {
    */
   public void shoot(double shooterRPM,double serializerDelay)
   {
+    
     double counterCurrentTime;
     double delayCount;
     
@@ -89,8 +90,8 @@ public class FuelHandler {
       //{
         //runs the serializer if we are not experiencing a current overload
         
-        Logger.Log("Delay Count Is : " + delayCount);
-        Logger.Log("SerializerDelay Is : "+ serializerDelay);
+        Logger.Log("FuelHandler() : Shoot() : Delay Count Is : " + delayCount);
+        Logger.Log("FuelHandler() : Shoot() : SerializerDelay Is : "+ serializerDelay);
         
         boolean delayTimer = delayCount >= serializerDelay;
         
@@ -99,7 +100,7 @@ public class FuelHandler {
         {
           
           theSerializer.runSerializer();
-          Logger.Log("We Are Serializing!");
+          Logger.Log("FuelHandler() : Shoot() : We Are Serializing!");
           
         }
         
@@ -123,6 +124,7 @@ public class FuelHandler {
    
     
   }
+  
   /** 
    * opens the hopper door.
    */
@@ -132,6 +134,7 @@ public class FuelHandler {
     theHopperDoor.openDoor();
     
   }
+  
   /**
    * closes the hopper door.
    */
@@ -150,7 +153,7 @@ public class FuelHandler {
     
     theShooter.setTalonSpeed(talonSpeed);
     
-    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    Logger.Log("FuelHandler() : increaseTen() : SHOOTER SPEED IS   " + talonSpeed);
     
     
   }
@@ -162,7 +165,7 @@ public class FuelHandler {
     
     theShooter.setTalonSpeed(talonSpeed);
     
-    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    Logger.Log("FuelHandler() : increaseOne() : SHOOTER SPEED IS   " + talonSpeed);
     
   }
   
@@ -174,7 +177,7 @@ public class FuelHandler {
     
     theShooter.setTalonSpeed(talonSpeed);
     
-    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    Logger.Log("FuelHandler() : decreaseTen() : SHOOTER SPEED IS   " + talonSpeed);
     
     
   }
@@ -186,7 +189,7 @@ public class FuelHandler {
     
     theShooter.setTalonSpeed(talonSpeed);
     
-    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
+    Logger.Log("FuelHandler() : decreaseOne() : SHOOTER SPEED IS   " + talonSpeed);
   }
   
   public void serialDecreaseTen()
@@ -196,7 +199,7 @@ public class FuelHandler {
     
     theSerializer.setTalonSpeed(serializerSpeed);
     
-    Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
+    Logger.Log("FuelHandler() : serialDecreaseTen() : SERIALIZER SPEED IS   " + serializerSpeed);
     
   }
   
@@ -207,9 +210,10 @@ public class FuelHandler {
     
     theSerializer.setTalonSpeed(serializerSpeed);
     
-    Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
+    Logger.Log("FuelHandler() : serialIncreaseTen() : SERIALIZER SPEED IS   " + serializerSpeed);
     
   }
+  
   /**
    * this method resets the motor.
    */
@@ -222,11 +226,12 @@ public class FuelHandler {
     theShooter.setTalonSpeed(talonSpeed);
     theSerializer.setTalonSpeed(serializerSpeed);
     
-    Logger.Log("SHOOTER SPEED IS   " + talonSpeed);
-    Logger.Log("SERIALIZER SPEED IS   " + serializerSpeed);
+    Logger.Log("FuelHandler() : resetMotor() : SHOOTER SPEED IS   " + talonSpeed);
+    Logger.Log("FuelHandler() : resetMotor() : SERIALIZER SPEED IS   " + serializerSpeed);
     
     
   }
+  
   /**
    * this method checks if the ring light is on.
    * @return
@@ -238,13 +243,14 @@ public class FuelHandler {
     {
       
       return true;
-    }
-    else
-    {
+      
+    }else{
+      
       return false;
     }
     
   }
+  
   /**
    * this method turns the ring light on.
    */

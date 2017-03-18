@@ -48,7 +48,7 @@ public class Hood {
         try
         {
           
-          Logger.Log("Moving Hood Up");
+          Logger.Log("Hood() : Test() : Moving Hood Up");
           if(count < CrusaderCommon.TEST_COUNT_CONDITION)
           {
              
@@ -58,7 +58,7 @@ public class Hood {
             
           }
           
-          Logger.Log("Moving Hood Down");
+          Logger.Log("Hood(): Test(): Moving Hood Down");
           if(count > CrusaderCommon.TEST_COUNT_CONDITION && count < (CrusaderCommon.TEST_COUNT_CONDITION*2))
           {
             
@@ -73,11 +73,11 @@ public class Hood {
         {
           
           e.printStackTrace();
-          Logger.Log("Hood Test Failed!");
+          Logger.Log("FuelHandler() : Test() : Hood Test Failed!");
           
         }
         
-        Logger.Log("Hood Test Sucessful!");
+        Logger.Log("FuelHandler() : Test() : Hood Test Sucessful!");
     
   }
 

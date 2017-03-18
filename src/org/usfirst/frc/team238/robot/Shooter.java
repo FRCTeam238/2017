@@ -69,7 +69,7 @@ public class Shooter {
     
     encoderPosition = shooterMaster.getEncPosition();
     
-    Logger.Log("Shooter Encoder Position"+ encoderPosition);
+    Logger.Log("Shooter(): getShooterEncPosition(): Encoder Position"+ encoderPosition);
     
     return encoderPosition;
     
@@ -82,7 +82,7 @@ public class Shooter {
     
     encoderPosition = shooterMaster.getEncPosition();
     
-    Logger.Log("Shooter Encoder Position"+ encoderPosition);
+    Logger.Log("Shooter(): resetShooterEncoder(): Encoder Position"+ encoderPosition);
     
   }
   
@@ -91,13 +91,13 @@ public class Shooter {
   {
     shooterMaster.enableControl();
    
-    smahtDashboard();
+    //smahtDashboard();
     
     shooterMaster.set(shooterRPM);//(CrusaderCommon.SHOOTER_MAX_RPM);
     
   }
   
-  private void smahtDashboard(){
+  /*private void smahtDashboard(){
     double test = SmartDashboard.getNumber("Shooter F Value",0.427);
     Logger.Log("test: " +  test);
     shooterMaster.setF(test); 
@@ -105,7 +105,7 @@ public class Shooter {
     shooterMaster.setI(SmartDashboard.getNumber("Shooter I Value", 0)); 
     shooterMaster.setD(SmartDashboard.getNumber("Shooter D Value", 1.33));
     
-  }
+  }*/
   
   public void stopShooter()
   {
@@ -134,12 +134,11 @@ public class Shooter {
      /*This sets the FPID values to correct error in the motor's velocity
       * */
      talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
-     double test = SmartDashboard.getNumber("Shooter F Value",0.427);
-     Logger.Log("test: " +  test);
-     talon.setF(test); /*CrusaderCommon.SHOOTER_TALON_F_VALUE */ //.3113);
-     talon.setP(SmartDashboard.getNumber("Shooter P Value", 0.2)/*CrusaderCommon.SHOOTER_TALON_P_VALUE*/); //.8);//064543);
-     talon.setI(SmartDashboard.getNumber("Shooter I Value", 0) /*CrusaderCommon.SHOOTER_TALON_I_VALUE*/); 
-     talon.setD(SmartDashboard.getNumber("Shooter D Value", 1.33)/*CrusaderCommon.SHOOTER_TALON_D_VALUE*/);
+     
+     talon.setF(SmartDashboard.getNumber("Shooter F Value",0.427)); //.3113);
+     talon.setP(SmartDashboard.getNumber("Shooter P Value", 0.2)); //.8);//064543);
+     talon.setI(SmartDashboard.getNumber("Shooter I Value", 0)); 
+     talon.setD(SmartDashboard.getNumber("Shooter D Value", 1.33));
      
      talon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
      talon.SetVelocityMeasurementWindow(20);
@@ -215,7 +214,7 @@ public class Shooter {
    
 
     
-    Logger.Log("Begining Shooter Test");
+    Logger.Log("Shooter(): test(): Begining Shooter Test");
     
     try
     {
@@ -225,7 +224,7 @@ public class Shooter {
         
         execute(3500);
         
-        Logger.Log("Shooter Encoder Position"+ encoderPosition);
+        Logger.Log("Shooter(): test(): Shooter Encoder Position"+ encoderPosition);
         
         count++;
         
@@ -237,11 +236,11 @@ public class Shooter {
     {
       
       e.printStackTrace();
-      Logger.Log("Shooter Test Failed!");
+      Logger.Log("Shooter(): test(): Exception: "+e);
       
     }
     
-    Logger.Log("Shooter Test Sucessful!");
+    Logger.Log("Shooter(): test(): Shooter Standing by!");
   }
   
   

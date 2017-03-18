@@ -37,19 +37,19 @@ public class CommandTurnAwayFromBoiler extends AbstractCommand {
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
         targetValue, CrusaderCommon.TURN_MAX_ERROR,CrusaderCommon.TURN_MAX_MOTOR_VALUE);
     
-    Logger.Log("Calculated Motor Value is " + calculatedMotorValue);
+    Logger.Log("CommandTurnAwayFromBoiler(): Calculated Motor Value is " + calculatedMotorValue);
     
     switch(direction){
       
       //THIS NEEDS TO BE FIXED
       case "Right":
         myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
-        Logger.Log("We Are Turning Right");
+        Logger.Log("CommandTurnAwayFromBoiler(): We Are Turning Right");
         break;
      
       case "Left":
         myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
-        Logger.Log("We Are Turning Left");
+        Logger.Log("CommandTurnAwayFromBoiler(): We Are Turning Left");
         break;
         
       default:

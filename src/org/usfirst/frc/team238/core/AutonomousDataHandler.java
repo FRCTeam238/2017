@@ -23,7 +23,7 @@ import org.usfirst.frc.team238.robot.CrusaderCommon;
  * The goal of this is to be able to read the amodeJSON file for it's data, 
  * and to be able to creates, edit, and even saves the data to a new JSON file.
  * This also creates a chooser that's meant for selecting specific Autonomous Modes.
- * @author Mike :D
+ * @author Mike Frye :D
  */
 public class AutonomousDataHandler implements AutonomousState{
 	
@@ -48,9 +48,12 @@ public class AutonomousDataHandler implements AutonomousState{
 	}
 	
 	public Integer getModeSelectionFromDashboard(){
+	  
 	  int selection;
+	  
 	  selection = (int) SmartDashboard.getNumber("Chosen Auto Mode", 0);
 	  //selection = Integer.parseInt(SmartDashboard.getString("Choosen Auto Mode","0"));
+	  
 	  return selection;
 	}
 	
@@ -104,11 +107,14 @@ public class AutonomousDataHandler implements AutonomousState{
 		readJson(theMCP);
 		dump();
 		save();
-		Logger.Log("JSONHandler Standing by!");
+		
+		Logger.Log("AutonomousDataHandler() : Test() : AutonomousDataHandler Standing by!");
 		
 		}catch(Exception e){
+		  
 			e.printStackTrace();
-			Logger.Log("JSONHandler Test Failed!");
+			Logger.Log("AutonomousDataHandler() : Test() : AutonomousDataHandler Test Failed!: Exception: "+ e);
+			
 		}
 	}
 	
@@ -144,7 +150,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			
 			//Get's the number of modes
 			int numModes = autonomousModes.size();
-			Logger.Log("NumModes : " + numModes);
+			Logger.Log("AutonomousDataHandler() : readJson() : Number of detected modes : " + numModes);
 			
 			//create a list of commandsteps for each mode
 			autonomousModeCommandList = new ArrayList[numModes];
@@ -166,7 +172,7 @@ public class AutonomousDataHandler implements AutonomousState{
 				//Gets the name of the autonomousMode
             	JSONObject autoModeX = aModeIterator.next();
             	String name = (String) autoModeX.get("Name");
-            	Logger.Log("Autonmous Name: " + name);
+            	Logger.Log("AutonomousDataHandler() : readJson() : Autonomous Mode Name: " + name);
             	
             	//Add the name of this mode to the arrayList
             	autonomousModeNames.add(name);
@@ -193,9 +199,9 @@ public class AutonomousDataHandler implements AutonomousState{
             		
             		//Debug stuff
             		String cmdName = (String) aCommand.get("Name");
-            		Logger.Log("	Command Name = " + cmdName);
+            		Logger.Log("AutonomousDataHandler() : readJson() : 	Command Name = " + cmdName);
             		String cmdClass = classPath + cmdName; 
-            		Logger.Log("	Class = " + cmdClass);
+            		Logger.Log("AutonomousDataHandler() : readJson() : 	Class = " + cmdClass);
 
             		//Gets the array of params in the command
             		JSONArray paramArrayList = (JSONArray) aCommand.get("Parameters");
@@ -208,7 +214,7 @@ public class AutonomousDataHandler implements AutonomousState{
             		int i = 0;
             		while (paramIterator.hasNext()) {
             			params[i++] = (String) paramIterator.next();
-            			Logger.Log("	Param:" + i + " = " + params[i -1]);
+            			Logger.Log("AutonomousDataHandler() : readJson() :    	Param:" + i + " = " + params[i -1]);
             		}
             		
             		try {
@@ -249,7 +255,7 @@ public class AutonomousDataHandler implements AutonomousState{
 		
 		try {
 			
-			Logger.Log("AutonomousDataHandler: Saving...");
+			Logger.Log("AutonomousDataHandler() : save() : Saving...");
 		
 			//Creates the new json string with params given
 			String newAmode = BuildNewJson();
@@ -267,7 +273,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			//Close it
 			file.close();
 			
-			Logger.Log("AutonomousDataHandler: Saved!");
+			Logger.Log("AutonomousDataHandler() : save() :  Saved!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -419,7 +425,7 @@ public class AutonomousDataHandler implements AutonomousState{
       name = name.substring(41);
       //statesList = "AutoStateList " + count + " ";
       //SmartDashboard.putString( statesList, name);
-      Logger.Log("AUTONOMOUS DUMP " + name);
+      Logger.Log("AutonomousDataHandler() : dump() : State Name" + name);
     
       //If this state was selected
       if ( count == index){
@@ -443,7 +449,7 @@ public class AutonomousDataHandler implements AutonomousState{
 //    }
   }
 
-	/**
+	/*
 	 * Goes through each AutonomousMode and prints out each state and it's parameters
 	 
 	public void dump(){
@@ -495,6 +501,8 @@ public class AutonomousDataHandler implements AutonomousState{
 	}
 
 	*/
+  
+  
 	/**
 	 * Used to keep track of when the JSON was last saved.
 	 * @return The date is in the format of MM/dd/yyyy hh:mm:ss (PM/AM)

@@ -102,13 +102,13 @@ public class OperatorCmdFactory {
     operatorCommands.put(8, commandRunSerializer);
 		
 		commandCloseHopper = new CommandCloseHopper(theFuelHandler);
-		operatorCommands.put(9, commandCloseHopper);
+		operatorCommands.put(11, commandCloseHopper);
 		
 		commandRunClimber = new CommandStartClimber(theClimber);
     operatorCommands.put(10, commandRunClimber);
         
-    commandOpenHopper = new CommandOpenHopper(theFuelHandler);
-    operatorCommands.put(11, commandOpenHopper);
+    //commandOpenHopper = new CommandOpenHopper(theFuelHandler);
+    //operatorCommands.put(11, commandOpenHopper);
     
 		return operatorCommands;
 	}

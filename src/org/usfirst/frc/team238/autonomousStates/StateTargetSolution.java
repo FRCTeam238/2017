@@ -18,12 +18,12 @@ public class StateTargetSolution implements AutonomousState {
   int targetValue;
 
   public void process() {
-    
-    Logger.Log("target state is in process");
+    count++;
+    Logger.Log("StateTargetSolution.Process() "+count);
   }
 
   public boolean done() {
-   
+      count = 0;
       return true;
   }
 

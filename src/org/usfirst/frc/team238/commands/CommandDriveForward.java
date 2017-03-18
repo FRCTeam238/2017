@@ -14,40 +14,41 @@ public class CommandDriveForward extends AbstractCommand {
 
   Drivetrain myRobotDrive;
   Navigation myNavigation;
-
+  PowerDistributionPanel myPowerDistributionPanel;
+  
   double motorValue;
   double targetValue;
-  // boolean debug;
   double rollValue;
   double yawValue;
   double yawErrorTotal;
   double ultrasonicTarget;
-
-  PowerDistributionPanel myPowerDistributionPanel;
-  double                 CurrentDrawLimit = 20.0; // Limit for CurrentDraw
-
-  double yawPConstant            = CrusaderCommon.DRIVE_FORWARD_P_VALUE; // Proportional constant for drive
-                                          // straight controller
-  double yawIConstant            = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
+  double CurrentDrawLimit = 20.0; // Limit for CurrentDraw
+  double yawPConstant = CrusaderCommon.DRIVE_FORWARD_P_VALUE; // Proportional constant for drive
+  double yawIConstant = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
   double yawCorrectionMaxPercent = CrusaderCommon.DRIVE_FORWARD_MAX_YAW_PERCENT;   // percent of motorValue for max yaw
-                                          // correction
+ 
+  // boolean debug;
 
   public CommandDriveForward(Drivetrain robotDrive, Navigation myNav) {
+    
+    // this.debug = SmartDashboard.getBoolean("Debug");
     this.myRobotDrive = robotDrive;
     this.myNavigation = myNav;
-    // this.debug = SmartDashboard.getBoolean("Debug");
     this.myPowerDistributionPanel = new PowerDistributionPanel();
 
   }
 
   public void prepare() {
 
+    yawErrorTotal = 0;
+    
     myNavigation.resetNAVX();
     myNavigation.zeroYaw();
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
+    
     SmartDashboard.putNumber("Starting Yaw", yawValue);
-    yawErrorTotal = 0;
+    
     //Logger.Log("CommandDriveForward.prepare");
 
   }
@@ -56,46 +57,25 @@ public class CommandDriveForward extends AbstractCommand {
 
     myRobotDrive.shiftLow();
     
-   motorValue = pidCalc(CrusaderCommon.STRAIGHT_P_VALUE, CrusaderCommon.STRAIGHT_DEAD_STOP,
-        targetValue, CrusaderCommon.STRAIGHT_MAX_ERROR, CrusaderCommon.STRAIGHT_MAX_MOTOR_VALUE);
+    motorValue = pidCalc(CrusaderCommon.STRAIGHT_P_VALUE, CrusaderCommon.STRAIGHT_DEAD_STOP,
+    targetValue, CrusaderCommon.STRAIGHT_MAX_ERROR, CrusaderCommon.STRAIGHT_MAX_MOTOR_VALUE);
     
     double currentYaw = myNavigation.getYaw();
-    double yawError = currentYaw - yawValue; // Positive yaw is right turn so
-                                             // positive error is right turn
-    // yawErrorTotal += yawError;
-
-    double yawCorrection = yawPConstant * yawError * motorValue;// +
-                                                                // yawIConstant*yawErrorTotal*motorValue;
-    yawCorrection = Math.min(yawCorrection, yawCorrectionMaxPercent * motorValue); // Constrain
-                                                                                   // yaw
-                                                                                   // correction
-                                                                                   // factor
-                                                                                   // to
-                                                                                   // max
-                                                                                   // value
+    double yawError = currentYaw - yawValue; // Positive yaw is right turn so positive error is right turn
+    double yawCorrection = yawPConstant * yawError * motorValue;
+    
+    yawCorrection = Math.min(yawCorrection, yawCorrectionMaxPercent * motorValue); 
 
     double finalMotorValueLeft = motorValue - yawCorrection;
     double finalMotorValueRight = motorValue + yawCorrection;
     
-    Logger.Log("CommandDriveForward: leftMotorValue = "
-    + finalMotorValueLeft + "/n"+"RightMotorValue = " + finalMotorValueRight);
+    Logger.Log("CommandDriveForward(): LeftMotorValue = "+ finalMotorValueLeft); 
+    Logger.Log("CommandDriveForward(): RightMotorValue = " + finalMotorValueRight);
+    Logger.Log("CommandDriveForward(): CurrentYaw: "+ currentYaw+ "  YawError: "+ yawError+ "  YawCorrection: "+ yawCorrection);
     
-    myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight); // If
-                                                                          // yaw
-                                                                          // error
-                                                                          // is
-                                                                          // positive,
-                                                                          // slow
-                                                                          // down
-                                                                          // left
-                                                                          // side
-                                                                          // to
-                                                                          // turn
-                                                                          // yaw
-                                                                          // back
-                                                                          // to
-                                                                          // left
-
+    myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight); 
+    
+    
     /*
      * SmartDashboard.putNumber("YawError", yawError);
      * SmartDashboard.putNumber("CurrenTYaw", currentYaw);
@@ -105,8 +85,7 @@ public class CommandDriveForward extends AbstractCommand {
      * SmartDashboard.putNumber("finalMotorValueRight", finalMotorValueRight);
      */
 
-    Logger.Log("CurrentYaw: "+ currentYaw+ "  YawError: "+ yawError+ "  YawCorrection: "+ yawCorrection);
-    
+   
     //myRobotDrive.driveForward(motorValue, motorValue);
     
     // myRobotDrive.driveForward(motorValue, motorValue);
@@ -141,21 +120,21 @@ public class CommandDriveForward extends AbstractCommand {
   }
 
   public boolean done() {
+    
     boolean isDone = false;
+    
     double amountOfTicks;
     double currnetRollValue = myNavigation.getRoll();
     double currentUltrasonicDistance;
 
     amountOfTicks = myRobotDrive.getEncoderTicks();
-    Logger.Log("Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
+    
+    Logger.Log("CommandDriveForward() : Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
     //Logger.Log("RollValue : "+ rollValue+ "CurrentRollValue : "+ currnetRollValue);
-    Logger.Log("Ultrasonic : "+ ultrasonicTarget);
+    //Logger.Log("Ultrasonic : "+ ultrasonicTarget);
 
     if (rollValue > 0) {
-      if ((currnetRollValue >= rollValue) && (amountOfTicks > 9000)) // why is
-                                                                     // this &&
-                                                                     // here?
-                                                                     // MJF?
+      if ((currnetRollValue >= rollValue) && (amountOfTicks > 9000))
       {
         isDone = true;
         myRobotDrive.driveForward(0, 0);
@@ -180,33 +159,38 @@ public class CommandDriveForward extends AbstractCommand {
        * doesn't kick in until 1.5 feet away from the target distance
        */
       if ((amountOfTicks >= targetValue - CrusaderCommon.SONIC_SENSOR_ACTIVATION_DISTANCE)) {
+        
         currentUltrasonicDistance = myNavigation.getDistanceFromUltrasonic();
         
-        
-
         if (currentUltrasonicDistance <= ultrasonicTarget) {
+          
           isDone = true;
           myRobotDrive.driveForward(0, 0);
+          
         }
-
+        
       }
-    } 
-    else 
-    {
+      
+    } else {
+      
       boolean areWeDone = (amountOfTicks > targetValue);
       
       //Logger.logBoolean("DONE : ", areWeDone);
       
       if (areWeDone) {
+        
         isDone = true;
         myRobotDrive.driveForward(0, 0);
 
       } else {
+        
         isDone = false;
+        
       }
     }
     return isDone;
   }
+  
   /*
    * A function meant to check if the robot is running into a wall by checking
    * the current output private boolean currentOverLoad(){ boolean

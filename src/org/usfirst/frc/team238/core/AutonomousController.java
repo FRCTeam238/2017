@@ -44,7 +44,7 @@ public class AutonomousController implements AutonomousState{
 	public void setState(AutonomousState state){
 		this.currentState = state;
 		state.prepare();
-		Logger.Log("State: " + currentState);
+		Logger.Log("AutonomousController(): State: " + currentState);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class AutonomousController implements AutonomousState{
 	 * @return
 	 */
 	private AutonomousState getNextState(){
-		Logger.Log("getNextState:index = " + index);
+		Logger.Log("AutonomousController(): getNextState(): index = " + index);
 		AutonomousState nextState = steps.get(++index);
 		
 		return(nextState);
@@ -90,7 +90,7 @@ public class AutonomousController implements AutonomousState{
 		while(aModeIterator.hasNext()){
 			
 			AutonomousState thisState = aModeIterator.next();
-			Logger.Log("AUTONOMOUS Update State Params " + thisState.getClass().getName());
+			Logger.Log("AutonomousController(): updateStateParameters(): State Updated! :" + thisState.getClass().getName());
 			if ( count == index)
 			{
 				//Updates it (It grabs the data from the SmartDashboard and applies it)

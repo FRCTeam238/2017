@@ -43,11 +43,10 @@ public class Serializer {
     }
  
     }catch(Exception e){
-      e.printStackTrace();
-      Logger.Log("Serializer has failed!");
+      Logger.Log("Serializer(): test(): Exception:"+e);
     }
     
-    Logger.Log("Serializer standing by!");
+    Logger.Log("Serializer(): test(): Serializer standing by!");
     
   }
   
@@ -59,7 +58,9 @@ public class Serializer {
     serializerMotor.set(CrusaderCommon.SERIALIZER_MOTOR_ON);
     spinning = true;
     
-    /*if(currentOverLoad()){
+    /*if(currentOverLoad() && timer> currentTimeLimit){
+      
+      
       
       stopSpinning();
       
@@ -75,6 +76,7 @@ public class Serializer {
     serializerMotor.set(CrusaderCommon.SERIALIZER_MOTOR_OFF);
     spinning = false;
     
+    //timer = 0;
   }
   
   public void runSerializer()
@@ -100,16 +102,16 @@ public class Serializer {
    boolean currentOverload = false;
    
    double SerializerCurrentDraw = myPowerDistributionPanel.getCurrent(CrusaderCommon.PDP_SERIALIZER_MOTOR_ID); 
-
-   Logger.Log("Serializer: CurrentDraw is = "+SerializerCurrentDraw);
-  
+   
+   Logger.Log("Serializer(): currentOverLoad(): CurrentDraw is = "+SerializerCurrentDraw);
+   
    if( SerializerCurrentDraw > CrusaderCommon.CURRENT_DRAW_LIMIT) {
    
-     currentOverload = true; 
-    
+     currentOverload = true;
+   
    }
    
-  return currentOverload; 
+   return currentOverload; 
   }
   
   public boolean complete(){

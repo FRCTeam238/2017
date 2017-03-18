@@ -40,7 +40,7 @@ public class CommandTargetBoiler extends AbstractCommand {
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
         targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
     
-    Logger.Log("Calculated Motor Value is " + calculatedMotorValue);
+    Logger.Log("CommandTargetBoiler(): Calculated Motor Value is " + calculatedMotorValue);
     
     //this is different than turning to/from boiler cmd as it's the 
     //opposite direction but only on one side so the robot pivots on the side that doesn't move
@@ -48,12 +48,12 @@ public class CommandTargetBoiler extends AbstractCommand {
     switch(direction){
        case "Left":
         myRobotDrive.turnLeft(calculatedMotorValue, 0);
-        Logger.Log("We Are Going Left");
+        Logger.Log("CommandTargetBoiler(): We Are Going Left");
         break;
      
       case "Right":
         myRobotDrive.turnRight(0, calculatedMotorValue);
-        Logger.Log("We Are Going Right");
+        Logger.Log("CommandTargetBoiler(): We Are Going Right");
         break;
         
       default:
@@ -76,7 +76,7 @@ public class CommandTargetBoiler extends AbstractCommand {
     
     teamColor = theRobot.getAllianceTeam();
     
-    Logger.Log("Team Color is : " + teamColor);
+    Logger.Log("CommandTargetBoiler(): Team Color is : " + teamColor);
     
     //this is different than turning to/from boiler cmd as it's the 
     //opposite direction but only on one side so the robot pivots on the side that doesn't move
@@ -87,7 +87,7 @@ public class CommandTargetBoiler extends AbstractCommand {
       direction = "Right";
     }
     
-    Logger.Log("CommandTurnToBoiler: Direction is: "+direction);
+    Logger.Log("CommandTargetBoiler(): Direction is: "+direction);
     
     
     if ((params[0] != null) || (!params[0].isEmpty())) {

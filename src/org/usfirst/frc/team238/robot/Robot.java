@@ -92,10 +92,10 @@ public class Robot extends IterativeRobot {
 			// or you will smoke the roborio into a useless pile of silicon
 			//checkForSmartDashboardChanges(CrusaderCommon.PREFVALUE_OP_AUTO, CrusaderCommon.PREFVALUE_OP_AUTO_DEFAULT);
 			
-			Logger.Log("disabledInit:");
+			Logger.Log("Robot(): disabledInit:");
 		
-		} catch (Exception ex) {
-			Logger.Log("disabledInit exception");
+		} catch (Exception e) {
+			Logger.Log("Robot(): disabledInit Exception: "+e);
 		}
 	}
 
@@ -120,7 +120,7 @@ public class Robot extends IterativeRobot {
 				int autoModeSelection = myAutonomousDataHandler.getModeSelectionFromDashboard();
 				
 				//int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection();
-				Logger.Log("The chosen One =  " + String.valueOf(autoModeSelection));
+				Logger.Log("Robot(): disabledPeriodic(): The chosen AutoMode =  " + String.valueOf(autoModeSelection));
 			
 				//see if we need to modify the params on a state
 				String updateParams = (String) autonomousStateParamsUpdate.getSelected();
@@ -180,27 +180,26 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
-				Logger.Log("Vision Horizontal : " + dataFromVision[0]);
-				Logger.Log("Vision Vertical : " + dataFromVision[1]);
+				Logger.Log("Robot(): disabledPeriodic(): Vision Horizontal : " + dataFromVision[0]);
+				Logger.Log("Robot(): disabledPeriodic(): Vision Vertical : " + dataFromVision[1]);
 				
 			}
 			
 			count++;
 			
-		} catch (Exception ex) {
-			Logger.Log("disabledPriodic exception: " + ex );
-			ex.printStackTrace();
+		} catch (Exception e) {
+			Logger.Log("Robot(): disabledPeriodic(): disabledPriodic exception: " + e);
 		}
 
 	}
 
 	public void teleopInit() {
 		try {
-			Logger.Log("TeleopInit()");
+			Logger.Log("Robot(): TeleopInit()");
 			myControlBoard.checkXboxController();
 			
-		} catch (Exception ex) {
-			Logger.Log("TeleopInit:Exception");
+		} catch (Exception e) {
+			Logger.Log("Robot(): TeleopInit() Exception: "+ e);
 		}
 
 	}
@@ -208,15 +207,12 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		try {
 
-			Logger.Log("AutononousInit()");
-
-			try {
+			  Logger.Log("Robot(): AutononousInit()");
 			
 				//int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection(); //controller
 				int automousModeFromDS =  myAutonomousDataHandler.getModeSelectionFromDashboard(); //controller
-				
 			
-				Logger.Log("The chosen One =  " + String.valueOf(automousModeFromDS));
+				Logger.Log("Robot(): AutonomousInit(): The chosen One =  " + String.valueOf(automousModeFromDS));
 				theMACP.pickAMode(automousModeFromDS);
 				
 				myDriveTrain.getEncoderTicks();
@@ -224,11 +220,8 @@ public class Robot extends IterativeRobot {
 				teamColor = DriverStation.getInstance().getAlliance();
 				SmartDashboard.putString("Alliance Color", teamColor.toString());
 				
-			} catch (Exception ex) {
-				Logger.Log("AutononousInit:Something BAD happened");
-			}
 		} catch (Exception ex) {
-			Logger.Log("AutononousInit:Exception");
+			Logger.Log("Robot(): AutononousInit() Exception: "+ex);
 		}
 	}
 	
@@ -319,12 +312,11 @@ public class Robot extends IterativeRobot {
       myTargetingData = new TargetingDataHandler();
       myTargetingData.init(theMCP);
       
-			Logger.Log("Fully Initialized");
+			Logger.Log("Robot(): robotInit(): Fully Initialized");
 
 		} catch (Exception ex) {
 
-			Logger.Log(ex.getMessage());
-			ex.printStackTrace();
+			Logger.Log("Robot(): robotInit() Exception : "+ex);
 
 		}
 	}
@@ -386,9 +378,11 @@ public class Robot extends IterativeRobot {
   
   SmartDashboard.putNumber("TESTING RPM", 650);
 
-  SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
+  //SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
   
   SmartDashboard.putBoolean("CLIMBDEBUG", false);
+  
+  SmartDashboard.putNumber("DRIVETRAIN TUNING", 0.2);
   
   //SmartDashboard.putString("Team Side :",getAllianceTeam());
   //SmartDashboard.putNumber("SHOOTER RPM",0);
@@ -422,8 +416,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("AutonomousPeriodic: The CurrentYaw ", currentYaw);
 			
 		} catch (Exception ex) {
-			Logger.Log("Autonomous exception");
-			ex.printStackTrace();
+			Logger.Log("Robot(): autonomousPeriodic() Exception: "+ex);
 		}
 	}
 
@@ -450,8 +443,8 @@ public class Robot extends IterativeRobot {
 
 		} catch (Exception e) {
 			
-			Logger.Log("telopperiodic: ");
-			e.printStackTrace();
+			Logger.Log("Robot(): teleopPeriodic() Exception: "+ e);
+			
 		}
 	}
 
@@ -480,7 +473,7 @@ public class Robot extends IterativeRobot {
 
 		String valueFromPrefs = myPreferences.getString(key, value);
 		if (valueFromPrefs != null) {
-			Logger.Log("CheckSDChanges:valueFromPrefs : " + key + " = " + valueFromPrefs);
+			Logger.Log("Robot(): CheckSDChanges(): valueFromPrefs : " + key + " = " + valueFromPrefs);
 			String valueFromDS = null;
 			
 			try {
@@ -490,7 +483,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putString(key, valueFromPrefs);
 			}
 
-			Logger.Log("CheckSDChanges.ValFromDS : " + key + " = " + valueFromDS);
+			Logger.Log("Robot(): CheckSDChanges(): ValFromDS : " + key + " = " + valueFromDS);
 
 			// check for null and also if it's empty don't overwrite what's in
 			// the preferences table
@@ -498,7 +491,7 @@ public class Robot extends IterativeRobot {
 								// if they are not the same then update the preferences
 				if (!valueFromPrefs.equalsIgnoreCase(valueFromDS)) {
 					
-					Logger.Log("CheckSDChanges.UpdatePrefs" + key + " = " + valueFromDS);
+					Logger.Log("Robot(): CheckSDChanges(): UpdatePrefs" + key + " = " + valueFromDS);
 					myPreferences.putString(key, valueFromDS);
 
 					// NEVER NEVER use this save() in a periodic function or you

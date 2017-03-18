@@ -101,7 +101,8 @@ public class Navigation {
 		currentYaw = ahrs.getYaw();
 		currentYaw = Math.abs(currentYaw);
 		
-		Logger.Log("Current Yaw is : "+ currentYaw+ " \n Target is : "+ targetYaw);
+		Logger.Log("Navigation(): areWeThereYet(): Current Yaw is : "+ currentYaw);
+		Logger.Log("Navigation(): areWeThereYet(): Target is : "+ targetYaw);
 		
 		if((currentYaw >= targetYaw)) // && (currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE)))
 		{
@@ -152,19 +153,19 @@ public class Navigation {
 	   * */
 	  double yawError = targetYaw - currentYaw;
 	  
-	  Logger.Log("Yaw Error : "+ yawError);
+	  Logger.Log("Navigation(): turningMotorValue(): Yaw Error : "+ yawError);
 	  
 	  double yawCorrection = yawPConstant * yawError * motorValue;
 	  
-	  Logger.Log("True Yaw Correction : "+ yawCorrection);
+	  Logger.Log("Navigation(): turningMotorValue(): True Yaw Correction : "+ yawCorrection);
 	  
 	  yawCorrection = Math.min(yawCorrection, motorValue * CrusaderCommon.NAVIGATION_MAX_MOTOR_INCREMENT);
 	  
-	  Logger.Log("Used Yaw Correction : "+ yawCorrection);
+	  Logger.Log("Navigation(): turningMotorValue(): Used Yaw Correction : "+ yawCorrection);
 	  
 	  double finalMotorValue = motorValue + yawCorrection;
 	  
-	  Logger.Log("Final Motor Value : "+ finalMotorValue);
+	  Logger.Log("Navigation(): turningMotorValue(): Final Motor Value : "+ finalMotorValue);
 	  
 	  return finalMotorValue;
 	  

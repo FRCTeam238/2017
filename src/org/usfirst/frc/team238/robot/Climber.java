@@ -89,10 +89,10 @@ public class Climber {
    
     }catch(Exception e){
         e.printStackTrace();
-        Logger.Log("Climber has failed!");
+        Logger.Log("Climber() : Test() : Climber has failed!");
     }
     
-    Logger.Log("Climber standing by!");    
+    Logger.Log("Climber() : Test() : Climber standing by!");    
     
   }
   
@@ -110,7 +110,7 @@ public class Climber {
 
    TotalCurrentDraw = (ClimberMotorCurrentDrawOne+ClimberMotorCurrentDrawTwo)/2;
    
-   Logger.Log("Elevator: TotalCurrentDraw is = "+TotalCurrentDraw);
+   Logger.Log("Climber() : currentOverLoad() : TotalCurrentDraw is = "+TotalCurrentDraw);
   
    if( TotalCurrentDraw > CrusaderCommon.CURRENT_DRAW_LIMIT) {
    

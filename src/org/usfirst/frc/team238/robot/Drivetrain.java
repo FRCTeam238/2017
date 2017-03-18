@@ -88,8 +88,8 @@ public class Drivetrain {
 		
 		encoderLeft = Math.abs(encoderLeft);
 		
-		Logger.Log("DriveTrain: Left Encoder = " + encoderLeft);
-		Logger.Log("DriveTrain: Right Encoder = " + encoderRight);
+		Logger.Log("DriveTrain(): Left Encoder = " + encoderLeft);
+		Logger.Log("DriveTrain(): Right Encoder = " + encoderRight);
 		
 		//If the left encoder isn't reading, return the right encoder
 		if((encoderLeft == 0) && (encoderRight != 0))
@@ -108,7 +108,7 @@ public class Drivetrain {
 		//If neither of them are reading, return 0
 		else if((encoderLeft == 0) && (encoderRight == 0))
 		{
-		  Logger.Log("DriveTrain: Encoders are broken!!!! HELP!!");
+		  Logger.Log("DriveTrain(): Encoders are broken!!!! HELP!!");
 		  encoderNumber = 0;
 		  
 		}
@@ -158,7 +158,7 @@ public class Drivetrain {
 	{
 	  
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
-		Logger.Log("!!!!!!!!!!WE'RE IN HIGH GEAR!!!!!!!!!!");
+		Logger.Log("Drivetrain() : shiftHigh(): !!!!!!!!!!WE'RE IN HIGH GEAR!!!!!!!!!!");
 		
 	}
 	
@@ -170,7 +170,7 @@ public class Drivetrain {
 	{
 	  
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_LOW_GEAR);
-		Logger.Log("!!!!!!!!!!WE'RE IN LOW GEAR!!!!!!!!!!");
+		Logger.Log("Drivetrain() : shiftLow(): !!!!!!!!!!WE'RE IN LOW GEAR!!!!!!!!!!");
 		
 	}
 	
@@ -218,7 +218,8 @@ public class Drivetrain {
     leftFrontDrive.set(leftJsValue);
     rightFrontDrive.set(rightJsValue);
     
-    Logger.Log("DriveTrain: TurnLeft: leftMotorValue = " + leftJsValue + "/n"+"RightMotorValue = " + rightJsValue);
+    //Logger.Log("DriveTrain() : turnLeft() : LeftMotorValue = " + leftJsValue);
+    //Logger.Log("DriveTrain() : turnLeft() : RightMotorValue = " + rightJsValue);
     
 	}
 	
@@ -233,6 +234,7 @@ public class Drivetrain {
 		//robotMotors.tankDrive(leftJsValue, rightJsValue * -1);
     leftFrontDrive.set(-leftJsValue);
     rightFrontDrive.set(-rightJsValue);
+    
 	}
 	
 	
@@ -302,7 +304,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.Log("Increment"+ protoCounter);
+			Logger.Log("DriveTrain() : incrementMotorValue() : Increment"+ protoCounter);
 		}
 	}
 	
@@ -336,7 +338,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.Log("decrenment "+ protoCounter);
+			Logger.Log("DriveTrain() : decrementMotorValue() : decrenment "+ protoCounter);
 		}
 	}
 	
@@ -374,7 +376,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.Log("Increment "+ protoCounter);
+			Logger.Log("DriveTrain() : incrementMotorValueOnePercent() : Increment "+ protoCounter);
 		}
 	}
 	
@@ -408,7 +410,7 @@ public class Drivetrain {
 				lastBtnPressed = currentBtn;
 				SmartDashboard.putNumber("Motor vaslue = ", protoCounter);
 			}
-			Logger.Log("decrenment "+ protoCounter);
+			Logger.Log("DriveTrain() : incrementMotorValueOnePercent() : decrenment "+ protoCounter);
 		}
 	}
 	
@@ -422,7 +424,7 @@ public class Drivetrain {
 		protoCounter = 0;
 		lastBtnPressed = 1;
 		robotMotors.tankDrive(0, 0);
-		Logger.Log("Reset "+ protoCounter);
+		Logger.Log("DriveTrain() : resetMotorValue() : Reset Counter "+ protoCounter);
 	}
 	
 	

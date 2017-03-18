@@ -140,7 +140,7 @@ public class CommandRunShooter extends AbstractCommand {
     }
     else
     {
-      Logger.Log("We Can't Find A Distance!");
+      Logger.Log("CommandRunShooter(): calculateRPM(): We Can't Find A Distance!");
       newRPM = (3250 * 0.5);
     }
       

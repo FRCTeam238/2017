@@ -35,12 +35,16 @@ public class CommandTurnRight extends AbstractCommand {
 
   public void execute() {
 
-    currentYaw = myNavigation.getYaw();
    // finalMotorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
-    myRobotDrive.turnRight(motorValue, motorValue);
+    
     double yaw = myNavigation.getYaw();
-    Logger.Log("CommandTurnRight: Our yaw = "+yaw+"\n"+"Our Target yaw is = "+ targetValue);
+    
     myNavigation.navxValues();
+    currentYaw = myNavigation.getYaw();
+    myRobotDrive.turnRight(motorValue, motorValue);
+    
+    Logger.Log("CommandTurnRight(): Our yaw = "+yaw);
+    Logger.Log("CommandTurnRight(): Our Target yaw is = "+ targetValue);
     
   }
 

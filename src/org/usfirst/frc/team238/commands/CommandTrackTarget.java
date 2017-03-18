@@ -49,7 +49,7 @@ public class CommandTrackTarget extends AbstractCommand {
 		
 		myNavigation.setTargetValues(realAngle);
 		 
-		Logger.Log("Target Value is = "+ realAngle);
+		Logger.Log("CommandTrackTarget(): Target Value is = "+ realAngle);
 		
 		if(visionAngle[CrusaderCommon.VISION_ANGLE_SLOT] == Double.MAX_VALUE)
 		{
@@ -58,11 +58,13 @@ public class CommandTrackTarget extends AbstractCommand {
 			{
 				//scan right to find the target
 				realAngle = 30;
+				
 			}
 			else
 			{
 				//scan left to find the target
 				realAngle = -30;
+				
 			}
 			
 		}
@@ -73,34 +75,34 @@ public class CommandTrackTarget extends AbstractCommand {
 			
 			if(realAngle > 10)
 			{
+			  
 				slowSide = 0.5;
-			}
-			else if(realAngle > 0)
-			{
+				
+			}else if(realAngle > 0){
+			  
 				getSlowSide();
+				
 			}
 			
 			leftMotor = paramMotorValue;
 			rightMotor = slowSide;
 			
-		}
-		
-		else if(realAngle < 0)
-		{
+		}else if(realAngle < 0){
 			// Turn Right
 			
 			if(realAngle < -10)
 			{
+			  
 				slowSide = 0.5;
-			}
-			else if(realAngle < 0)
-			{
+				
+			}else if(realAngle < 0){
+			  
 				getSlowSide();
+				
 			}
 			
 			leftMotor = slowSide;
 			rightMotor = paramMotorValue;
-			
 			
 		}
 		
@@ -115,17 +117,14 @@ public class CommandTrackTarget extends AbstractCommand {
 		if(slowSide > 1){
 			
 			//If the motor value goes over one we stop the motors
-			
 			rightMotor = 0;
 			leftMotor = 0;
 			
 		}
 		
-		Logger.Log("The Slow Side is = "+ slowSide);
+		Logger.Log("CommandTrackTarget(): The Slow Side is = "+ slowSide);
 		
 		myRobotDrive.driveForward(leftMotor, rightMotor);
-		
-		
 		
 		myNavigation.zeroYaw();
 		
@@ -150,15 +149,13 @@ public class CommandTrackTarget extends AbstractCommand {
 	public void setParams(String params[]) throws Exception {
 		// TODO Auto-generated method stub
 		 
-		 
-		 	
 			if ((params[0] != null) || (!params[0].isEmpty())){
 				pickASide = Double.parseDouble(params[0]);
 			}
 			else 
 			{
 			
-				throw new Exception("Bad Param in trackTarget, Please Fix");
+				throw new Exception("CommandTrackTarget(): Bad Param in trackTarget, Please Fix");
 				
 			}
 			if ((params[1] != null) || (!params[1].isEmpty())){
@@ -169,18 +166,13 @@ public class CommandTrackTarget extends AbstractCommand {
 			}
 			
 			// 0 = you are on the left, want to turn right
-			//1 = you are on the right, want to turn left
-			
-			
-		 
-			
+			// 1 = you are on the right, want to turn left
 		 
 	}
 
 	@Override
 	public boolean done() {
 		// TODO Auto-generated method stub
-		
 		
 		if(realAngle == 0)
 		{
@@ -189,16 +181,15 @@ public class CommandTrackTarget extends AbstractCommand {
 			
 			if(count >20)
 			{
-				Logger.Log("We Have Finished!");
+			  
+				Logger.Log("CommandTrackTarget(): We Have Finished!");
 				return true;
-				
+			
 			}
 			
 		}
 		
 		return false;
-		
-		
 	}
 
 }

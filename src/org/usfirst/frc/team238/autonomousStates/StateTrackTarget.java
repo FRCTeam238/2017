@@ -17,9 +17,9 @@ public class StateTrackTarget implements AutonomousState {
 	//parameter[0] = direction
 	
 	CommandTrackTarget trackerCommand;
-	
 	String parameters[];		// 0 = Left
-								// 1 = Right
+								          // 1 = Right
+	int count = 0;
 	
 	@Override
 	public void init() {
@@ -30,15 +30,13 @@ public class StateTrackTarget implements AutonomousState {
 	@Override
 	public void prepare() {
 		
-		try 
-		{
-			trackerCommand.setParams(parameters);
-		} catch (Exception e)
-		
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	  //For some reason this demands a try/catch here
+			try {
+        trackerCommand.setParams(parameters);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        Logger.Log("StateTrackTarget: Exception: "+ e);
+      }
 		trackerCommand.prepare();
 	}
 
@@ -53,8 +51,9 @@ public class StateTrackTarget implements AutonomousState {
 	@Override
 	public void process() {
 		
+	  count++;
 		trackerCommand.execute();
-		Logger.Log("tracking target...");
+		Logger.Log("StateTrackTarget.Process(): "+count);
 		
 	}
 
@@ -63,6 +62,7 @@ public class StateTrackTarget implements AutonomousState {
 		
 		 if(trackerCommand.done() == true)
 		 {
+		   count = 0;
 		 	return true;
 		 }
 		 else

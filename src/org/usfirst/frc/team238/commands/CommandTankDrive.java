@@ -6,6 +6,7 @@ import org.usfirst.frc.team238.robot.ControlBoard;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandTankDrive extends AbstractCommand {
 
@@ -23,10 +24,15 @@ public class CommandTankDrive extends AbstractCommand {
   public void execute() {
     double leftJsValue = 0;
     double rightJsValue = 0;
+    
+    double tuningValue = SmartDashboard.getNumber("DRIVETRAIN TUNING", 0.2);
     leftJsValue = ControlBoard.getDriverLeftJs().getY();
     rightJsValue = ControlBoard.getDriverRightJs().getY();
     
-
+    
+    //This represents x = ax^3+(1-a)x where leftJsValue = x; tuningValue = a;
+    leftJsValue = (tuningValue * (leftJsValue * leftJsValue * leftJsValue) + (1-tuningValue) * leftJsValue);
+    rightJsValue = (tuningValue * (rightJsValue * rightJsValue * rightJsValue) + (1-tuningValue) * rightJsValue);
 
     myRobotDrive.tankDrive(leftJsValue, rightJsValue);
 

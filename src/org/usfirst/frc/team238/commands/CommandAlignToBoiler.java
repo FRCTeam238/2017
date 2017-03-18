@@ -14,16 +14,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CommandAlignToBoiler extends AbstractCommand {
 
+  //THIS COMMAND IS PROBABLY BEING REPLACED WITH CommandTargetBoiler
+  
 	Drivetrain myDrivetrain;
 	Vision myVision;
 	Navigation myNavigation;
 	FuelHandler myFuelHandler;
-
+	
+	boolean done;
 	boolean areWeThere = false;
-	double realAngle;
+	
+	
 	int count = 0;
 	int checkCount = 0;
-	boolean done;
+	
+	double realAngle;
 	double visionAngle = 0;
 	double ringLightTime;
 	double imageDelayTimestamp = 0;
@@ -39,21 +44,28 @@ public class CommandAlignToBoiler extends AbstractCommand {
 
 	@Override
 	public void execute() {
+	  
+	  double calculatedMotorValue;
+	  
 	  if(!myFuelHandler.isRingLightOn())
 	  {
 	    myFuelHandler.turnOnRingLight();
 	  }
+	  
 		if (Timer.getFPGATimestamp() - ringLightTime < CrusaderCommon.RING_LIGHT_DELAY) {
 			return;
 		}
 
-		double calculatedMotorValue;
-
 		if (myNavigation.areWeThereYet()) {
+		  
 			if (imageDelayTimestamp == 0) {
+			  
 				imageDelayTimestamp = Timer.getFPGATimestamp();
+				
 			} else if (Timer.getFPGATimestamp() - imageDelayTimestamp > CrusaderCommon.ALIGN_IMAGE_DELAY)
+			  
 			// ALIGN_IMAGE_DELAY should be a constant, start with .25?
+			  
 			{
 				imageDelayTimestamp = 0;
 				if (myVision.shooterHorizontal() != Double.MAX_VALUE) {

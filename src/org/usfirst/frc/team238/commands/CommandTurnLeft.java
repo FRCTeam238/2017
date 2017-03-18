@@ -17,6 +17,7 @@ public class CommandTurnLeft extends AbstractCommand {
   double targetValue;
   double newTargetYaw;
   double currentYaw;
+  
   int    count;
 
   public CommandTurnLeft(Drivetrain theRobotDrive, Navigation myNavigationForTarget) {
@@ -36,17 +37,20 @@ public class CommandTurnLeft extends AbstractCommand {
 
   public void execute() {
   
-    currentYaw = myNavigation.getYaw();
    // finalMotorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
-    myRobotDrive.turnLeft(motorValue, motorValue);
     double yaw = myNavigation.getYaw();
-    Logger.Log("CommandTurnLeft: Our yaw = "+yaw+"\n"+"Our Target yaw is = "+targetValue);
+    
+    currentYaw = myNavigation.getYaw();
+    myRobotDrive.turnLeft(motorValue, motorValue);
     myNavigation.navxValues();
+    
+    Logger.Log("CommandTurnLeft(): Our yaw = "+yaw+"\n"+"Our Target yaw is = "+targetValue);
 
   }
 
   public void setParams(String params[]) {
-    Logger.Log("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!  "+ params[0]);
+    
+    //Logger.Log("!!!!!DEBUG!!!!!!!!PARAMETERS!!!!  "+ params[0]);
 
     if ((params[0] != null) || (!params[0].isEmpty())) {
       targetValue = Double.parseDouble(params[0]) * -1;

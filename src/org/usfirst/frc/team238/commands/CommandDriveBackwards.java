@@ -22,7 +22,7 @@ public class CommandDriveBackwards extends AbstractCommand {
   public void prepare() {
 
     myRobotDrive.resetEncoders();
-    Logger.Log("CommandDriveBackwards.prepare");
+    //Logger.Log("CommandDriveBackwards.prepare");
 
   }
 

@@ -62,10 +62,10 @@ public class Intake {
     
     }catch(Exception e){
       e.printStackTrace();
-      Logger.Log("Intake has failed!");
+      Logger.Log("Intake(): Test(): Intake has failed! Exception: "+e);
     }
     
-    Logger.Log("Intake standing by!");
+    Logger.Log("FuelHandler() : Test() : Intake standing by!");
     
   }
   

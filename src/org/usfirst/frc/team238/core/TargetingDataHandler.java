@@ -100,11 +100,15 @@ public class TargetingDataHandler implements AutonomousState{
 		readJson(theMCP);
 		dump();
 		save();
-		Logger.Log("JSONHandler Standing by!");
+		
+		Logger.Log("TargetingDataHandler() : Test() : TargetingDataHandler Standing by!");
 		
 		}catch(Exception e){
+		  
 			e.printStackTrace();
-			Logger.Log("JSONHandler Test Failed!");
+			
+			Logger.Log("TargetingDataHandler() : Test() : TargetingDataHandler Test Failed!");
+			
 		}
 	}
 	
@@ -139,7 +143,7 @@ public class TargetingDataHandler implements AutonomousState{
 			
 			//Get's the number of target solutions
 			int numSolutions = targetSolutions.size();
-			Logger.Log("numSolutions : " + numSolutions);
+			Logger.Log("TargetingDataHandler() : readJson() : Number of Targeting Solutions : " + numSolutions);
 			
 			//create a list of commandsteps for each targetSolution
 			targetSolutionCommandList = new ArrayList[numSolutions];
@@ -161,7 +165,7 @@ public class TargetingDataHandler implements AutonomousState{
 				//Gets the name of the targetSolution
             	JSONObject targetSolution = targetSolutionsIterator.next();
             	String name = (String) targetSolution.get("Name");
-            	Logger.Log("TargetSolution Name: " + name);
+            	Logger.Log("TargetingDataHandler() : readJson() : TargetSolution Name: " + name);
             	
             	//Add the name of this targetSolution to the arrayList
             	targetSolutionNames.add(name);
@@ -186,9 +190,9 @@ public class TargetingDataHandler implements AutonomousState{
             		
             		//Debug stuff
             		String cmdName = (String) aCommand.get("Name");
-            		Logger.Log("	Command Name = " + cmdName);
+            		Logger.Log("TargetingDataHandler() : readJson() :  	Command Name = " + cmdName);
             		String cmdClass = classPath + cmdName; 
-            		Logger.Log("	Class = " + cmdClass);
+            		Logger.Log("TargetingDataHandler() : readJson() :  	Class = " + cmdClass);
 
             		//Gets the array of params in the command
             		JSONArray paramArrayList = (JSONArray) aCommand.get("Parameters");
@@ -201,7 +205,7 @@ public class TargetingDataHandler implements AutonomousState{
             		int i = 0;
             		while (paramIterator.hasNext()) {
             			params[i++] = (String) paramIterator.next();
-            			Logger.Log("	Param:" + i + " = " + params[i -1]);
+            			Logger.Log("TargetingDataHandler() : readJson() :   	Param:" + i + " = " + params[i -1]);
             		}
             		
             		try {
@@ -406,7 +410,7 @@ public class TargetingDataHandler implements AutonomousState{
 			name = name.substring(41);
 			targetStatesList = "TargetStateList " + count + " ";
 			SmartDashboard.putString( targetStatesList, name);
-			Logger.Log("TargetSolution DUMP " + name);
+			Logger.Log("TargetingDataHandler() : dump() : TargetSolution Name " + name);
 		
 			//If this state was selected
 			if ( count == index){
@@ -448,7 +452,7 @@ public class TargetingDataHandler implements AutonomousState{
     while(aModeIterator.hasNext()){
       
       AutonomousState thisState = aModeIterator.next();
-      Logger.Log("TARGETINGDATA Update State Params " + thisState.getClass().getName());
+      Logger.Log("TargetingDataHandler() : updateStateParameters() :  State Updated!: " + thisState.getClass().getName());
       if ( count == index)
       {
         //Updates it (It grabs the data from the SmartDashboard and applies it)

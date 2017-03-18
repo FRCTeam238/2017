@@ -37,19 +37,19 @@ public class CommandTurnToBoiler extends AbstractCommand {
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
         targetValue, CrusaderCommon.TURN_MAX_ERROR, .7);
     
-    Logger.Log("Calculated Motor Value is " + calculatedMotorValue);
+    Logger.Log("CommandTurnToBoiler(): Calculated Motor Value is " + calculatedMotorValue);
     
     switch(direction){
       
       
       case "Left":
         myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
-        Logger.Log("We Are Going Left");
+        Logger.Log("CommandTurnToBoiler(): We Are Going Left");
         break;
      
       case "Right":
         myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
-        Logger.Log("We Are Going Right");
+        Logger.Log("CommandTurnToBoiler(): We Are Going Right");
         break;
         
       default:
@@ -68,63 +68,83 @@ public class CommandTurnToBoiler extends AbstractCommand {
   }
 
   public void setParams(String params[]) {
-
     
     teamColor = theRobot.getAllianceTeam();
     
-    Logger.Log("Team Color is : " + teamColor);
+    Logger.Log("CommandTurnToBoiler(): Team Color is : " + teamColor);
     
     if (teamColor == Alliance.Red)
     {
+      
       direction = "Right";
+      
     }else{
+      
       direction = "Left";
+      
     }
     
-    Logger.Log("CommandTurnToBoiler: Direction is: "+direction);
-    
+    Logger.Log("CommandTurnToBoiler(): Direction is: "+direction);
     
     if ((params[0] != null) || (!params[0].isEmpty())) {
+      
       targetValue = Double.parseDouble(params[0]);
+      
     } else {
+      
       targetValue = 0;
     }
 
     if ((params[1] != null) || (!params[1].isEmpty())) {
+      
       motorValue = Double.parseDouble(params[1]);
+      
     } else {
+      
       motorValue = 1;
+      
     }
 
     if ((params[2] != null) || (!params[2].isEmpty())) {
+      
       newTargetYaw = Integer.parseInt(params[2]);
 
     } else {
+      
       newTargetYaw = 0; // Don't turn if there's no input
 
     }
 
     if(direction.equals("Left")){
+      
       myNavigation.setTargetValues(targetValue*-1);
+      
     }else{
+      
       myNavigation.setTargetValues(targetValue);
+      
     }
   }
 
   @Override
   public boolean done() {
+    
     double currentYaw;
+    
     currentYaw = myNavigation.getYaw();
+    
     if (myNavigation.areWeThereYet() == true) {
-      myRobotDrive.driveForward(0, 0);
       
+      myRobotDrive.driveForward(0, 0);
+     
       SmartDashboard.putNumber("FINAL YAW", currentYaw);
       
       return true;
-    }
-
-    else {
+      
+    } else {
+      
       return false;
+      
     }
   }
   
