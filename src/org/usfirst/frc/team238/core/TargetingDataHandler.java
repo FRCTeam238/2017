@@ -85,7 +85,7 @@ public class TargetingDataHandler implements AutonomousState{
 	public void init(CommandController theMCP)
 	{
 		targetChooser = new SendableChooser();
-		readJson(theMCP);
+		//readJson(theMCP);
 	}
 	
 	

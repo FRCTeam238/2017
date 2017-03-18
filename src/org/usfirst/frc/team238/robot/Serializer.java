@@ -69,6 +69,15 @@ public class Serializer {
   }
   
   /**
+   * Spins the serializer in the opposite direction
+   */
+  public void reverseSerializer(){
+    
+    serializerMotor.set(CrusaderCommon.SERIALIZER_MOTOR_ON_REVERSE);
+    
+  }
+  
+  /**
    * Stops spinning the serializer
    */
   public void stopSpinning(){

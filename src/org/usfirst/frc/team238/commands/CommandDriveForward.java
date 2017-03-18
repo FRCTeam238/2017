@@ -181,6 +181,7 @@ public class CommandDriveForward extends AbstractCommand {
         
         isDone = true;
         myRobotDrive.driveForward(0, 0);
+        SmartDashboard.putNumber("WE STOPPED AT", amountOfTicks);
 
       } else {
         

@@ -48,8 +48,9 @@ public class CrusaderCommon {
 	public static final int AUTO_DRIVE_LIMIT = 15000;
 	
 	//Intake Motor Values
-	public final static double SERIALIZER_MOTOR_ON = 0.77;
+	public final static double SERIALIZER_MOTOR_ON = 0.87;//0.77;
 	public final static double SERIALIZER_MOTOR_OFF = 0;
+	public final static double SERIALIZER_MOTOR_ON_REVERSE = -0.77;
 	
 	public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
 	public final static double INTAKE_MOTOR_ROTATE_OUT = -1.0;
@@ -129,8 +130,8 @@ public class CrusaderCommon {
 	public final static double TURN_MAX_MOTOR_VALUE = .7;//SmartDashboard.getNumber("Turn Max Error",45);//45;
 	  
 	public final static double STRAIGHT_P_VALUE = 0.000055;//0.00003512;
-	public final static double STRAIGHT_DEAD_STOP = 0.39;
-	public final static double STRAIGHT_MAX_ERROR = 9966;
+	public final static double STRAIGHT_DEAD_STOP = 0.05;
+	public final static double STRAIGHT_MAX_ERROR = 15000;//9966;
 	 public final static double STRAIGHT_MAX_MOTOR_VALUE  = 1;//SmartDashboard.getNumber("Turn Max Error",45);//45;
 	  
 	public final static int SHOOTER_COUNT_DELAY = 5;

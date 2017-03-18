@@ -70,11 +70,13 @@ public class CommandRunShooter extends AbstractCommand {
       
       
       shooterSpeed = SmartDashboard.getNumber("TESTING RPM",0); //calculateRPM();
-     // shooterSpeed = calculateRPM();
+      //shooterSpeed = calculateRPM();
       myFuelHandler.theShooter.isShooterAtSpeed(shooterSpeed);
       
       SmartDashboard.putNumber("CommandRunShooter: Calculated Shooter Speed", shooterSpeed);
       //myFuelHandler.shoot(SmartDashboard.getNumber("TESTING RPM",1600),shooterDelayTime);//shooterSpeed);
+      
+      myFuelHandler.theIntake.IntakeIn();
       myFuelHandler.shoot(shooterSpeed,shooterDelayTime);
     }
 
@@ -100,6 +102,13 @@ public class CommandRunShooter extends AbstractCommand {
 
     
   }
+  
+  
+  //AUTO NOTE!!!!!
+  //RPM 2808 at hopper 2
+  
+  
+  
   /**
    * this is the setParams method.
    * @param params String

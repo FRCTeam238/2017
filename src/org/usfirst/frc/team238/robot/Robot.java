@@ -326,10 +326,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void InitSmartDashboardObjects(){
 	  
-//  SmartDashboard.putNumber("Shooter P Value",0);
-//  SmartDashboard.putNumber("Shooter I Value", 0);
-//  SmartDashboard.putNumber("Shooter D Value", 0);
-//  SmartDashboard.putNumber("Shooter F Value", 0.0);
+  SmartDashboard.putNumber("Shooter F Value",0.0427);
+  SmartDashboard.putNumber("Shooter P Value",  0.2);
+  SmartDashboard.putNumber("Shooter I Value", 0);
+  SmartDashboard.putNumber("Shooter D Value", 1.33);
   
   /*SmartDashboard.putNumber("Turn P Value", 0.005);
   SmartDashboard.putNumber("Turn Dead Stop", 0.42);
@@ -376,7 +376,7 @@ public class Robot extends IterativeRobot {
   SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
   SmartDashboard.putData("Save Changes", autonomousSaveChooser);
   
-  SmartDashboard.putNumber("TESTING RPM", 650);
+  SmartDashboard.putNumber("TESTING RPM", 2900);//2900 is blue side
 
   //SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
   
