@@ -18,7 +18,7 @@ public class CommandDriveForward extends AbstractCommand {
   
   double motorValue;
   double targetValue;
-  double rollValue;
+  double stallValue;
   double yawValue;
   double yawErrorTotal;
   double ultrasonicTarget;
@@ -26,7 +26,8 @@ public class CommandDriveForward extends AbstractCommand {
   double yawPConstant = CrusaderCommon.DRIVE_FORWARD_P_VALUE; // Proportional constant for drive
   double yawIConstant = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
   double yawCorrectionMaxPercent = CrusaderCommon.DRIVE_FORWARD_MAX_YAW_PERCENT;   // percent of motorValue for max yaw
- 
+  double previousEncoderTicks;
+  
   // boolean debug;
 
   public CommandDriveForward(Drivetrain robotDrive, Navigation myNav) {
@@ -107,9 +108,9 @@ public class CommandDriveForward extends AbstractCommand {
     }
 
     if ((params[2] != null) || (!params[2].isEmpty())) {
-      rollValue = Double.parseDouble(params[2]);
+      stallValue = Double.parseDouble(params[2]);
     } else {
-      rollValue = 0;
+      stallValue = 0;
     }
     if ((params[3] != null) || (!params[3].isEmpty())) {
       ultrasonicTarget = Double.parseDouble(params[3]);
@@ -124,8 +125,8 @@ public class CommandDriveForward extends AbstractCommand {
     boolean isDone = false;
     
     double amountOfTicks;
-    double currnetRollValue = myNavigation.getRoll();
-    double currentUltrasonicDistance;
+    //double currnetRollValue = myNavigation.getRoll();
+   //double currentUltrasonicDistance;
 
     amountOfTicks = myRobotDrive.getEncoderTicks();
     
@@ -133,48 +134,17 @@ public class CommandDriveForward extends AbstractCommand {
     //Logger.Log("RollValue : "+ rollValue+ "CurrentRollValue : "+ currnetRollValue);
     //Logger.Log("Ultrasonic : "+ ultrasonicTarget);
 
-    if (rollValue > 0) {
-      if ((currnetRollValue >= rollValue) && (amountOfTicks > 9000))
-      {
-        isDone = true;
-        myRobotDrive.driveForward(0, 0);
-
-      } else {
-        isDone = false;
-      }
-    }
-    /*
-     * else if(currentOverLoad()){
-     * 
-     * Logger.
-     * logString("COMMANDDRIVEFORWARD: We must've hit a wall, stopping...");
-     * isDone = true; myRobotDrive.driveForward(0, 0);
-     * 
-     * }
-     */
-    else if (ultrasonicTarget > 0) {
-      isDone = false;
-      /*
-       * This (amountOfTicks >= targetValue - 6840) is here so the sonic sensor
-       * doesn't kick in until 1.5 feet away from the target distance
-       */
-      if ((amountOfTicks >= targetValue - CrusaderCommon.SONIC_SENSOR_ACTIVATION_DISTANCE)) {
-        
-        currentUltrasonicDistance = myNavigation.getDistanceFromUltrasonic();
-        
-        if (currentUltrasonicDistance <= ultrasonicTarget) {
-          
-          isDone = true;
-          myRobotDrive.driveForward(0, 0);
-          
-        }
-        
-      }
-      
-    } else {
-      
+   
       boolean areWeDone = (amountOfTicks > targetValue);
       
+      // if we run into a wall and still arent There yet consider it done 
+      if(stallValue != 0)
+      {
+        if(previousEncoderTicks == amountOfTicks)
+        {
+          areWeDone = true;
+        }
+      }
       //Logger.logBoolean("DONE : ", areWeDone);
       
       if (areWeDone) {
@@ -188,7 +158,8 @@ public class CommandDriveForward extends AbstractCommand {
         isDone = false;
         
       }
-    }
+      previousEncoderTicks = amountOfTicks;
+      
     return isDone;
   }
   

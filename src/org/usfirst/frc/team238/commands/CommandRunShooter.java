@@ -8,6 +8,7 @@ import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Vision;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -68,16 +69,24 @@ public class CommandRunShooter extends AbstractCommand {
     if(Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY)
     {
       
+      if (myFuelHandler.getAlliance() == Alliance.Red)
+      {
+        shooterSpeed = SmartDashboard.getNumber("Red TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED); //2900); 
+      //shooterSpeed = calculateRPM(Alliance.Red);
+      }
+      else
+      {
+        shooterSpeed = SmartDashboard.getNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED); //2808);
+      //shooterSpeed = calculateRPM(Alliance.Blue);
+      }
       
-      shooterSpeed = SmartDashboard.getNumber("TESTING RPM",0); //calculateRPM();
-      //shooterSpeed = calculateRPM();
+      //shooterSpeed = calculateRPM
       myFuelHandler.theShooter.isShooterAtSpeed(shooterSpeed);
       
       SmartDashboard.putNumber("CommandRunShooter: Calculated Shooter Speed", shooterSpeed);
-      //myFuelHandler.shoot(SmartDashboard.getNumber("TESTING RPM",1600),shooterDelayTime);//shooterSpeed);
       
       myFuelHandler.theIntake.IntakeIn();
-      myFuelHandler.shoot(shooterSpeed,shooterDelayTime);
+      myFuelHandler.shoot(shooterSpeed, shooterDelayTime);
     }
 
     

@@ -5,6 +5,9 @@ import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.Intake;
 
 import org.usfirst.frc.team238.robot.Shooter;
+
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
 import org.usfirst.frc.team238.robot.HopperDoor;
 
 /**
@@ -32,6 +35,8 @@ public class FuelHandler {
   double serializerSpeed = 0;
   int count = 0;
   double delayMotorStart = 0;
+  
+  Alliance alliance; 
   /**
    * 
    */
@@ -50,6 +55,18 @@ public class FuelHandler {
     theHopperDoor.init();
     
 
+    
+  }
+  
+  public void setAlliance(Alliance alliance)
+  {
+    alliance = alliance;
+    
+  }
+  
+  public Alliance getAlliance()
+  {
+   return alliance;
     
   }
   /**

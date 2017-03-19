@@ -22,7 +22,11 @@ public class CommandTargetBoiler extends AbstractCommand {
   
   double motorValue;
   double targetValue;
-  double newTargetYaw;
+  double redSideShooterSpeed;
+  double blueSideShooterSpeed;
+  double shooterSpeed;
+  double timeToStartTheShooter = 0;
+  boolean releaseTheHounds = false;
   
   public CommandTargetBoiler(Drivetrain theRobotDrive, Navigation theNavigation, Robot myRobot, FuelHandler theFuelHandler){
     
@@ -83,37 +87,53 @@ public class CommandTargetBoiler extends AbstractCommand {
     if (teamColor == Alliance.Red)
     {
       direction = "Left";
+      
     }else{
       direction = "Right";
     }
     
     Logger.Log("CommandTargetBoiler(): Direction is: "+direction);
     
-    
+    //angle to drive to
     if ((params[0] != null) || (!params[0].isEmpty())) {
       targetValue = Double.parseDouble(params[0]);
     } else {
       targetValue = 0;
     }
-
+    
+    timeToStartTheShooter = targetValue * CrusaderCommon.PERCENT_COMPLETE_BEFORE_SHOOTER_START;
+    
+    //speed to drive
     if ((params[1] != null) || (!params[1].isEmpty())) {
       motorValue = Double.parseDouble(params[1]);
     } else {
       motorValue = 1;
     }
-
+    
+    //shooter motor speed for Red Side
     if ((params[2] != null) || (!params[2].isEmpty())) {
-      newTargetYaw = Integer.parseInt(params[2]);
+      redSideShooterSpeed = Integer.parseInt(params[2]);
 
     } else {
-      newTargetYaw = 0; // Don't turn if there's no input
+      redSideShooterSpeed = 0; // Don't turn if there's no input
+
+    }
+    
+    // shooter motor speed for Blue Side
+    if ((params[2] != null) || (!params[2].isEmpty())) {
+      blueSideShooterSpeed = Integer.parseInt(params[3]);
+
+    } else {
+      blueSideShooterSpeed = 0; // Don't turn if there's no input
 
     }
 
     if(direction.equals("Left")){
+      shooterSpeed = redSideShooterSpeed;
       myNavigation.setTargetValues(targetValue*-1);
     }else{
       myNavigation.setTargetValues(targetValue);
+      shooterSpeed = blueSideShooterSpeed;
     }
   }
 
@@ -124,9 +144,13 @@ public class CommandTargetBoiler extends AbstractCommand {
     
     currentYaw = myNavigation.getYaw();
     
+    //if the turn is 75% complete start up the shooter 
+    if(this.releaseTheHounds)
+    {
+      myFuelHandler.shoot(shooterSpeed, CrusaderCommon.BOILER_TARGET_SERIALIZER_DELAY);
+    }
+    
     if (myNavigation.areWeThereYet() == true) {
-      
-      myFuelHandler.shoot(CrusaderCommon.BOILER_TARGET_RPM, CrusaderCommon.BOILER_TARGET_SERIALIZER_DELAY);
       myRobotDrive.driveForward(0, 0);  
       SmartDashboard.putNumber("FINAL YAW", currentYaw);
       
@@ -146,6 +170,13 @@ public class CommandTargetBoiler extends AbstractCommand {
     
     error = targetValue - currentYaw;
     
+    //set the flag to start the shooter when we are 75% of te way into the turn
+    
+    
+    if( error <= timeToStartTheShooter)
+    {
+        releaseTheHounds = true;
+    }
     return error;
   }
 

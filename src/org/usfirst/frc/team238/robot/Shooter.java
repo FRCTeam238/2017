@@ -98,12 +98,12 @@ public class Shooter {
   }
   
   private void smahtDashboard(){
-    double test = SmartDashboard.getNumber("Shooter F Value",0.0427);
+    double test = SmartDashboard.getNumber("Shooter F Value", CrusaderCommon.SHOOTER_TALON_F_VALUE); //0.0427);
     Logger.Log("test: " +  test);
     shooterMaster.setF(test); 
-    shooterMaster.setP(SmartDashboard.getNumber("Shooter P Value", 0.2)); 
-    shooterMaster.setI(SmartDashboard.getNumber("Shooter I Value", 0)); 
-    shooterMaster.setD(SmartDashboard.getNumber("Shooter D Value", 1.33));
+    shooterMaster.setP(SmartDashboard.getNumber("Shooter P Value", CrusaderCommon.SHOOTER_TALON_P_VALUE)); //0.2)); 
+    shooterMaster.setI(SmartDashboard.getNumber("Shooter I Value", CrusaderCommon.SHOOTER_TALON_I_VALUE)); //0)); 
+    shooterMaster.setD(SmartDashboard.getNumber("Shooter D Value", CrusaderCommon.SHOOTER_TALON_D_VALUE)); //1.33));
     
   }
   
@@ -135,10 +135,10 @@ public class Shooter {
       * */
      talon.setProfile(CrusaderCommon.TALON_NO_VALUE);
      
-     talon.setF(SmartDashboard.getNumber("Shooter F Value",0.0427)); //.3113);
-     talon.setP(SmartDashboard.getNumber("Shooter P Value", 0.2)); //.8);//064543);
-     talon.setI(SmartDashboard.getNumber("Shooter I Value", 0)); 
-     talon.setD(SmartDashboard.getNumber("Shooter D Value", 1.33));
+     talon.setF(SmartDashboard.getNumber("Shooter F Value", CrusaderCommon.SHOOTER_TALON_F_VALUE)); //0.0427)); //.3113);
+     talon.setP(SmartDashboard.getNumber("Shooter P Value", CrusaderCommon.SHOOTER_TALON_P_VALUE)); //0.2)); //.8);//064543);
+     talon.setI(SmartDashboard.getNumber("Shooter I Value", CrusaderCommon.SHOOTER_TALON_I_VALUE)); //0)); 
+     talon.setD(SmartDashboard.getNumber("Shooter D Value", CrusaderCommon.SHOOTER_TALON_D_VALUE)); //1.33));
      
      talon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
      talon.SetVelocityMeasurementWindow(20);

@@ -143,8 +143,14 @@ public class CrusaderCommon {
 	public final static double ALIGN_IMAGE_DELAY = 0.25;
 	public final static double ALIGN_ANGLE_BUFFER = 2;
 	
-	public final static int BOILER_TARGET_RPM = 0;
-	public final static int BOILER_TARGET_SERIALIZER_DELAY = 0;
 	
+	public final static int BOILER_TARGET_SERIALIZER_DELAY = 2000;
+	
+	public final static double PERCENT_COMPLETE_BEFORE_SHOOTER_START = 0.75;
+	
+	public final static double RED_SHOOTER_SPEED = 2808;
+	public final static double RED_CLOSE_SHOOTER_SPEED = 1738;
+	public final static double BLUE_SHOOTER_SPEED = 2900;
+  
 	
 }
