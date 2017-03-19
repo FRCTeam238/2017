@@ -155,5 +155,9 @@ public class CrusaderCommon {
   public static final int AUTONOMOUS_READ_FILE = 2;
   public static final int AUTONOMOUS_SAVE = 1;
   
+  public static final int SERIALIZER_DELAY = 1000;
+  
+  public final static double NO_TARGET_RPM = 3250;
+  
 	
 }

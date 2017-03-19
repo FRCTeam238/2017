@@ -28,7 +28,7 @@ public class CommandRunShooter extends AbstractCommand {
   double maxShootTime;
   int count = 0;
   
-  double shooterDelayTime = 1000;
+  double shooterDelayTime = CrusaderCommon.SERIALIZER_DELAY;
   
   
   public CommandRunShooter(FuelHandler theFuelHandler, Vision theVision) 
@@ -128,7 +128,7 @@ public class CommandRunShooter extends AbstractCommand {
     if ((params[0] != null) || (!params[0].isEmpty())) {
       shooterDelayTime = Double.parseDouble(params[0]);
     } else {
-      shooterDelayTime = 1000;
+      shooterDelayTime = CrusaderCommon.SERIALIZER_DELAY;
     }
 
     if ((params[1] != null) || (!params[1].isEmpty())) {
@@ -159,7 +159,7 @@ public class CommandRunShooter extends AbstractCommand {
     else
     {
       Logger.Log("CommandRunShooter(): calculateRPM(): We Can't Find A Distance!");
-      newRPM = (3250 * 0.5);
+      newRPM = (CrusaderCommon.NO_TARGET_RPM * 0.5);
     }
       
     
