@@ -151,6 +151,9 @@ public class CrusaderCommon {
 	public final static double RED_SHOOTER_SPEED = 2808;
 	public final static double RED_CLOSE_SHOOTER_SPEED = 1738;
 	public final static double BLUE_SHOOTER_SPEED = 2900;
+	
+  public static final int AUTONOMOUS_READ_FILE = 2;
+  public static final int AUTONOMOUS_SAVE = 1;
   
 	
 }

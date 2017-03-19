@@ -160,11 +160,15 @@ public class Robot extends IterativeRobot {
 					theMACP.updateStateParameters(autoModeSelection);
 				}
 				
-				if(save != 0)
+				if(save == CrusaderCommon.AUTONOMOUS_SAVE)  //!= 0)
 				{
 				  myAutonomousDataHandler.save();	
 				}
 				
+				if(save == CrusaderCommon.AUTONOMOUS_READ_FILE)
+				{
+				  myAutonomousDataHandler.readJson(theMCP);
+				}
 				
 				myAutonomousDataHandler.dump();
 				
@@ -362,6 +366,7 @@ public class Robot extends IterativeRobot {
   autonomousSaveChooser = new SendableChooser<String>();
   autonomousSaveChooser.addDefault("DON'T Save", "0");
   autonomousSaveChooser.addObject("Save", "1");
+  autonomousSaveChooser.addObject("Read", "2");
   
   aModeSelector = new SendableChooser<String>();
   
@@ -372,9 +377,9 @@ public class Robot extends IterativeRobot {
   SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
   SmartDashboard.putData("Save Changes", autonomousSaveChooser);
   
-  SmartDashboard.putNumber("Blue TESTING RPM", 2900);//2900 is blue side
-  SmartDashboard.putNumber("Red TESTING RPM", 2808);//2900 is blue side
-
+  SmartDashboard.putNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED);//2900 is blue side
+  SmartDashboard.putNumber("Red Hopper 2 TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED);//2808 is blue side
+  SmartDashboard.putNumber("Red Hopper 1 TESTING RPM", CrusaderCommon.RED_CLOSE_SHOOTER_SPEED);
   //SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
   
   SmartDashboard.putBoolean("CLIMBDEBUG", false);
