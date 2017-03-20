@@ -80,7 +80,7 @@ public class AutonomousController implements AutonomousState{
 	public void updateStateParameters(int selectedMode)
 	{
 		//Get the index of the state that's being modified
-		int index = (int) SmartDashboard.getNumber("AutoStateCmdIndex");
+		int index = (int) SmartDashboard.getNumber("Select Auto State");
 		int count = 0;
 
 		steps = autonomousModeList[selectedMode];

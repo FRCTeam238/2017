@@ -37,7 +37,7 @@ public class AutonomousDataHandler implements AutonomousState{
 	ArrayList<String> autonomousModeNames;
 	
 	//Put's out all the autonomousModes for the user to choose from
-	SendableChooser aModeChooser; 
+	//SendableChooser aModeChooser; 
 	
 	
 	/**
@@ -60,38 +60,38 @@ public class AutonomousDataHandler implements AutonomousState{
 	/**
 	 * @return An Integer on what AutoMode was selected on the Smartdashboard 
 	 */
-	public Integer getAModeChooserSelection(){
-		
-		String selection = (String) aModeChooser.getSelected();
-		
-		if(selection == null){
-			
-			return 0;
-			
-		}else{
-			
-			int modeSelection = Integer.parseInt(selection);
-			
-			if(modeSelection < 0){
-			  
-			  return 0;
-			  
-			}else{
-			  
-			  return modeSelection;
-			  
-			}
-		}
-	}
+//	public Integer getAModeChooserSelection(){
+//		
+//		String selection = (String) aModeChooser.getSelected();
+//		
+//		if(selection == null){
+//			
+//			return 0;
+//			
+//		}else{
+//			
+//			int modeSelection = Integer.parseInt(selection);
+//			
+//			if(modeSelection < 0){
+//			  
+//			  return 0;
+//			  
+//			}else{
+//			  
+//			  return modeSelection;
+//			  
+//			}
+//		}
+//	}
 	
 	
 	/**
 	 * Starts up the JSONHandler
 	 * @param theMCP (The control scheme that's being used)
 	 */
-	public void init(CommandController theMCP, SendableChooser theAutoChooser)
+	public void init(CommandController theMCP)   //, SendableChooser theAutoChooser)
 	{
-		aModeChooser = theAutoChooser;
+		//aModeChooser = theAutoChooser;
 		readJson(theMCP);
 	}
 	
@@ -178,13 +178,13 @@ public class AutonomousDataHandler implements AutonomousState{
             	autonomousModeNames.add(name);
             	
             	//Start building the list of selectable Amodes on the dashboard
-            	if(aModeIndexCounter == 1){
-            		aModeChooser.addDefault(name, String.valueOf(aModeIndexCounter));
-            	}
-            	else{
-            		aModeChooser.addObject(name,String.valueOf(aModeIndexCounter));
-            	}
-            	
+//            	if(aModeIndexCounter == 1){
+//            		aModeChooser.addDefault(name, String.valueOf(aModeIndexCounter));
+//            	}
+//            	else{
+//            		aModeChooser.addObject(name,String.valueOf(aModeIndexCounter));
+//            	}
+//            	
             	SmartDashboard.putString("Amode "+aModeIndexCounter,name);
             	
             	//Create an array/iterator of commands from the AutoMode it's currently cycling through
@@ -217,30 +217,33 @@ public class AutonomousDataHandler implements AutonomousState{
             			Logger.Log("AutonomousDataHandler() : readJson() :    	Param:" + i + " = " + params[i -1]);
             		}
             		
-            		try {
+            		try 
+            		{
     					
             			//Use reflection to create state object (Naming it, while also giving it params and the control scheme on initiation)
-    					AutonomousState xxx = (AutonomousState) Class.forName(cmdClass).newInstance();
-    					
-    					//Initiate the state object with the params and control scheme
-    					xxx.init(params, theMCP);
-    					
-    					//add it to the steps for this autonomous mode   					
-    					autonomousModeCommandList[aModeIndexCounter].add(xxx);
-    					
-    				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-    					e.printStackTrace();
-    				}
+        					AutonomousState xxx = (AutonomousState) Class.forName(cmdClass).newInstance();
+        					
+        					//Initiate the state object with the params and control scheme
+        					xxx.init(params, theMCP);
+        					
+        					//add it to the steps for this autonomous mode   					
+        					autonomousModeCommandList[aModeIndexCounter].add(xxx);
+        					
+        				} 
+            		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) 
+            		{
+        					e.printStackTrace();
+        				}
             		//Probably don't need this
             		//autonomousModeStates.add(arg0);
-            	}
+            }
             	aModeIndexCounter++;
             }
 			
 			amodeFile.close();
 			
 			//Push the list of Amodes to the dashboard
-			SmartDashboard.putData("Choose Auto", aModeChooser);
+			//SmartDashboard.putData("Choose Auto", aModeChooser);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -403,17 +406,11 @@ public class AutonomousDataHandler implements AutonomousState{
    */
   public void dump(){
     
-    int index = (int) SmartDashboard.getNumber("Chosen Auto Mode");
+    int aModeSelection = (int) SmartDashboard.getNumber("Chosen Auto Mode");
+    int index = (int) SmartDashboard.getNumber("Select Auto State");
     int count = 0;
-   // String selection = (String) aModeChooser.getSelected();
-    int aModeSelection =  index; //Integer.parseInt(selection);
-    
-    
     String name;
-    //String statesList = String.valueOf(aModeChooser.getSelected() + ": ");
-    
-    //Substitutes for the 'steps' variable from the AutonomousController
-    
+    String statesList;
     autonomousModeStates = autonomousModeCommandList[aModeSelection];
     Iterator<AutonomousState> aModeIterator = autonomousModeStates.iterator();
     
@@ -423,8 +420,8 @@ public class AutonomousDataHandler implements AutonomousState{
       AutonomousState thisState = aModeIterator.next();
       name =  thisState.getClass().getName();
       name = name.substring(41);
-      //statesList = "AutoStateList " + count + " ";
-      //SmartDashboard.putString( statesList, name);
+      statesList = "AutoStateList " + count + " ";
+      SmartDashboard.putString( statesList, name);
       Logger.Log("AutonomousDataHandler() : dump() : State Name" + name);
     
       //If this state was selected
@@ -439,14 +436,14 @@ public class AutonomousDataHandler implements AutonomousState{
       count++;
     }
 
-    //Kinda confused on what this is specifically used for
-//    while(count < autonomousModeStates.size()){ 
-//      
-//      statesList = "AutoStateList " + count + " ";
-//      SmartDashboard.putString( statesList, " ");
-//      count++;
-//      
-//    }
+    //Kinda confused on what this is specifically used for - It clears out the rest of the autostatelist entries on teh DB
+    while(count < 12){ 
+      
+      statesList = "AutoStateList " + count + " ";
+      SmartDashboard.putString( statesList, " ");
+      count++;
+      
+    }
   }
 
 	/*
@@ -454,7 +451,7 @@ public class AutonomousDataHandler implements AutonomousState{
 	 
 	public void dump(){
 		
-		int index = (int) SmartDashboard.getNumber("AutoStateCmdIndex");
+		int index = (int) SmartDashboard.getNumber("Select Auto State");
 		int count = 0;
 		String selection = (String) aModeChooser.getSelected();
 		int aModeSelection = Integer.parseInt(selection);

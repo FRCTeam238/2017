@@ -76,7 +76,7 @@ public class Robot extends IterativeRobot {
   SendableChooser<String> autonomousSaveChooser;
 	//SendableChooser<String> targetingStateParamsUpdate;
   //SendableChooser<String> targetingSaveChooser;
-  SendableChooser<String> aModeSelector;
+  //SendableChooser<String> aModeSelector;
   SendableChooser<String> autonomousStateParamsUpdate;
 	
 	Alliance teamColor;
@@ -103,7 +103,7 @@ public class Robot extends IterativeRobot {
 	 * Called periodically when the robot is disabled
 	 */
 	public void disabledPeriodic() {
-		boolean debug;
+		//boolean debug;
 		try {
 			if (count > 150) {
 				
@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot {
 				
 				//myNavigation.getDistanceFromUltrasonic();
 				
-				debug = SmartDashboard.getBoolean("Debug");
+				//debug = SmartDashboard.getBoolean("Debug");
 				//Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
 				
 				int autoModeSelection = myAutonomousDataHandler.getModeSelectionFromDashboard();
@@ -122,12 +122,49 @@ public class Robot extends IterativeRobot {
 				//int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection();
 				Logger.Log("Robot(): disabledPeriodic(): The chosen AutoMode =  " + String.valueOf(autoModeSelection));
 			
+				//backups  in case sendable chooser disappear
+				boolean updateBackup_BecauseTheSendableChooserSucks = false;
+        boolean saveBackup_BecauseTheSendableChooserSucks = false;
+        boolean  readAmode238DotTxt = false;
+        
 				//see if we need to modify the params on a state
 				String updateParams = (String) autonomousStateParamsUpdate.getSelected();
 				int update = Integer.parseInt(updateParams);
 				
+				if(updateParams == null)
+				{
+				  updateBackup_BecauseTheSendableChooserSucks = SmartDashboard.getBoolean("Update Params", false);
+				  
+				  if(updateBackup_BecauseTheSendableChooserSucks)
+				  {
+				    update = 1;
+				  }
+				}
+				
 				String saveParam = (String) autonomousSaveChooser.getSelected();
-				int save = Integer.parseInt(saveParam);
+				int save = 0;
+				if(saveParam == null)
+				{
+				  saveBackup_BecauseTheSendableChooserSucks = SmartDashboard.getBoolean("Save to Amode238", false);
+          if(saveBackup_BecauseTheSendableChooserSucks)
+          {
+            save = CrusaderCommon.AUTONOMOUS_SAVE;            
+          }
+          
+				  readAmode238DotTxt = SmartDashboard.getBoolean("Read Amode238", false);
+				  if(readAmode238DotTxt)
+				  {
+				    save = CrusaderCommon.AUTONOMOUS_READ_FILE;
+				  }
+				}
+				else
+				{
+				  save = Integer.parseInt(saveParam); 
+				}
+				 
+				
+				
+				Logger.Log("Robot:DisablePeriodic: save = " + save);
 				
 //				String updateTargetingParams = (String) targetingStateParamsUpdate.getSelected();
 //				int updateTargeting = Integer.parseInt(updateTargetingParams);
@@ -155,15 +192,16 @@ public class Robot extends IterativeRobot {
 //				  
 //				}
 				
-				if(update != 0)
+				if(update == CrusaderCommon.AUTONOMOUS_UPDATE)
 				{
 					theMACP.updateStateParameters(autoModeSelection);
 				}
 				
-				if(save == CrusaderCommon.AUTONOMOUS_SAVE)  //!= 0)
+				if(save == CrusaderCommon.AUTONOMOUS_SAVE) 
 				{
 				  myAutonomousDataHandler.save();	
 				}
+				
 				
 				if(save == CrusaderCommon.AUTONOMOUS_READ_FILE)
 				{
@@ -176,7 +214,7 @@ public class Robot extends IterativeRobot {
 				
 				//myNavigation.navxValues();
 				
-			  dataFromVision = theVision.getTheData();
+			  //dataFromVision = theVision.getTheData();
 				
 				//Logger.logDouble("Distance ", dataFromVision[CrusaderCommon.VISION_DISTANCE_SLOT]);		
 				
@@ -184,8 +222,8 @@ public class Robot extends IterativeRobot {
 				
 				SmartDashboard.putString("Last Modified : ", myAutonomousDataHandler.getModificationDate());  
 				
-				Logger.Log("Robot(): disabledPeriodic(): Vision Horizontal : " + dataFromVision[0]);
-				Logger.Log("Robot(): disabledPeriodic(): Vision Vertical : " + dataFromVision[1]);
+				//Logger.Log("Robot(): disabledPeriodic(): Vision Horizontal : " + dataFromVision[0]);
+				//Logger.Log("Robot(): disabledPeriodic(): Vision Vertical : " + dataFromVision[1]);
 				
 			}
 			
@@ -307,7 +345,7 @@ public class Robot extends IterativeRobot {
 			myAutonomousDataHandler = new AutonomousDataHandler();
 			
 		  //Takes the CommandController in order to create AutonomousStates that work with the control scheme
-			myAutonomousDataHandler.init(theMCP, aModeSelector);
+			myAutonomousDataHandler.init(theMCP); //, aModeSelector);
 			
 			//Controller Object for autonomous
 			theMACP = new AutonomousController(); 
@@ -345,7 +383,7 @@ public class Robot extends IterativeRobot {
   
   SmartDashboard.putBoolean("Match Time Flag", false);
   
-  SmartDashboard.putInt("AutoStateCmdIndex", 0);
+  SmartDashboard.putInt("Select Auto State", 0);
   
 //  SmartDashboard.putInt("TargetStateCmdIndex", 0);
 //  
@@ -368,7 +406,7 @@ public class Robot extends IterativeRobot {
   autonomousSaveChooser.addObject("Save", "1");
   autonomousSaveChooser.addObject("Read", "2");
   
-  aModeSelector = new SendableChooser<String>();
+  //aModeSelector = new SendableChooser<String>();
   
 //  SmartDashboard.putData("Edit Target Params", targetingStateParamsUpdate);
 //  SmartDashboard.putData("Save Target Data", targetingSaveChooser);
@@ -380,6 +418,9 @@ public class Robot extends IterativeRobot {
   SmartDashboard.putNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED);//2900 is blue side
   SmartDashboard.putNumber("Red Hopper 2 TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED);//2808 is blue side
   SmartDashboard.putNumber("Red Hopper 1 TESTING RPM", CrusaderCommon.RED_CLOSE_SHOOTER_SPEED);
+  SmartDashboard.putBoolean("Update Params", false);
+  SmartDashboard.putBoolean("Save to Amode238", false);
+  SmartDashboard.putBoolean("Read Amode238", false);
   //SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
   
   SmartDashboard.putBoolean("CLIMBDEBUG", false);
