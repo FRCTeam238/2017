@@ -43,6 +43,7 @@ public class Serializer {
     }
  
     }catch(Exception e){
+      e.printStackTrace();
       Logger.Log("Serializer(): test(): Exception:"+e);
     }
     

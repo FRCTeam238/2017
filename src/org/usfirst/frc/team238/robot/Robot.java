@@ -95,6 +95,7 @@ public class Robot extends IterativeRobot {
 			Logger.Log("Robot(): disabledInit:");
 		
 		} catch (Exception e) {
+		  e.printStackTrace();
 			Logger.Log("Robot(): disabledInit Exception: "+e);
 		}
 	}
@@ -230,6 +231,7 @@ public class Robot extends IterativeRobot {
 			count++;
 			
 		} catch (Exception e) {
+		  e.printStackTrace();
 			Logger.Log("Robot(): disabledPeriodic(): disabledPriodic exception: " + e);
 		}
 
@@ -241,6 +243,7 @@ public class Robot extends IterativeRobot {
 			myControlBoard.checkXboxController();
 			
 		} catch (Exception e) {
+		  e.printStackTrace();
 			Logger.Log("Robot(): TeleopInit() Exception: "+ e);
 		}
 
@@ -265,6 +268,7 @@ public class Robot extends IterativeRobot {
 				theFuelHandler.setAlliance(teamColor);
 				
 		} catch (Exception ex) {
+		  ex.printStackTrace();
 			Logger.Log("Robot(): AutononousInit() Exception: "+ex);
 		}
 	}
@@ -359,7 +363,7 @@ public class Robot extends IterativeRobot {
 			Logger.Log("Robot(): robotInit(): Fully Initialized");
 
 		} catch (Exception ex) {
-
+		  ex.printStackTrace();
 			Logger.Log("Robot(): robotInit() Exception : "+ex);
 
 		}
@@ -370,65 +374,65 @@ public class Robot extends IterativeRobot {
 	 */
 	public void InitSmartDashboardObjects(){
 	  
-  SmartDashboard.putNumber("Shooter F Value", CrusaderCommon.SHOOTER_TALON_F_VALUE); //0.0427);
-  SmartDashboard.putNumber("Shooter P Value", CrusaderCommon.SHOOTER_TALON_P_VALUE); // 0.2);
-  SmartDashboard.putNumber("Shooter I Value",  CrusaderCommon.SHOOTER_TALON_I_VALUE); //0);
-  SmartDashboard.putNumber("Shooter D Value",  CrusaderCommon.SHOOTER_TALON_D_VALUE); //1.33);
+	  SmartDashboard.putNumber("Shooter F Value", CrusaderCommon.SHOOTER_TALON_F_VALUE); //0.0427);
+	  SmartDashboard.putNumber("Shooter P Value", CrusaderCommon.SHOOTER_TALON_P_VALUE); // 0.2);
+	  SmartDashboard.putNumber("Shooter I Value",  CrusaderCommon.SHOOTER_TALON_I_VALUE); //0);
+	  SmartDashboard.putNumber("Shooter D Value",  CrusaderCommon.SHOOTER_TALON_D_VALUE); //1.33);
   
-  SmartDashboard.putNumber("Chosen Auto Mode", 0);
+	  SmartDashboard.putNumber("Chosen Auto Mode", 0);
   
-  SmartDashboard.putBoolean("Output Log to File", true);
+	  SmartDashboard.putBoolean("Output Log to File", true);
   
-  SmartDashboard.putBoolean("Debug", true);
+	  SmartDashboard.putBoolean("Debug", true);
   
-  SmartDashboard.putBoolean("Match Time Flag", false);
+	  SmartDashboard.putBoolean("Match Time Flag", false);
   
-  SmartDashboard.putInt("Select Auto State", 0);
+	  SmartDashboard.putInt("Select Auto State", 0);
   
-//  SmartDashboard.putInt("TargetStateCmdIndex", 0);
-//  
-//  targetingStateParamsUpdate = new SendableChooser<String>();
-//  targetingStateParamsUpdate.addDefault("Don't update", "0");
-//  targetingStateParamsUpdate.addObject("Update State Target", "1");
-//  
-//  targetingSaveChooser = new SendableChooser<String>();
-//  targetingSaveChooser.addDefault("Don't Save Target Data", "0");
-//  targetingSaveChooser.addObject("Save Target State Data", "1");
+	  //  SmartDashboard.putInt("TargetStateCmdIndex", 0);
+	  //  
+	  //  targetingStateParamsUpdate = new SendableChooser<String>();
+	  //  targetingStateParamsUpdate.addDefault("Don't update", "0");
+	  //  targetingStateParamsUpdate.addObject("Update State Target", "1");
+	  //  
+	  //  targetingSaveChooser = new SendableChooser<String>();
+	  //  targetingSaveChooser.addDefault("Don't Save Target Data", "0");
+	  //  targetingSaveChooser.addObject("Save Target State Data", "1");
   
-  //Sendable Chooser for the state update function
-  autonomousStateParamsUpdate = new SendableChooser<String>();
-  autonomousStateParamsUpdate.addDefault("As Received", "0");
-  autonomousStateParamsUpdate.addObject("UPDATE", "1");
+	  //Sendable Chooser for the state update function
+	  autonomousStateParamsUpdate = new SendableChooser<String>();
+	  autonomousStateParamsUpdate.addDefault("As Received", "0");
+	  autonomousStateParamsUpdate.addObject("UPDATE", "1");
   
-  //Create a new SendableChooser for the save function
-  autonomousSaveChooser = new SendableChooser<String>();
-  autonomousSaveChooser.addDefault("DON'T Save", "0");
-  autonomousSaveChooser.addObject("Save", "1");
-  autonomousSaveChooser.addObject("Read", "2");
+	  //Create a new SendableChooser for the save function
+	  autonomousSaveChooser = new SendableChooser<String>();
+	  autonomousSaveChooser.addDefault("DON'T Save", "0");
+	  autonomousSaveChooser.addObject("Save", "1");
+	  autonomousSaveChooser.addObject("Read", "2");
   
-  //aModeSelector = new SendableChooser<String>();
+	  //aModeSelector = new SendableChooser<String>();
   
-//  SmartDashboard.putData("Edit Target Params", targetingStateParamsUpdate);
-//  SmartDashboard.putData("Save Target Data", targetingSaveChooser);
+	  //  SmartDashboard.putData("Edit Target Params", targetingStateParamsUpdate);
+	  //  SmartDashboard.putData("Save Target Data", targetingSaveChooser);
   
-  //Put sendableChoosers to the SmartDashboard
-  SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
-  SmartDashboard.putData("Save Changes", autonomousSaveChooser);
+	  //Put sendableChoosers to the SmartDashboard
+	  SmartDashboard.putData("Edit State Params", autonomousStateParamsUpdate);
+	  SmartDashboard.putData("Save Changes", autonomousSaveChooser);
   
-  SmartDashboard.putNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED);//2900 is blue side
-  SmartDashboard.putNumber("Red Hopper 2 TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED);//2808 is blue side
-  //SmartDashboard.putNumber("Red Hopper 1 TESTING RPM", CrusaderCommon.RED_CLOSE_SHOOTER_SPEED);
-  SmartDashboard.putBoolean("Update Params", false);
-  SmartDashboard.putBoolean("Save to Amode238", false);
-  SmartDashboard.putBoolean("Read Amode238", false);
-  //SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
+	  SmartDashboard.putNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED);//2900 is blue side
+    SmartDashboard.putNumber("Red Hopper 2 TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED);//2808 is blue side
+    //SmartDashboard.putNumber("Red Hopper 1 TESTING RPM", CrusaderCommon.RED_CLOSE_SHOOTER_SPEED);
+    SmartDashboard.putBoolean("Update Params", false);
+    SmartDashboard.putBoolean("Save to Amode238", false);
+    SmartDashboard.putBoolean("Read Amode238", false);
+    //SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
   
-  SmartDashboard.putBoolean("CLIMBDEBUG", false);
+    SmartDashboard.putBoolean("CLIMBDEBUG", false);
   
-  //SmartDashboard.putNumber("DRIVETRAIN TUNING", 0.2);
+    //SmartDashboard.putNumber("DRIVETRAIN TUNING", 0.2);
   
-  //SmartDashboard.putString("Team Side :",getAllianceTeam());
-  //SmartDashboard.putNumber("SHOOTER RPM",0);
+    //SmartDashboard.putString("Team Side :",getAllianceTeam());
+    //SmartDashboard.putNumber("SHOOTER RPM",0);
 	  
 	}
 	
@@ -459,6 +463,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putNumber("AutonomousPeriodic: The CurrentYaw ", currentYaw);
 			
 		} catch (Exception ex) {
+		  ex.printStackTrace();
 			Logger.Log("Robot(): autonomousPeriodic() Exception: "+ex);
 		}
 	}
@@ -485,7 +490,7 @@ public class Robot extends IterativeRobot {
 			
 
 		} catch (Exception e) {
-			
+		  e.printStackTrace();
 			Logger.Log("Robot(): teleopPeriodic() Exception: "+ e);
 			
 		}

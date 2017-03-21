@@ -108,12 +108,11 @@ public class AutonomousDataHandler implements AutonomousState{
 		dump();
 		save();
 		
-		Logger.Log("AutonomousDataHandler() : Test() : AutonomousDataHandler Standing by!");
+		Logger.Log("AutonomousDataHandler(): Test(): AutonomousDataHandler Standing by!");
 		
 		}catch(Exception e){
 		  
 			e.printStackTrace();
-			Logger.Log("AutonomousDataHandler() : Test() : AutonomousDataHandler Test Failed!: Exception: "+ e);
 			
 		}
 	}
@@ -150,7 +149,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			
 			//Get's the number of modes
 			int numModes = autonomousModes.size();
-			Logger.Log("AutonomousDataHandler() : readJson() : Number of detected modes : " + numModes);
+			Logger.Log("AutonomousDataHandler(): readJson(): Number of detected modes: " + numModes);
 			
 			//create a list of commandsteps for each mode
 			autonomousModeCommandList = new ArrayList[numModes];
@@ -172,7 +171,7 @@ public class AutonomousDataHandler implements AutonomousState{
 				//Gets the name of the autonomousMode
             	JSONObject autoModeX = aModeIterator.next();
             	String name = (String) autoModeX.get("Name");
-            	Logger.Log("AutonomousDataHandler() : readJson() : Autonomous Mode Name: " + name);
+            	Logger.Log("AutonomousDataHandler(): readJson(): Autonomous Mode Name: " + name);
             	
             	//Add the name of this mode to the arrayList
             	autonomousModeNames.add(name);
@@ -199,9 +198,9 @@ public class AutonomousDataHandler implements AutonomousState{
             		
             		//Debug stuff
             		String cmdName = (String) aCommand.get("Name");
-            		Logger.Log("AutonomousDataHandler() : readJson() : 	Command Name = " + cmdName);
+            		Logger.Log("AutonomousDataHandler(): readJson(): 	Command Name = " + cmdName);
             		String cmdClass = classPath + cmdName; 
-            		Logger.Log("AutonomousDataHandler() : readJson() : 	Class = " + cmdClass);
+            		Logger.Log("AutonomousDataHandler(): readJson(): 	Class = " + cmdClass);
 
             		//Gets the array of params in the command
             		JSONArray paramArrayList = (JSONArray) aCommand.get("Parameters");
@@ -214,7 +213,7 @@ public class AutonomousDataHandler implements AutonomousState{
             		int i = 0;
             		while (paramIterator.hasNext()) {
             			params[i++] = (String) paramIterator.next();
-            			Logger.Log("AutonomousDataHandler() : readJson() :    	Param:" + i + " = " + params[i -1]);
+            			Logger.Log("AutonomousDataHandler(): readJson():    	Param:" + i + " = " + params[i -1]);
             		}
             		
             		try 
@@ -258,7 +257,7 @@ public class AutonomousDataHandler implements AutonomousState{
 		
 		try {
 			
-			Logger.Log("AutonomousDataHandler() : save() : Saving...");
+			Logger.Log("AutonomousDataHandler(): save(): Saving...");
 		
 			//Creates the new json string with params given
 			String newAmode = BuildNewJson();
@@ -276,7 +275,7 @@ public class AutonomousDataHandler implements AutonomousState{
 			//Close it
 			file.close();
 			
-			Logger.Log("AutonomousDataHandler() : save() :  Saved!");
+			Logger.Log("AutonomousDataHandler(): save():  Saved!");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -422,7 +421,7 @@ public class AutonomousDataHandler implements AutonomousState{
       name = name.substring(41);
       statesList = "AutoStateList " + count + " ";
       SmartDashboard.putString( statesList, name);
-      Logger.Log("AutonomousDataHandler() : dump() : State Name" + name);
+      Logger.Log("AutonomousDataHandler(): dump(): State Name" + name);
     
       //If this state was selected
       if ( count == index){
