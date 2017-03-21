@@ -120,7 +120,7 @@ public class CommandTargetBoiler extends AbstractCommand {
     }
     
     // shooter motor speed for Blue Side
-    if ((params[2] != null) || (!params[2].isEmpty())) {
+    if ((params[3] != null) || (!params[3].isEmpty())) {
       blueSideShooterSpeed = Integer.parseInt(params[3]);
 
     } else {

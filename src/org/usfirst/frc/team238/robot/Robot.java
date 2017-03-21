@@ -103,7 +103,7 @@ public class Robot extends IterativeRobot {
 	 * Called periodically when the robot is disabled
 	 */
 	public void disabledPeriodic() {
-		//boolean debug;
+		//boolean debug;m,
 		try {
 			if (count > 150) {
 				

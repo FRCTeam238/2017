@@ -48,7 +48,7 @@ public class CrusaderCommon {
 	public static final int AUTO_DRIVE_LIMIT = 15000;
 	
 	//Intake Motor Values
-	public final static double SERIALIZER_MOTOR_ON = 0.87;//0.77;
+	public final static double SERIALIZER_MOTOR_ON = 0.77;//0.77;
 	public final static double SERIALIZER_MOTOR_OFF = 0;
 	public final static double SERIALIZER_MOTOR_ON_REVERSE = -0.77;
 	
