@@ -113,6 +113,7 @@ public class AutonomousDataHandler implements AutonomousState{
 		}catch(Exception e){
 		  
 			e.printStackTrace();
+			Logger.Log("AutonomousDataHandler(): Test(): AutonomousDataHandler Test Failed!: Exception: "+ e);
 			
 		}
 	}
