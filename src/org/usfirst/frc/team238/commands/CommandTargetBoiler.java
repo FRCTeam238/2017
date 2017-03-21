@@ -128,10 +128,13 @@ public class CommandTargetBoiler extends AbstractCommand {
 
     }
 
-    if(direction.equals("Left")){
+    if(direction.equals("Left"))
+    {
       shooterSpeed = redSideShooterSpeed;
-      myNavigation.setTargetValues(targetValue*-1);
-    }else{
+      myNavigation.setTargetValues(targetValue * -1);
+    }
+    else
+    {
       myNavigation.setTargetValues(targetValue);
       shooterSpeed = blueSideShooterSpeed;
     }
@@ -147,7 +150,7 @@ public class CommandTargetBoiler extends AbstractCommand {
     //if the turn is 75% complete start up the shooter 
     if(this.releaseTheHounds)
     {
-      myFuelHandler.shoot(shooterSpeed, CrusaderCommon.BOILER_TARGET_SERIALIZER_DELAY);
+      myFuelHandler.shoot(shooterSpeed, CrusaderCommon.SERIALIZER_DELAY);
     }
     
     if (myNavigation.areWeThereYet() == true) {
@@ -170,7 +173,7 @@ public class CommandTargetBoiler extends AbstractCommand {
     
     error = targetValue - currentYaw;
     
-    //set the flag to start the shooter when we are 75% of te way into the turn
+    //set the flag to start the shooter when we are 75% of the way into the turn
     
     
     if( error <= timeToStartTheShooter)

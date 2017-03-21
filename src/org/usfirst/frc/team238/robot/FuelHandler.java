@@ -60,7 +60,7 @@ public class FuelHandler {
   
   public void setAlliance(Alliance alliance)
   {
-    alliance = alliance;
+    this.alliance = alliance;
     
   }
   

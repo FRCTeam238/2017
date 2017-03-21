@@ -417,7 +417,7 @@ public class Robot extends IterativeRobot {
   
   SmartDashboard.putNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED);//2900 is blue side
   SmartDashboard.putNumber("Red Hopper 2 TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED);//2808 is blue side
-  SmartDashboard.putNumber("Red Hopper 1 TESTING RPM", CrusaderCommon.RED_CLOSE_SHOOTER_SPEED);
+  //SmartDashboard.putNumber("Red Hopper 1 TESTING RPM", CrusaderCommon.RED_CLOSE_SHOOTER_SPEED);
   SmartDashboard.putBoolean("Update Params", false);
   SmartDashboard.putBoolean("Save to Amode238", false);
   SmartDashboard.putBoolean("Read Amode238", false);
