@@ -19,6 +19,7 @@ public class CommandDriveForward extends AbstractCommand {
   double motorValue;
   double targetValue;
   double stallValue;
+  int autonomousCount;
   double yawValue;
   double yawErrorTotal;
   double ultrasonicTarget;
@@ -47,7 +48,7 @@ public class CommandDriveForward extends AbstractCommand {
     myNavigation.zeroYaw();
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
-    
+    autonomousCount = 0;
     SmartDashboard.putNumber("Starting Yaw", yawValue);
     
     //Logger.Log("CommandDriveForward.prepare");
@@ -138,14 +139,15 @@ public class CommandDriveForward extends AbstractCommand {
       boolean areWeDone = (amountOfTicks > targetValue);
       
       // if we run into a wall and still arent There yet consider it done 
-      if(stallValue != 0)
+      if((stallValue != 0) && (autonomousCount > 100))
       {
         if(previousEncoderTicks == amountOfTicks)
         {
           areWeDone = true;
         }
       }
-      //Logger.logBoolean("DONE : ", areWeDone);
+      autonomousCount++;
+      Logger.Log("autonomousCount : " + autonomousCount);
       
       if (areWeDone) {
         

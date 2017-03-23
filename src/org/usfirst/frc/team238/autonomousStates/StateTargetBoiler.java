@@ -58,7 +58,7 @@ public class StateTargetBoiler implements AutonomousState {
     SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
     SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
     SmartDashboard.putString("Param 3 - rollValue", parameters[2]);
-    SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
+    SmartDashboard.putString("Param 4 - ultrasonicTarget", parameters[3]);
 
   }
 

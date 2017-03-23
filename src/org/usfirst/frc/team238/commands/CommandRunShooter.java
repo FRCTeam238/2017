@@ -30,6 +30,8 @@ public class CommandRunShooter extends AbstractCommand {
   
   int count = 0;
   
+  double dummyDouble;
+  
   double shooterDelayTime = CrusaderCommon.SERIALIZER_DELAY;
   
   
@@ -68,15 +70,15 @@ public class CommandRunShooter extends AbstractCommand {
     
     //Logger.Log("Elapsed Time is : " + elapsed);
     
-    if(Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY)
+    if((autonomousFlag == 1) || (Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY))
     {
-      
+     
       if(autonomousFlag == 1)
       {
         if (myFuelHandler.getAlliance() == Alliance.Red)
         {
-          shooterSpeed = SmartDashboard.getNumber("Red TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED); //2900); 
-        }
+          shooterSpeed = SmartDashboard.getNumber("Red TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED); //2900); +
+        }        
         else
         {
           shooterSpeed = SmartDashboard.getNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED); //2808);\
@@ -86,8 +88,8 @@ public class CommandRunShooter extends AbstractCommand {
       {
         shooterSpeed = calculateRPM();
       }
-      
-      
+       
+    }
       //shooterSpeed = calculateRPM
       myFuelHandler.theShooter.isShooterAtSpeed(shooterSpeed);
       
@@ -98,7 +100,7 @@ public class CommandRunShooter extends AbstractCommand {
     }
 
     
-  }
+  
   /**
    * this is the prepare method.
    */
@@ -149,7 +151,12 @@ public class CommandRunShooter extends AbstractCommand {
       autonomousFlag = Double.parseDouble(params[2]);
     } else {
       autonomousFlag = 0;
-    } 
+    }
+    if ((params[3] != null) || (!params[2].isEmpty())) {
+      dummyDouble = Double.parseDouble(params[3]);
+    } else {
+      dummyDouble = 0;
+    }
     
   }
   

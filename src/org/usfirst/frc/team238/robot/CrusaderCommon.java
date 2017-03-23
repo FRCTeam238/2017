@@ -101,7 +101,7 @@ public class CrusaderCommon {
 	public static final int TEST_COUNT_CONDITION = 150;
 	
 	//FPID VALUES FOR SHOOTER
-	public final static double SHOOTER_TALON_F_VALUE = 0.0427;
+	public final static double SHOOTER_TALON_F_VALUE = 0.044;
 	public final static double SHOOTER_TALON_P_VALUE = 0.2;
 	public final static double SHOOTER_TALON_I_VALUE = 0;
 	public final static double SHOOTER_TALON_D_VALUE = 1.333;
