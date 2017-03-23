@@ -57,7 +57,7 @@ public class CommandDriveBackwards extends AbstractCommand {
     amountOfTicks = myRobotDrive.getEncoderTicks();
     Logger.Log("Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
 
-    if (amountOfTicks < targetValue) {
+    if (amountOfTicks > targetValue) {
 
       isDone = true;
       myRobotDrive.driveForward(0, 0);
