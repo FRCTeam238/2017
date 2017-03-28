@@ -24,7 +24,7 @@ public class Intake {
    * Starts the intake
    */
   public void IntakeIn(){
-    intakeMotor.set(-CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
+    intakeMotor.set(CrusaderCommon.INTAKE_MOTOR_ROTATE_IN);
     intakeIsOn = true;
   }
   

@@ -93,13 +93,13 @@ public class OperatorCmdFactory {
     operatorCommands.put(5, commandTargetBoiler);
     
     commandRunIntake = new CommandStartIntake(theFuelHandler.theIntake);
-    operatorCommands.put(6, commandRunIntake);
+    operatorCommands.put(7, commandRunIntake);
     
     commandReverseIntake = new CommandReverseIntake(theFuelHandler.theIntake);
-    operatorCommands.put(7, commandReverseIntake);
+    operatorCommands.put(6, commandReverseIntake);
     
-    commandRunSerializer = new CommandStartSerializer(theFuelHandler.theSerializer);
-    operatorCommands.put(8, commandRunSerializer);
+    //commandRunSerializer = new CommandStartSerializer(theFuelHandler.theSerializer);
+    //operatorCommands.put(8, commandRunSerializer);
 		
 		commandCloseHopper = new CommandCloseHopper(theFuelHandler);
 		operatorCommands.put(11, commandCloseHopper);

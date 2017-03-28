@@ -52,8 +52,8 @@ public class CrusaderCommon {
 	public final static double SERIALIZER_MOTOR_OFF = 0;
 	public final static double SERIALIZER_MOTOR_ON_REVERSE = -0.77;
 	
-	public final static double INTAKE_MOTOR_ROTATE_IN = 1.0;
-	public final static double INTAKE_MOTOR_ROTATE_OUT = -1.0;
+	public final static double INTAKE_MOTOR_ROTATE_IN = -1.0;
+	public final static double INTAKE_MOTOR_ROTATE_OUT = 1.0;
 	public final static double INTAKE_MOTOR_OFF = 0;
 	
 	public final static int VISION_ANGLE_SLOT = 0;
@@ -146,11 +146,11 @@ public class CrusaderCommon {
 	
 	public final static int BOILER_TARGET_SERIALIZER_DELAY = 2000;
 	
-	public final static double PERCENT_COMPLETE_BEFORE_SHOOTER_START = 0.75;
+	public final static double PERCENT_COMPLETE_BEFORE_SHOOTER_START = 0.25;  
 	
-	public final static double RED_SHOOTER_SPEED = 1738;
+	public final static double RED_SHOOTER_SPEED = 1728;
 	
-	public final static double BLUE_SHOOTER_SPEED = 1838;
+	public final static double BLUE_SHOOTER_SPEED = 1828;
 	
   public static final int AUTONOMOUS_READ_FILE = 2;
   public static final int AUTONOMOUS_SAVE = 1;
