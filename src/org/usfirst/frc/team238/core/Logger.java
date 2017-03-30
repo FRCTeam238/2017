@@ -48,6 +48,7 @@ public class Logger {
   
   /**
    * Logs a string to the system log
+   * Writes the comment to logFile238 by default
    * Also writes it to a file if writeToFile is true on the SmartDashboard
    * @param comment
    */
@@ -67,6 +68,66 @@ public class Logger {
     
   }
 
+  
+    /**
+   * Logs a string to the system log and creates a new file for it
+   * Can be used for categorization
+   * Also writes it to a file if writeToFile is true on the SmartDashboard
+   * @param comment
+   */
+  public static void Log(String comment,String fileName)
+  {
+    if(isDebug())
+    {
+      System.out.println(comment);
+      
+      if(writeToFile()){
+        
+		writeToNewLogFile(comment,fileName);
+        
+      }
+      
+    }
+    
+  }
+  
+  
+   /**
+   * Writes the log into a custom file
+   * @param log
+   */
+  public static void writeToNewLogFile(String log,String logFileName){
+    
+    try{
+    
+    File customFile = new File("/home/lvuser/"+logFileName+".txt");
+    
+    //If the file already exists, open the file and write the string to it 
+      if(customFile.exists()){
+        
+        FileWriter logFile = new FileWriter("/home/lvuser/"+logFileName+".txt",true);
+        logFile.write(newline+log);
+        logFile.flush();
+        logFile.close();
+     
+    //If the file doesn't already exists, create a new one and write the string to it
+      }else{
+       
+        customFile.createNewFile();
+        FileWriter logFile = new FileWriter("/home/lvuser/"+logFileName+".txt",true);
+        logFile.write(newline+log);
+        logFile.flush();
+        logFile.close();
+        
+      }
+    }catch(Exception e){
+      
+      e.printStackTrace();
+      Log("Logger: writeToNewLogFile has Failed!");
+    
+    }
+  }
+  
   
   /**
    * Writes the log into a file

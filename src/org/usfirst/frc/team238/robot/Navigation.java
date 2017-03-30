@@ -23,7 +23,7 @@ public class Navigation {
 		
 		ahrs = new AHRS(SerialPort.Port.kMXP);
 		currentYaw = ahrs.getYaw();
-		
+	
 		currentRoll = ahrs.getRoll();
 		myUltrasonic = new Ultrasonic(CrusaderCommon.SONIC_OUTPUT_PORT,CrusaderCommon.SONIC_INPUT_PORT);
 		myUltrasonic.setEnabled(true);
@@ -94,6 +94,9 @@ public class Navigation {
         SmartDashboard.putNumber("IMU_Yaw", ahrs.getYaw());
         SmartDashboard.putNumber("IMU_Pitch", ahrs.getPitch());
         SmartDashboard.putNumber("IMU_Roll", ahrs.getRoll());
+        
+        SmartDashboard.putNumber("Refresh Rate", ahrs.getActualUpdateRate());
+        SmartDashboard.putBoolean("Are We Moving?", ahrs.isMoving());
 	}
 	//Tells us if we are at our target yaw
 	public boolean areWeThereYet()
@@ -168,6 +171,26 @@ public class Navigation {
 	  Logger.Log("Navigation(): turningMotorValue(): Final Motor Value : "+ finalMotorValue);
 	  
 	  return finalMotorValue;
+	  
+	}
+	
+	/**
+	 * This function tells us if we are moving by using the NavX board .isMoving() function
+	 * @return
+	 */
+	public boolean areWeMoving()
+	{
+	  
+	  if(ahrs.isMoving())
+	  {
+	    //We are moving
+	    return true;
+	  }
+	  else
+	  {
+	    //We are not moving
+	    return false;
+	  }
 	  
 	}
 	
