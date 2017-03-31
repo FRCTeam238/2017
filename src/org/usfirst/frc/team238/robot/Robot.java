@@ -428,6 +428,8 @@ public class Robot extends IterativeRobot {
     //SmartDashboard.putNumber("InityawValue", myNavigation.getYaw());
   
     SmartDashboard.putBoolean("CLIMBDEBUG", false);
+    
+    SmartDashboard.putNumber("Curl Turn Value", 0.5);
   
     //SmartDashboard.putNumber("DRIVETRAIN TUNING", 0.2);
   

@@ -51,32 +51,33 @@ public class CommandCurlForward extends AbstractCommand {
   @Override
   public void execute() {
     
-    double calculatedMotorValue;
+    /*double calculatedMotorValue;
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
-        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
+        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);*/
     
-    driveStraightCalc();
+    
     
     turnValue = SmartDashboard.getNumber("Curl Turn Value", 0.5);
     
-    Logger.Log("CommandCurlForward(): Calculated Motor Value is " + calculatedMotorValue);
+    //Logger.Log("CommandCurlForward(): Calculated Motor Value is " + calculatedMotorValue);
     
+    //Stages for execution 
     switch(stage)
     {
-      case 1:
+      case 1: //Stage 1: Drive forward
       {
         
-        myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight);
+        driveStraight();
         
         break;
         
       }
       
-      case 2:
+      case 2: //Stage 2: Swing to one side or another
       {
         
+        //Selects a side and slows down one side in order to do a swinging action
         switch(direction){
-          
           
           case "Left":
             myRobotDrive.driveForward(turnValue, motorValue);
@@ -96,11 +97,11 @@ public class CommandCurlForward extends AbstractCommand {
         break;
         
       }
-        
-      case 3:
+       
+      case 3: //Stage 3: Drive Forward again
       {
-          
-        myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight);
+        driveStraight();
+        
         break;
           
       }
@@ -138,7 +139,7 @@ public class CommandCurlForward extends AbstractCommand {
     
     if ((params[0] != null) || (!params[0].isEmpty())) {
       
-      targetValue = Double.parseDouble(params[0]);
+      targetValue = Double.parseDouble(params[0]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT;
       
     } else {
       
@@ -167,11 +168,11 @@ public class CommandCurlForward extends AbstractCommand {
 
     if(direction.equals("Left")){
       
-      myNavigation.setTargetValues(targetValue*-1);
+      myNavigation.setTargetValues(newTargetYaw);
       
     }else{
       
-      myNavigation.setTargetValues(targetValue);
+      myNavigation.setTargetValues(newTargetYaw);
       
     }
   }
@@ -189,11 +190,11 @@ public class CommandCurlForward extends AbstractCommand {
     
     switch(stage){
       
-      case 0:
+      case 0: //Increments to stage 1
         stage++;
         break;
         
-      case 1:
+      case 1: //Checks if we're at the targeted distance and increments to stage 2
         
         boolean areWeDone = (amountOfTicks > targetValue);
         
@@ -203,25 +204,29 @@ public class CommandCurlForward extends AbstractCommand {
         
        break; 
       
-      case 2:
-
-        if(myNavigation.areWeThereYet()){
-          stage++;
+      case 2: //Checks if we are at a certain angle and increments to stage 3
+        
+        if(myNavigation.haveWeCollided())
+        {
+          return true;
+        }
+        
+        if(myNavigation.areWeThereYet())
+        {
+          //stage++;
+          //myRobotDrive.resetEncoders();
+          //myNavigation.zeroYaw();
+          myRobotDrive.driveForward(0, 0);
+          Doness = true;
         }
         
        break;
       
-      case 3:
-        
-        boolean areWeDoneAgain = (amountOfTicks > targetValue);
-        
-        if(areWeDoneAgain){
-          Doness = true;
-        }
-        
-        break;
+      
        
     }
+    
+    
     
     return Doness;
     
@@ -238,7 +243,7 @@ public class CommandCurlForward extends AbstractCommand {
     return error;
   }
   
-  public void driveStraightCalc()
+  public void driveStraight()
   {
     
     double currentYaw = myNavigation.getYaw();
@@ -250,6 +255,7 @@ public class CommandCurlForward extends AbstractCommand {
     finalMotorValueLeft = motorValue - yawCorrection;
     finalMotorValueRight = motorValue + yawCorrection;
     
+    myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight);
     
   }
 

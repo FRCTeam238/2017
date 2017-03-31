@@ -16,6 +16,7 @@ import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
 import org.usfirst.frc.team238.commands.CommandTurnToBoiler;
 import org.usfirst.frc.team238.commands.CommandCloseHopper;
+import org.usfirst.frc.team238.commands.CommandCurlForward;
 import org.usfirst.frc.team238.commands.CommandDelay;
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
 import org.usfirst.frc.team238.commands.CommandTurnAwayFromBoiler;
@@ -34,6 +35,7 @@ public class AutonomousCmdFactory {
 	CommandOpenHopper openHopper;
 	CommandCloseHopper closeHopper;
 	CommandTargetBoiler targetBoiler;
+	CommandCurlForward curlForward;
 	
 	HashMap <String, Command> autonomousCommands;
 	//TODO change that static 10
@@ -69,6 +71,8 @@ public class AutonomousCmdFactory {
 		autonomousCommands.put("CommandCloseHopper", closeHopper);
     targetBoiler = new CommandTargetBoiler(robotDrive, myNavigation, myRobot, myFuelHandler);
     autonomousCommands.put("CommandTargetBoiler", targetBoiler);
+    curlForward = new CommandCurlForward(robotDrive, myNavigation, myRobot);
+    autonomousCommands.put("CommandCurlForward", curlForward);
     
 		return autonomousCommands;
 		

@@ -18,6 +18,10 @@ public class Navigation {
 	
 	Ultrasonic myUltrasonic;
 	
+	final static double kCollisionThreshold_DeltaG = 0.5f;
+  double last_world_linear_accel_x = 0;
+  double last_world_linear_accel_y = 0;
+	
 	public void init()
 	{
 		
@@ -96,7 +100,7 @@ public class Navigation {
         SmartDashboard.putNumber("IMU_Roll", ahrs.getRoll());
         
         SmartDashboard.putNumber("Refresh Rate", ahrs.getActualUpdateRate());
-        SmartDashboard.putBoolean("Are We Moving?", ahrs.isMoving());
+        //SmartDashboard.putBoolean("Are We Moving?", ahrs.isMoving());
 	}
 	//Tells us if we are at our target yaw
 	public boolean areWeThereYet()
@@ -178,10 +182,27 @@ public class Navigation {
 	 * This function tells us if we are moving by using the NavX board .isMoving() function
 	 * @return
 	 */
-	public boolean areWeMoving()
+	public boolean haveWeCollided()
 	{
 	  
-	  if(ahrs.isMoving())
+	  boolean collisionDetected = false;
+
+	  
+    double curr_world_linear_accel_x = ahrs.getWorldLinearAccelX();
+    double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
+    last_world_linear_accel_x = curr_world_linear_accel_x;
+    double curr_world_linear_accel_y = ahrs.getWorldLinearAccelY();
+    double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
+    last_world_linear_accel_y = curr_world_linear_accel_y;
+    
+    if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
+         ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ) {
+        collisionDetected = true;
+    }
+    SmartDashboard.putBoolean(  "CollisionDetected", collisionDetected);
+    
+    return collisionDetected;
+	  /*if(ahrs.isMoving())
 	  {
 	    //We are moving
 	    return true;
@@ -190,8 +211,10 @@ public class Navigation {
 	  {
 	    //We are not moving
 	    return false;
-	  }
+	  }*/
 	  
 	}
+	
+	
 	
 }
