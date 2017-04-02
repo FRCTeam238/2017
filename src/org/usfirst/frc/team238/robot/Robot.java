@@ -42,12 +42,11 @@ public class Robot extends IterativeRobot {
 
 	private static int count = 1;
 	double[] dataFromVision;
-	//private static boolean AUTO_STARTED = false;
-	
-	CANTalon leftFrontDrive; //id = 1
-	CANTalon leftRearDrive; //id = 2
-	CANTalon rightFrontDrive; //id = 3
-	CANTalon rightRearDrive; //id = 4
+		
+	CANTalon leftFrontDrive; 
+	CANTalon leftRearDrive; 
+	CANTalon rightFrontDrive; 
+	CANTalon rightRearDrive; 
 	
 	Robot myRobot;
 	Preferences myPreferences;
@@ -69,7 +68,7 @@ public class Robot extends IterativeRobot {
 	String autoMode;
 	/*AutonomousDrive autonomousDrive;*/
 	private AutonomousDataHandler myAutonomousDataHandler;
-	private TargetingDataHandler myTargetingData;
+	//private TargetingDataHandler myTargetingData;
 	private AutonomousController theMACP;
 	
   //SendableChooser<String> autonomousChooser;
@@ -81,6 +80,11 @@ public class Robot extends IterativeRobot {
 	
 	Alliance teamColor;
 	
+	
+	public FuelHandler getFuelHandler()
+	{
+	  return theFuelHandler;
+	}
 	
 	/**
 	 * Called when the robot is disabled
@@ -113,14 +117,7 @@ public class Robot extends IterativeRobot {
 				//Send the list of AutonomousModes into the AutonomousController for processing
         theMACP.setAutonomousControllerData(myAutonomousDataHandler);
 				
-				//myNavigation.getDistanceFromUltrasonic();
-				
-				//debug = SmartDashboard.getBoolean("Debug");
-				//Logger.logBoolean("disabledPeriodic:Debug=  " , debug);
-				
 				int autoModeSelection = myAutonomousDataHandler.getModeSelectionFromDashboard();
-				
-				//int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection();
 				Logger.Log("Robot(): disabledPeriodic(): The chosen AutoMode =  " + String.valueOf(autoModeSelection));
 			
 				//backups  in case sendable chooser disappear
@@ -254,9 +251,7 @@ public class Robot extends IterativeRobot {
 
 			  Logger.Log("Robot(): AutononousInit()");
 			
-				//int automousModeFromDS =  myAutonomousDataHandler.getAModeChooserSelection(); //controller
 				int automousModeFromDS =  myAutonomousDataHandler.getModeSelectionFromDashboard(); //controller
-			
 				Logger.Log("Robot(): AutonomousInit(): The chosen One =  " + String.valueOf(automousModeFromDS));
 				theMACP.pickAMode(automousModeFromDS);
 				
@@ -264,7 +259,6 @@ public class Robot extends IterativeRobot {
 				
 				teamColor = DriverStation.getInstance().getAlliance();
 				SmartDashboard.putString("Alliance Color", teamColor.toString());
-				
 				theFuelHandler.setAlliance(teamColor);
 				
 		} catch (Exception ex) {
@@ -305,14 +299,8 @@ public class Robot extends IterativeRobot {
 			rightRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_RIGHT);
 			leftRearDrive.set(CrusaderCommon.DRIVE_TRAIN_MASTER_LEFT);
 			
-			//theFuelHandler = new FuelHandler();
-			//theFuelHandler.init();
-			
 			myRobotDrive = new RobotDrive(leftFrontDrive,rightFrontDrive);
 			myRobotDrive.setSafetyEnabled(false);
-			//myRobotDrive.setMaxOutput(CrusaderCommon.DRIVETRAIN_MAX_RPM);
-			/*autonomousDrive = new AutonomousDrive(myRobotDrive);
-			autonomousDrive.init();*/
 			
 			myNavigation = new Navigation();
 			myNavigation.init();
@@ -330,7 +318,6 @@ public class Robot extends IterativeRobot {
 			
 			theVision = new Vision();
 			theVision.init();
-			//theVision.startClient();
 			
 			theFuelHandler = new FuelHandler();
 			theFuelHandler.init();
@@ -458,10 +445,8 @@ public class Robot extends IterativeRobot {
 			
 			theMACP.process();
 			myNavigation.navxValues();
-			myNavigation.getDistanceFromUltrasonic();
 			
-			int currentYaw = (int) myNavigation.getYaw();
-			
+			int currentYaw = (int) myNavigation.getYaw();			
 			SmartDashboard.putNumber("AutonomousPeriodic: The CurrentYaw ", currentYaw);
 			
 		} catch (Exception ex) {
@@ -487,9 +472,6 @@ public class Robot extends IterativeRobot {
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
 			myNavigation.navxValues();
-			//myNavigation.ultrasonicSensor();
-			//SmartDashboard.putNumber("Match Time", myDriverstation.getMatchTime());
-			
 
 		} catch (Exception e) {
 		  e.printStackTrace();

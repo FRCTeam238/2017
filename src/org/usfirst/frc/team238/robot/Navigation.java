@@ -202,16 +202,6 @@ public class Navigation {
     SmartDashboard.putBoolean(  "CollisionDetected", collisionDetected);
     
     return collisionDetected;
-	  /*if(ahrs.isMoving())
-	  {
-	    //We are moving
-	    return true;
-	  }
-	  else
-	  {
-	    //We are not moving
-	    return false;
-	  }*/
 	  
 	}
 	

@@ -160,5 +160,6 @@ public class CrusaderCommon {
   
   public final static double NO_TARGET_RPM = 3250;
   
-	
+	public final static int CURL_START = 1;
+	public final static int CURL_TURN = 2;
 }

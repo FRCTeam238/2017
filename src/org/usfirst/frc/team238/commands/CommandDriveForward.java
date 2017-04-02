@@ -19,7 +19,6 @@ public class CommandDriveForward extends AbstractCommand {
   double motorValue;
   double targetValue;
   double stallValue;
-  int autonomousCount;
   double yawValue;
   double yawErrorTotal;
   double ultrasonicTarget;
@@ -48,7 +47,6 @@ public class CommandDriveForward extends AbstractCommand {
     myNavigation.zeroYaw();
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
-    autonomousCount = 0;
     previousEncoderTicks = 0;
     SmartDashboard.putNumber("Starting Yaw", yawValue);
     
@@ -123,50 +121,30 @@ public class CommandDriveForward extends AbstractCommand {
   }
 
   public boolean done() {
-    
-    boolean isDone = false;
-    
+  
     double amountOfTicks;
-    //double currnetRollValue = myNavigation.getRoll();
-   //double currentUltrasonicDistance;
-
+   
     amountOfTicks = myRobotDrive.getEncoderTicks();
     
     Logger.Log("CommandDriveForward() : Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
-    //Logger.Log("RollValue : "+ rollValue+ "CurrentRollValue : "+ currnetRollValue);
-    //Logger.Log("Ultrasonic : "+ ultrasonicTarget);
+    
+    boolean areWeDone = (amountOfTicks > targetValue);
 
-   
-      boolean areWeDone = (amountOfTicks > targetValue);
-      
-     // if((stallValue != 0) && (previousEncoderTicks != 0))
-     // {
-        // if we run into a wall and still arent There yet consider it done 
-        if((stallValue != 0) && (autonomousCount > 75))
-        {
-          if(previousEncoderTicks == amountOfTicks)
-          {
-            areWeDone = true;
-          }
-        }
-     // }
-      autonomousCount++;
-      Logger.Log("autonomousCount : " + autonomousCount);
-      
-      if (areWeDone) {
-        
-        isDone = true;
-        myRobotDrive.driveForward(0, 0);
-        SmartDashboard.putNumber("WE STOPPED AT", amountOfTicks);
+    if((!areWeDone) && (stallValue != 0)) 
+    {
+      //if we run into a wall and still arent There yet consider it done 
+      areWeDone = myNavigation.haveWeCollided();
+    }
 
-      } else {
-        
-        isDone = false;
-        
-      }
-      previousEncoderTicks = amountOfTicks;
+    if (areWeDone) 
+    {
+      //isDone = true;
+      myRobotDrive.driveForward(0, 0);
+      SmartDashboard.putNumber("WE STOPPED AT", amountOfTicks);
+    }
+    
       
-    return isDone;
+    return areWeDone;
   }
   
   /*

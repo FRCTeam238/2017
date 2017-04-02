@@ -158,7 +158,7 @@ public class Drivetrain {
 	{
 	  
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_HIGH_GEAR);
-		Logger.Log("Drivetrain() : shiftHigh(): !!!!!!!!!!WE'RE IN HIGH GEAR!!!!!!!!!!");
+	//	Logger.Log("Drivetrain() : shiftHigh(): !!!!!!!!!!WE'RE IN HIGH GEAR!!!!!!!!!!");
 		
 	}
 	
@@ -170,7 +170,7 @@ public class Drivetrain {
 	{
 	  
 		shifterSolenoid.set(CrusaderCommon.SHIFTER_LOW_GEAR);
-		Logger.Log("Drivetrain() : shiftLow(): !!!!!!!!!!WE'RE IN LOW GEAR!!!!!!!!!!");
+	//	Logger.Log("Drivetrain() : shiftLow(): !!!!!!!!!!WE'RE IN LOW GEAR!!!!!!!!!!");
 		
 	}
 	

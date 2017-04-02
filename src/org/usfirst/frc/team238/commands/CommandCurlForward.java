@@ -4,6 +4,7 @@ import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
 
@@ -17,6 +18,7 @@ public class CommandCurlForward extends AbstractCommand {
   Robot theRobot;
   Drivetrain myRobotDrive;
   Navigation myNavigation;
+  FuelHandler myFuelHandler;
   
   double motorValue;
   double targetValue;
@@ -38,25 +40,19 @@ public class CommandCurlForward extends AbstractCommand {
   
   double turnValue = 0;
   
-  int stage = 0;
+  int stage = CrusaderCommon.CURL_START;
   
   public CommandCurlForward(Drivetrain theRobotDrive, Navigation myNavigationForTarget, Robot myRobot){
     
     this.myRobotDrive = theRobotDrive;
     this.myNavigation = myNavigationForTarget;
     this.theRobot = myRobot;
-    
+    this.myFuelHandler = myRobot.getFuelHandler();
   }
   
   @Override
   public void execute() {
-    
-    /*double calculatedMotorValue;
-    calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
-        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);*/
-    
-    
-    
+       
     turnValue = SmartDashboard.getNumber("Curl Turn Value", 0.5);
     
     //Logger.Log("CommandCurlForward(): Calculated Motor Value is " + calculatedMotorValue);
@@ -64,7 +60,7 @@ public class CommandCurlForward extends AbstractCommand {
     //Stages for execution 
     switch(stage)
     {
-      case 1: //Stage 1: Drive forward
+      case CrusaderCommon.CURL_START: //Stage 1: Drive forward
       {
         
         driveStraight();
@@ -73,8 +69,10 @@ public class CommandCurlForward extends AbstractCommand {
         
       }
       
-      case 2: //Stage 2: Swing to one side or another
+      case CrusaderCommon.CURL_TURN: //Stage 2: Swing to one side or another
       {
+        
+        myFuelHandler.theIntake.IntakeIn();
         
         //Selects a side and slows down one side in order to do a swinging action
         switch(direction){
@@ -98,13 +96,13 @@ public class CommandCurlForward extends AbstractCommand {
         
       }
        
-      case 3: //Stage 3: Drive Forward again
-      {
-        driveStraight();
-        
-        break;
-          
-      }
+//      case 3: //Stage 3: Drive Forward again
+//      {
+//        driveStraight();
+//        
+//        break;
+//          
+//      }
         
     }
       
@@ -115,6 +113,7 @@ public class CommandCurlForward extends AbstractCommand {
   public void prepare() {
     
     myNavigation.zeroYaw();
+    myRobotDrive.resetEncoders();
   
   }
 
@@ -180,21 +179,14 @@ public class CommandCurlForward extends AbstractCommand {
   @Override
   public boolean done() {
     
-    boolean Doness= false;
-    double currentYaw;
+    boolean doness = false;
     double amountOfTicks;
-    
-    currentYaw = myNavigation.getYaw();
-    
+        
     amountOfTicks = myRobotDrive.getEncoderTicks();
     
     switch(stage){
       
-      case 0: //Increments to stage 1
-        stage++;
-        break;
-        
-      case 1: //Checks if we're at the targeted distance and increments to stage 2
+      case CrusaderCommon.CURL_START: //Checks if we're at the targeted distance and increments to stage 2
         
         boolean areWeDone = (amountOfTicks > targetValue);
         
@@ -202,33 +194,21 @@ public class CommandCurlForward extends AbstractCommand {
           stage++;
         }
         
-       break; 
+        break; 
       
-      case 2: //Checks if we are at a certain angle and increments to stage 3
+      case CrusaderCommon.CURL_TURN: //Checks if we are at a certain angle and increments to stage 3
         
-        if(myNavigation.haveWeCollided())
+        if(myNavigation.haveWeCollided() || myNavigation.areWeThereYet())
         {
-          return true;
-        }
-        
-        if(myNavigation.areWeThereYet())
-        {
-          //stage++;
-          //myRobotDrive.resetEncoders();
-          //myNavigation.zeroYaw();
           myRobotDrive.driveForward(0, 0);
-          Doness = true;
+          //myFuelHandler.theIntake.IntakeStop();
+          doness = true;
         }
         
-       break;
-      
-      
+        break;
        
     }
-    
-    
-    
-    return Doness;
+      return doness;
     
   }
   

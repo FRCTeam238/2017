@@ -66,7 +66,7 @@ public class StateAlignToBoiler implements AutonomousState {
     // TODO Auto-generated method stub
     SmartDashboard.putString("Param 1 - targetValue", parameters[0]);
     SmartDashboard.putString("Param 2 - motorSpeed", "0");
-    SmartDashboard.putString("Param 3 - rollValue", "0");
+    SmartDashboard.putString("Param 3 - targetYaw", "0");
     SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
   }
 
@@ -82,7 +82,7 @@ public class StateAlignToBoiler implements AutonomousState {
     parameters[0] = param1;
     param2 = SmartDashboard.getString("Param 2 - motorSpeed");
     parameters[1] = param2;
-    param3 = SmartDashboard.getString("Param 3 - rollValue");
+    param3 = SmartDashboard.getString("Param 3 - targetYaw");
     parameters[2] = param3;
     param4 = SmartDashboard.getString("Param 4 - ultrasonicTarget");
     parameters[3] = param4;
