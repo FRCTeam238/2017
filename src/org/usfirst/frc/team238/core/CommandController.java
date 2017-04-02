@@ -32,7 +32,7 @@ public class CommandController {
 	{
 		// populate the command lists
 		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber, myRobot);
-		setupDriverCommands(myRobotDrive, driveTrain, myClimber);
+		setupDriverCommands(myRobotDrive, driveTrain, myNavigation,myVision,theFuelHandler);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot, theFuelHandler);
 		
 		commandValue = new HashMap<Integer, Command>(8);
@@ -60,13 +60,13 @@ public class CommandController {
 		return driverCmdList.get(cmdName);
 	}
 	
-	private void setupDriverCommands( RobotDrive myRobotDrive, Drivetrain driveTrain, Climber theClimber)
+	private void setupDriverCommands( RobotDrive myRobotDrive, Drivetrain driveTrain,Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler)
 	{
 		theDriverCommandFactory = new DriverCommandFactory();
 		theDriverCommandFactory.init();
 		
-		driverLeftCmdList = theDriverCommandFactory.createDriverLeftCommands(driveTrain, theClimber);
-		driverRightCmdList = theDriverCommandFactory.createDriverRightCommands(driveTrain);
+		driverLeftCmdList = theDriverCommandFactory.createDriverLeftCommands(driveTrain,myNavigation,myVision);
+		driverRightCmdList = theDriverCommandFactory.createDriverRightCommands(driveTrain,myNavigation,myVision,myFuelHandler);
 		driverCmdList = theDriverCommandFactory.createDriverCommands(myRobotDrive);
 	}
 	

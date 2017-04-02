@@ -102,7 +102,13 @@ public class AutonomousController implements AutonomousState{
 			count++;
 		}
 	}
-			
+
+  @Override
+  public void reset() {
+    // TODO Auto-generated method stub
+    index = 0;
+  }
+  
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
@@ -125,12 +131,6 @@ public class AutonomousController implements AutonomousState{
 	public boolean done() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

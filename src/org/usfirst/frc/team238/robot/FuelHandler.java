@@ -269,13 +269,37 @@ public class FuelHandler {
   }
   
   /**
-   * this method turns the ring light on.
+   * Turns on the ring light on the shooter
    */
   public void turnOnRingLight()
   {
     
     theShooter.turnOnRingLight();
     
+    
+  }
+  
+  /**
+   * Turns off the ring light on the shooter
+   */
+  public void turnOffRingLight()
+  {
+    
+    theShooter.turnOffRingLight();
+    
+  }
+  
+  public void deployGearSolenoid()
+  {
+    
+    //deploy solenoid 
+    
+  }
+  
+  public void undeployGearSolenoid()
+  {
+    
+    //undeploy solenoid
     
   }
   

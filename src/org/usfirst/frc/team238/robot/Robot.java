@@ -114,6 +114,10 @@ public class Robot extends IterativeRobot {
 				
 				count = 0;
 				
+				theMACP.reset();
+				
+				//myDriveTrain.resetEncoders();
+				
 				//Send the list of AutonomousModes into the AutonomousController for processing
         theMACP.setAutonomousControllerData(myAutonomousDataHandler);
 				
@@ -444,7 +448,7 @@ public class Robot extends IterativeRobot {
 		try {
 			
 			theMACP.process();
-			myNavigation.navxValues();
+			//myNavigation.navxValues();
 			
 			int currentYaw = (int) myNavigation.getYaw();			
 			SmartDashboard.putNumber("AutonomousPeriodic: The CurrentYaw ", currentYaw);
@@ -471,6 +475,7 @@ public class Robot extends IterativeRobot {
 			commandValue = myControlBoard.getCommands();
 			//pass the array with the commands coming form the control to the Controller object 
 			theMCP.buttonPressed(commandValue);
+			//mjf do we need this?
 			myNavigation.navxValues();
 
 		} catch (Exception e) {

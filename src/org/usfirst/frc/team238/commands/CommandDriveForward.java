@@ -27,6 +27,7 @@ public class CommandDriveForward extends AbstractCommand {
   double yawIConstant = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
   double yawCorrectionMaxPercent = CrusaderCommon.DRIVE_FORWARD_MAX_YAW_PERCENT;   // percent of motorValue for max yaw
   double previousEncoderTicks;
+  double oktoCheckToCollisopn = 0;
   
   // boolean debug;
 
@@ -118,6 +119,7 @@ public class CommandDriveForward extends AbstractCommand {
       ultrasonicTarget = 0;
     }
 
+    oktoCheckToCollisopn = targetValue *.25;
   }
 
   public boolean done() {
@@ -133,7 +135,12 @@ public class CommandDriveForward extends AbstractCommand {
     if((!areWeDone) && (stallValue != 0)) 
     {
       //if we run into a wall and still arent There yet consider it done 
-      areWeDone = myNavigation.haveWeCollided();
+     
+      if (amountOfTicks > oktoCheckToCollisopn)
+      {
+        areWeDone = myNavigation.haveWeCollided();
+      }
+         
     }
 
     if (areWeDone) 

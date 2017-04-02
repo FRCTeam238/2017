@@ -261,5 +261,13 @@ public class Shooter {
     
   }
   
+  public void turnOffRingLight()
+  {
+    
+    shooterRingLight.set(false);
+    isRingLightOn = false;
+    
+  }
+  
 
 }

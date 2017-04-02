@@ -18,7 +18,7 @@ public class Navigation {
 	
 	Ultrasonic myUltrasonic;
 	
-	final static double kCollisionThreshold_DeltaG = 0.5f;
+	final static double kCollisionThreshold_DeltaG = 0.75f;
   double last_world_linear_accel_x = 0;
   double last_world_linear_accel_y = 0;
 	
@@ -100,6 +100,7 @@ public class Navigation {
         SmartDashboard.putNumber("IMU_Roll", ahrs.getRoll());
         
         SmartDashboard.putNumber("Refresh Rate", ahrs.getActualUpdateRate());
+        haveWeCollided();
         //SmartDashboard.putBoolean("Are We Moving?", ahrs.isMoving());
 	}
 	//Tells us if we are at our target yaw
@@ -197,9 +198,19 @@ public class Navigation {
     
     if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
          ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ) {
+      
         collisionDetected = true;
+        
+        Logger.Log("Navigation(): haveWeCollided(): CollisionDetected ="+collisionDetected);
     }
+    SmartDashboard.putNumber("cOLLISIONvaLUE x: ", currentJerkX);
+    SmartDashboard.putNumber("cOLLISIONvaLUE y: ", currentJerkY);
+    
+    Logger.Log("Navigation(): haveWeCollided(): Collision X :" + currentJerkX);
+    Logger.Log("Navigation(): haveWeCollided(): Collision Y :" + currentJerkY);
+    
     SmartDashboard.putBoolean(  "CollisionDetected", collisionDetected);
+   
     
     return collisionDetected;
 	  

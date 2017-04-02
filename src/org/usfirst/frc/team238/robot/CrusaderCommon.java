@@ -66,8 +66,8 @@ public class CrusaderCommon {
 	public final static int TALON_NO_VALUE = 0;
 	
 	/*THESE ARE THE ALL THE TALON IDS FOR THE 2017 ROBOT*/
-	public final static int SHOOTER_MASTER_TALON = 11;
-	public final static int SHOOTER_SLAVE_TALON = 12;
+	public final static int SHOOTER_MASTER_TALON = 11;//11
+	public final static int SHOOTER_SLAVE_TALON = 12;//10
 	public final static int ELEVATOR_TALON = 3;
 	public final static int INTAKE_TALON = 2;
 	public final static int DRIVE_TRAIN_MASTER_RIGHT = 7;
@@ -150,7 +150,8 @@ public class CrusaderCommon {
 	
 	public final static double RED_SHOOTER_SPEED = 1728;
 	
-	public final static double BLUE_SHOOTER_SPEED = 1828;
+	//public final static double BLUE_SHOOTER_SPEED = 1828;
+	public final static double BLUE_SHOOTER_SPEED = 1728;
 	
   public static final int AUTONOMOUS_READ_FILE = 2;
   public static final int AUTONOMOUS_SAVE = 1;

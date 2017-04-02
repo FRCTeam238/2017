@@ -5,9 +5,13 @@ import java.util.HashMap;
 import org.usfirst.frc.team238.commands.CommandShiftHigh;
 import org.usfirst.frc.team238.commands.CommandShiftLow;
 import org.usfirst.frc.team238.commands.CommandTankDrive;
+import org.usfirst.frc.team238.commands.CommandTrackTargetBoiler;
 import org.usfirst.frc.team238.commands.NoDriverCommand;
 import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.FuelHandler;
+import org.usfirst.frc.team238.robot.Navigation;
+import org.usfirst.frc.team238.robot.Vision;
 import org.usfirst.frc.team238.testCommands.CommandDeccrementTestDriveWithButtons;
 import org.usfirst.frc.team238.testCommands.CommandDecrementOnePercent;
 import org.usfirst.frc.team238.testCommands.CommandIncrementOnePercent;
@@ -22,6 +26,7 @@ public class DriverCommandFactory {
 	NoDriverCommand NoDriveCommand;
 	CommandShiftHigh commandShiftHigh;
 	CommandShiftLow commandShiftLow;
+	CommandTrackTargetBoiler commandTrackBoiler;
 	CommandResetTestDriveWithButtons cmdReset;
 	CommandDeccrementTestDriveWithButtons cmdDecrement;
 	CommandIncrementTestDriveWithButtons cmdIncrement;
@@ -40,7 +45,7 @@ public class DriverCommandFactory {
 	}
 	
 	
-	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain, Climber theClimber){
+	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision){
 		
 		NoDriveCommand = new NoDriverCommand(driveTrain);
 		
@@ -50,28 +55,32 @@ public class DriverCommandFactory {
 		
 		driverLeftCommands.put(1, commandShiftLow);
 		
-		cmdReverseClimb = new CommandReverseClimber(theClimber);
+		//cmdReverseClimb = new CommandReverseClimber(theClimber);
 		
-		driverLeftCommands.put(10, cmdReverseClimb);
+		//driverLeftCommands.put(10, cmdReverseClimb);
 		
 		return driverLeftCommands;
 		
 	}
 
-	public HashMap<Integer, Command> createDriverRightCommands(Drivetrain driveTrain){
+	public HashMap<Integer, Command> createDriverRightCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler ){
 		
 		NoDriveCommand  = new NoDriverCommand(driveTrain);
-		
 		driverRightCommands.put(0, NoDriveCommand);
 		
 		commandShiftHigh = new CommandShiftHigh(driveTrain);
 		driverRightCommands.put(1, commandShiftHigh);
+		
+		commandTrackBoiler = new CommandTrackTargetBoiler(driveTrain,myNavigation,myVision,myFuelHandler);
+		driverRightCommands.put(3, commandTrackBoiler);
+		
+		/*
 		driverRightCommands.put(2, cmdReset);
 		driverRightCommands.put(3, cmdDecrement);
 		driverRightCommands.put(4, cmdIncrement);
 		driverRightCommands.put(8, cmdIncrementOne);
 		driverRightCommands.put(14, cmdDecrementOne);
-		
+		*/
 		return driverRightCommands;
 		
 	}

@@ -5,6 +5,7 @@ import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.core.Logger;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
+import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Vision;
 
@@ -13,6 +14,7 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 	Drivetrain myRobotDrive;
 	Navigation myNavigation;
 	Vision myVision;
+	FuelHandler myFuelHandler;
 	double realAngle = 0;
 	
 	double slowSide = 0;
@@ -30,8 +32,9 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 	
 	
 	
-	public CommandTrackTargetBoiler(Drivetrain robotDrive, Navigation myNavigationForTarget, Vision theVision) {
+	public CommandTrackTargetBoiler(Drivetrain robotDrive, Navigation myNavigationForTarget, Vision theVision, FuelHandler theFuelHandler) {
 		// TODO Auto-generated constructor stub
+	  this.myFuelHandler = theFuelHandler;
 		this.myNavigation = myNavigationForTarget;
 		this.myRobotDrive = robotDrive;
 		this.myVision = theVision;
@@ -42,6 +45,8 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 	public void execute() {
 		// TODO Auto-generated method stub
 		
+	  myFuelHandler.turnOnRingLight();
+	  
 		double boilerAngle;
 		
     double calculatedMotorValue;
@@ -145,6 +150,13 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 			{
 			  
 				Logger.Log("CommandTrackTarget(): We Have Finished!");
+				
+				if(myFuelHandler.isRingLightOn()){
+				  
+				  myFuelHandler.turnOffRingLight();
+				  
+				}
+				
 				return true;
 			
 			}
