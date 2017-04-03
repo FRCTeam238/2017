@@ -114,7 +114,7 @@ public class Robot extends IterativeRobot {
 				
 				count = 0;
 				
-				theMACP.reset();
+				//theMACP.reset();
 				
 				//myDriveTrain.resetEncoders();
 				

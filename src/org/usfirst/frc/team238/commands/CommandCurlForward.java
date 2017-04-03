@@ -115,7 +115,7 @@ public class CommandCurlForward extends AbstractCommand {
     
     yawErrorTotal = 0;
     
-    myNavigation.resetNAVX();
+    //myNavigation.resetNAVX();
     myNavigation.zeroYaw();
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
@@ -210,6 +210,14 @@ public class CommandCurlForward extends AbstractCommand {
           //myFuelHandler.theIntake.IntakeStop();
           doness = true;
         }
+        
+        //if collided == true
+        //  if square_theRobot off == 0
+        //    square_theRobot off = gettime
+        //else 
+        //    getThe time and see if time - square_theRobot off > 250ms
+        //     if it is set doness = true and stop teh motors
+        
         
         break;
        
