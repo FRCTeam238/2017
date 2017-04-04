@@ -27,7 +27,7 @@ public class CommandDriveForward extends AbstractCommand {
   double yawIConstant = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
   double yawCorrectionMaxPercent = CrusaderCommon.DRIVE_FORWARD_MAX_YAW_PERCENT;   // percent of motorValue for max yaw
   double previousEncoderTicks;
-  double oktoCheckToCollisopn = 0;
+  double okToCheckForCollision = 0;
   
   int collisionDelay = 250;
   int delayCount = 0;
@@ -126,7 +126,7 @@ public class CommandDriveForward extends AbstractCommand {
       ultrasonicTarget = 0;
     }
 
-    oktoCheckToCollisopn = targetValue *.25;
+    okToCheckForCollision = targetValue *.25;
   }
 
   public boolean done() {
@@ -145,7 +145,7 @@ public class CommandDriveForward extends AbstractCommand {
     {
       //if we run into a wall and still arent There yet consider it done 
      
-      if (amountOfTicks > oktoCheckToCollisopn)
+      if (amountOfTicks > okToCheckForCollision)
       {
         
         areWeCollided = myNavigation.haveWeCollided();
@@ -174,41 +174,7 @@ public class CommandDriveForward extends AbstractCommand {
     return areWeDone;
   }
   
-  /*
-   * A function meant to check if the robot is running into a wall by checking
-   * the current output private boolean currentOverLoad(){ boolean
-   * currentOverload = false;
-   * 
-   * double totalCurrentDraw; //CurrentDraw of all Talons below double
-   * leftFrontCurrentDraw = myPowerDistributionPanel.getCurrent(5);
-   * //CurrentDraw of Left Front Talon CurrentDraw double leftRearCurrentDraw =
-   * myPowerDistributionPanel.getCurrent(6); //CurrentDraw of Left Rear Talon
-   * CurrentDraw double rightFrontCurrentDraw =
-   * myPowerDistributionPanel.getCurrent(7); //CurrentDraw of Right Front Talon
-   * CurrentDraw double rightRearCurrentDraw =
-   * myPowerDistributionPanel.getCurrent(8); //CurrentDraw of Right Rear Talon
-   * CurrentDraw
-   * 
-   * 
-   * totalCurrentDraw =
-   * (leftFrontCurrentDraw+leftRearCurrentDraw+rightFrontCurrentDraw+
-   * rightRearCurrentDraw)/4;
-   * 
-   * Logger.logString("COMMANDDRIVEFORWARD: leftFrontCurrentDraw: "+
-   * leftFrontCurrentDraw);
-   * Logger.logString("COMMANDDRIVEFORWARD: leftRearCurrentDraw: "+
-   * leftRearCurrentDraw);
-   * Logger.logString("COMMANDDRIVEFORWARD: rightFrontCurrentDraw: "+
-   * rightFrontCurrentDraw);
-   * Logger.logString("COMMANDDRIVEFORWARD: rightRearCurrentDraw: "+
-   * rightRearCurrentDraw);
-   * Logger.logString("COMMANDDRIVEFORWARD: Total CurrentDraw is = "+
-   * totalCurrentDraw);
-   * 
-   * if( totalCurrentDraw > CurrentDrawLimit) { currentOverload = true; }
-   * 
-   * return currentOverload; }
-   */
+  
   public double getError()
   {
     double error;

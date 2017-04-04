@@ -16,7 +16,7 @@ public class Navigation {
 	double targetYaw;
 	double ultrasonicDistance;
 	
-	Ultrasonic myUltrasonic;
+	//Ultrasonic myUltrasonic;
 	
 	final static double kCollisionThreshold_DeltaG = 0.75f;
   double last_world_linear_accel_x = 0;
@@ -34,9 +34,9 @@ public class Navigation {
 		currentYaw = ahrs.getYaw();
 	
 		currentRoll = ahrs.getRoll();
-		myUltrasonic = new Ultrasonic(CrusaderCommon.SONIC_OUTPUT_PORT,CrusaderCommon.SONIC_INPUT_PORT);
-		myUltrasonic.setEnabled(true);
-		myUltrasonic.setAutomaticMode(true);
+//		myUltrasonic = new Ultrasonic(CrusaderCommon.SONIC_OUTPUT_PORT,CrusaderCommon.SONIC_INPUT_PORT);
+//		myUltrasonic.setEnabled(true);
+//		myUltrasonic.setAutomaticMode(true);
 		
 		count = 0;
 		start = 0;
@@ -44,15 +44,15 @@ public class Navigation {
 		elapsed = 0;
 	}
 	
-	public double getDistanceFromUltrasonic()
-	{
-		
-		ultrasonicDistance = myUltrasonic.getRangeInches();
-		SmartDashboard.putNumber("Ultrasonic Distance", ultrasonicDistance);
-		
-		return ultrasonicDistance;
-	
-	}
+//	public double getDistanceFromUltrasonic()
+//	{
+//		
+//		ultrasonicDistance = myUltrasonic.getRangeInches();
+//		SmartDashboard.putNumber("Ultrasonic Distance", ultrasonicDistance);
+//		
+//		return ultrasonicDistance;
+//	
+//	}
 	
 	public void resetNAVX(){
 		
@@ -109,7 +109,7 @@ public class Navigation {
         SmartDashboard.putNumber("IMU_Roll", ahrs.getRoll());
         
         SmartDashboard.putNumber("Refresh Rate", ahrs.getActualUpdateRate());
-        haveWeCollided();
+       // haveWeCollided();
         //SmartDashboard.putBoolean("Are We Moving?", ahrs.isMoving());
 	}
 	//Tells us if we are at our target yaw
@@ -210,17 +210,16 @@ public class Navigation {
       
         collisionDetected = true;
         
-        Logger.Log("Navigation(): haveWeCollided(): CollisionDetected ="+collisionDetected);
+        Logger.Log("Navigation(): haveWeCollided(): CollisionDetected =" + collisionDetected);
     }
-    SmartDashboard.putNumber("cOLLISIONvaLUE x: ", currentJerkX);
-    SmartDashboard.putNumber("cOLLISIONvaLUE y: ", currentJerkY);
+   // SmartDashboard.putNumber("cOLLISIONvaLUE x: ", currentJerkX);
+   // SmartDashboard.putNumber("cOLLISIONvaLUE y: ", currentJerkY);
     
-    Logger.Log("Navigation(): haveWeCollided(): Collision X :" + currentJerkX);
-    Logger.Log("Navigation(): haveWeCollided(): Collision Y :" + currentJerkY);
+   // Logger.Log("Navigation(): haveWeCollided(): Collision X :" + currentJerkX);
+   // Logger.Log("Navigation(): haveWeCollided(): Collision Y :" + currentJerkY);
     
-    SmartDashboard.putBoolean(  "CollisionDetected", collisionDetected);
+   // SmartDashboard.putBoolean(  "CollisionDetected", collisionDetected);
    
-    
     return collisionDetected;
 	  
 	}

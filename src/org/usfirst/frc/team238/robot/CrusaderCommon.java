@@ -148,10 +148,10 @@ public class CrusaderCommon {
 	
 	public final static double PERCENT_COMPLETE_BEFORE_SHOOTER_START = 0.25;  
 	
-	public final static double RED_SHOOTER_SPEED = 1728;
+	public final static double RED_SHOOTER_SPEED = 1800;
 	
 	//public final static double BLUE_SHOOTER_SPEED = 1828;
-	public final static double BLUE_SHOOTER_SPEED = 1728;
+	public final static double BLUE_SHOOTER_SPEED = 1860;
 	
   public static final int AUTONOMOUS_READ_FILE = 2;
   public static final int AUTONOMOUS_SAVE = 1;
@@ -163,6 +163,7 @@ public class CrusaderCommon {
   
 	public final static int CURL_START = 1;
 	public final static int CURL_TURN = 2;
+	public final static int CURL_FINISH_TURN = 3;
 	
 	public final static int COLLISION_DELAY_IN_MILLIS = 375;
 }
