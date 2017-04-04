@@ -43,6 +43,8 @@ public class Logger {
   }
   
   
+  //getCurrentDate()??
+  
   //clearLog()??
   
   

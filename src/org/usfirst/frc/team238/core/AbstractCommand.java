@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.core;
 
 public class AbstractCommand implements Command {
 
+  
 	public AbstractCommand() {
 		// TODO Auto-generated constructor stub
 	}
@@ -58,5 +59,6 @@ public class AbstractCommand implements Command {
 	  return error;
 	  
 	}
-
+	
+  
 }

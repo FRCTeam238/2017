@@ -1,6 +1,5 @@
 package org.usfirst.frc.team238.core;
 
-
 import java.util.HashMap;
 //import org.usfirst.frc.team238.robot.AutonomousDrive;
 import org.usfirst.frc.team238.robot.CrusaderCommon;
@@ -14,7 +13,8 @@ import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Vision;
 
 public class CommandController {
-	AutonomousCmdFactory theRouge;
+
+  AutonomousCmdFactory theRouge;
 	DriverCommandFactory  theDriverCommandFactory;
 	OperatorCmdFactory theOperatorCmdFactory;
 	
@@ -26,11 +26,22 @@ public class CommandController {
 	
 	HashMap<Integer, Command> commandValue;
 	
+	
+	/**
+	 * Populates the command factories with their respective objects
+	 * @param myRobotDrive
+	 * @param driveTrain
+	 * @param myNavigation
+	 * @param myVision
+	 * @param theFuelHandler
+	 * @param myClimber
+	 * @param myRobot
+	 */
 	public void  init(RobotDrive myRobotDrive,/* AutonomousDrive autonomousDrive,*/ 
 	    Drivetrain driveTrain, Navigation myNavigation, Vision myVision, 
 	    FuelHandler theFuelHandler, Climber myClimber, Robot myRobot)
 	{
-		// populate the command lists
+
 		setupOperatorCommands(myNavigation, driveTrain, myVision, theFuelHandler, myClimber, myRobot);
 		setupDriverCommands(myRobotDrive, driveTrain, myNavigation,myVision,theFuelHandler);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot, theFuelHandler);
@@ -38,11 +49,15 @@ public class CommandController {
 		commandValue = new HashMap<Integer, Command>(8);
 	}
 	
-	//gets an AutoCommand by key name
+	
+	/**
+	 * Gets an AutoCommand by key name
+	 * @param cmdName
+	 * @return
+	 */
 	public Command getAutoCmd(String cmdName)
 	{
 		return autoCmdList.get(cmdName);
-		
 	}
 	
 	//loads all the autonomous commands from the auto factory

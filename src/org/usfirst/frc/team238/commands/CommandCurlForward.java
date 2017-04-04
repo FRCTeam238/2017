@@ -40,7 +40,15 @@ public class CommandCurlForward extends AbstractCommand {
   
   double turnValue = 0;
   
+  boolean collisionDetected;
+  
   int stage = CrusaderCommon.CURL_START;
+
+  
+  int delayCount = 0;
+  double delayStart = 0;
+  double delayCurrent = 0;
+  double delayElapsed = 0;
   
   public CommandCurlForward(Drivetrain theRobotDrive, Navigation myNavigationForTarget, Robot myRobot){
     
@@ -120,6 +128,7 @@ public class CommandCurlForward extends AbstractCommand {
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
     stage = CrusaderCommon.CURL_START;
+    delayCount = 0;
   
   }
 
@@ -204,19 +213,49 @@ public class CommandCurlForward extends AbstractCommand {
       
       case CrusaderCommon.CURL_TURN: //Checks if we are at a certain angle and increments to stage 3
         
-        if(myNavigation.haveWeCollided() || myNavigation.areWeThereYet())
+        collisionDetected = myNavigation.haveWeCollided();
+        
+        if(myNavigation.areWeThereYet())
         {
           myRobotDrive.driveForward(0, 0);
           //myFuelHandler.theIntake.IntakeStop();
           doness = true;
         }
         
+        if(collisionDetected)
+        {
+          
+          timerInMillis();
+          stage++;
+          
+        }
+        
+      
         //if collided == true
         //  if square_theRobot off == 0
         //    square_theRobot off = gettime
         //else 
         //    getThe time and see if time - square_theRobot off > 250ms
         //     if it is set doness = true and stop teh motors
+        
+        break;
+        
+      case 3:
+        
+        if(timerInMillis() < CrusaderCommon.COLLISION_DELAY_IN_MILLIS)
+        {
+          
+          //go full speed to square us off
+          myRobotDrive.driveForward(0, 1);
+          
+        }
+        else
+        {
+          
+          myRobotDrive.driveForward(0, 0);
+          doness = true;
+          
+        }
         
         
         break;
@@ -226,6 +265,50 @@ public class CommandCurlForward extends AbstractCommand {
     
   }
   
+//  @Override
+//  public boolean done() {
+//    
+//    boolean doness = false;
+//    double amountOfTicks;
+//        
+//    amountOfTicks = myRobotDrive.getEncoderTicks();
+//    
+//    switch(stage){
+//      
+//      case CrusaderCommon.CURL_START: //Checks if we're at the targeted distance and increments to stage 2
+//        
+//        boolean areWeDone = (amountOfTicks > targetValue);
+//        
+//        if(areWeDone){
+//          stage++;
+//        }
+//        
+//        break; 
+//      
+//      case CrusaderCommon.CURL_TURN: //Checks if we are at a certain angle and increments to stage 3
+//        
+//        if(myNavigation.haveWeCollided() || myNavigation.areWeThereYet())
+//        {
+//          myRobotDrive.driveForward(0, 0);
+//          //myFuelHandler.theIntake.IntakeStop();
+//          doness = true;
+//        }
+//        
+//        //if collided == true
+//        //  if square_theRobot off == 0
+//        //    square_theRobot off = gettime
+//        //else 
+//        //    getThe time and see if time - square_theRobot off > 250ms
+//        //     if it is set doness = true and stop teh motors
+//        
+//        
+//        break;
+//       
+//    }
+//      return doness;
+//    
+//  }
+
   //THIS ALSO EXISTS IN TURN AWAY FROM BOILER
   public double getError()
   {
@@ -251,6 +334,25 @@ public class CommandCurlForward extends AbstractCommand {
     
     myRobotDrive.driveForward(finalMotorValueLeft, finalMotorValueRight);
     
+  }
+  
+  public double timerInMillis()
+  {
+    if(delayCount == 0)
+    {
+      
+      delayStart = System.currentTimeMillis();
+      delayCount++;
+      
+    }
+    else
+    {
+      delayCurrent = System.currentTimeMillis();
+    }
+    
+    delayElapsed = delayCurrent - delayStart;
+    
+    return delayElapsed;
   }
 
 }

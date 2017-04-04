@@ -21,6 +21,11 @@ public class Navigation {
 	final static double kCollisionThreshold_DeltaG = 0.75f;
   double last_world_linear_accel_x = 0;
   double last_world_linear_accel_y = 0;
+  
+  int count = 0;
+  double start = 0;
+  double current = 0;
+  double elapsed = 0;
 	
 	public void init()
 	{
@@ -33,6 +38,10 @@ public class Navigation {
 		myUltrasonic.setEnabled(true);
 		myUltrasonic.setAutomaticMode(true);
 		
+		count = 0;
+		start = 0;
+		current = 0;
+		elapsed = 0;
 	}
 	
 	public double getDistanceFromUltrasonic()
@@ -216,6 +225,25 @@ public class Navigation {
 	  
 	}
 	
+	 
+  public double getCollisionDelay()
+  {
+    if(count == 0)
+    {
+      
+      start = System.currentTimeMillis();
+      count++;
+      
+    }
+    else
+    {
+      current = System.currentTimeMillis();
+    }
+    
+    elapsed = current - start;
+    
+    return elapsed;
+  }
 	
 	
 }

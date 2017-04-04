@@ -116,7 +116,7 @@ public class Robot extends IterativeRobot {
 				
 				//theMACP.reset();
 				
-				//myDriveTrain.resetEncoders();
+				myDriveTrain.resetEncoders();
 				
 				//Send the list of AutonomousModes into the AutonomousController for processing
         theMACP.setAutonomousControllerData(myAutonomousDataHandler);
@@ -255,6 +255,8 @@ public class Robot extends IterativeRobot {
 
 			  Logger.Log("Robot(): AutononousInit()");
 			
+			  myDriveTrain.resetEncoders();
+			  
 				int automousModeFromDS =  myAutonomousDataHandler.getModeSelectionFromDashboard(); //controller
 				Logger.Log("Robot(): AutonomousInit(): The chosen One =  " + String.valueOf(automousModeFromDS));
 				theMACP.pickAMode(automousModeFromDS);

@@ -72,7 +72,7 @@ public class DriverCommandFactory {
 		driverRightCommands.put(1, commandShiftHigh);
 		
 		commandTrackBoiler = new CommandTrackTargetBoiler(driveTrain,myNavigation,myVision,myFuelHandler);
-		driverRightCommands.put(3, commandTrackBoiler);
+		driverRightCommands.put(2, commandTrackBoiler);
 		
 		/*
 		driverRightCommands.put(2, cmdReset);

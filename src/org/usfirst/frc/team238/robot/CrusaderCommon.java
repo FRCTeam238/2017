@@ -104,7 +104,7 @@ public class CrusaderCommon {
 	public final static double SHOOTER_TALON_F_VALUE = 0.044;
 	public final static double SHOOTER_TALON_P_VALUE = 0.2;
 	public final static double SHOOTER_TALON_I_VALUE = 0;
-	public final static double SHOOTER_TALON_D_VALUE = 1.333;
+	public final static double SHOOTER_TALON_D_VALUE = 0.2;//1.333;
 
 	public final static double NAVIGATION_P_VALUE = 0.1;
 	public final static double NAVIGATION_MAX_MOTOR_INCREMENT = 0.2;
@@ -163,4 +163,6 @@ public class CrusaderCommon {
   
 	public final static int CURL_START = 1;
 	public final static int CURL_TURN = 2;
+	
+	public final static int COLLISION_DELAY_IN_MILLIS = 375;
 }

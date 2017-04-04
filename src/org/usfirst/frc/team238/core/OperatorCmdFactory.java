@@ -26,7 +26,7 @@ import org.usfirst.frc.team238.commands.CommandStopEverything;
 import org.usfirst.frc.team238.commands.CommandTargetBoiler;
 import org.usfirst.frc.team238.commands.CommandAlignToBoiler;
 import org.usfirst.frc.team238.commands.CommandCloseHopper;
-import org.usfirst.frc.team238.commands.CommandDepositGear;
+import org.usfirst.frc.team238.commands.CommandDeployGear;
 import org.usfirst.frc.team238.commands.CommandOpenHopper;
 
 public class OperatorCmdFactory {
@@ -47,7 +47,7 @@ public class OperatorCmdFactory {
 	
 	CommandCloseHopper commandCloseHopper;
 	
-	CommandDepositGear commandDepositGear;
+	CommandDeployGear commandDepositGear;
 	
 	CommandIncrementTestDriveWithButtons commandIncreaseTen;
 	
@@ -89,7 +89,7 @@ public class OperatorCmdFactory {
 	  commandRunShooter = new CommandRunShooter(theFuelHandler, theVision);
 		operatorCommands.put(1, commandRunShooter);
 		
-		commandDepositGear = new CommandDepositGear(theFuelHandler);
+		commandDepositGear = new CommandDeployGear(theFuelHandler);
 		operatorCommands.put(2, commandDepositGear);
 		
     commandAlignToBoiler = new CommandAlignToBoiler(driveTrain, theVision, theNavigation, theFuelHandler);

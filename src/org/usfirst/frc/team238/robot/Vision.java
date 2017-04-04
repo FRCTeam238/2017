@@ -10,6 +10,7 @@ public class Vision {
 	
 	
 	double[] data = null;
+
 	
 	public void init()
 	{
@@ -122,6 +123,7 @@ public class Vision {
 	  
 	  
 	}
+
 	
 	
 	

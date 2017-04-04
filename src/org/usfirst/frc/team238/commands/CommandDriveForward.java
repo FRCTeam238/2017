@@ -27,7 +27,14 @@ public class CommandDriveForward extends AbstractCommand {
   double yawIConstant = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
   double yawCorrectionMaxPercent = CrusaderCommon.DRIVE_FORWARD_MAX_YAW_PERCENT;   // percent of motorValue for max yaw
   double previousEncoderTicks;
-  double okToCheckForCollision = 0;
+  double oktoCheckToCollisopn = 0;
+  
+  int collisionDelay = 250;
+  int delayCount = 0;
+  double delayStart = 0;
+  double delayCurrent = 0;
+  double delayElapsed = 0;
+  
   
   // boolean debug;
 
@@ -44,7 +51,7 @@ public class CommandDriveForward extends AbstractCommand {
 
     yawErrorTotal = 0;
     
-    myNavigation.resetNAVX();
+    //myNavigation.resetNAVX();
     myNavigation.zeroYaw();
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
@@ -119,13 +126,15 @@ public class CommandDriveForward extends AbstractCommand {
       ultrasonicTarget = 0;
     }
 
-    okToCheckForCollision = targetValue *.25; // .25 should be in CC
+    oktoCheckToCollisopn = targetValue *.25;
   }
 
   public boolean done() {
   
     double amountOfTicks;
-   
+    
+    boolean areWeCollided;
+    
     amountOfTicks = myRobotDrive.getEncoderTicks();
     
     Logger.Log("CommandDriveForward() : Target Value = "+ targetValue+ " Amount Of Ticks = "+ amountOfTicks);
@@ -136,9 +145,20 @@ public class CommandDriveForward extends AbstractCommand {
     {
       //if we run into a wall and still arent There yet consider it done 
      
-      if (amountOfTicks > okToCheckForCollision)
+      if (amountOfTicks > oktoCheckToCollisopn)
       {
-        areWeDone = myNavigation.haveWeCollided();
+        
+        areWeCollided = myNavigation.haveWeCollided();
+        
+        if(areWeCollided)
+        {
+          
+          //if(myNavigation.getCollisionDelay() > CrusaderCommon.COLLISION_DELAY_IN_MILLIS)
+          //{
+            areWeDone = true;
+          //}
+          
+        }
       }
          
     }
@@ -198,4 +218,24 @@ public class CommandDriveForward extends AbstractCommand {
     
     return error;
   }
+  
+  public double timerInMillis()
+  {
+    if(delayCount == 0)
+    {
+      
+      delayStart = System.currentTimeMillis();
+      delayCount++;
+      
+    }
+    else
+    {
+      delayCurrent = System.currentTimeMillis();
+    }
+    
+    delayElapsed = delayCurrent - delayStart;
+    
+    return delayElapsed;
+  }
+  
 }

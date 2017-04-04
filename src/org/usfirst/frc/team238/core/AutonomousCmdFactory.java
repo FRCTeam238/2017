@@ -15,9 +15,11 @@ import org.usfirst.frc.team238.commands.CommandDriveBackwards;
 import org.usfirst.frc.team238.commands.CommandTurnLeft;
 import org.usfirst.frc.team238.commands.CommandTurnRight;
 import org.usfirst.frc.team238.commands.CommandTurnToBoiler;
+import org.usfirst.frc.team238.commands.CommandUnDeployGear;
 import org.usfirst.frc.team238.commands.CommandCloseHopper;
 import org.usfirst.frc.team238.commands.CommandCurlForward;
 import org.usfirst.frc.team238.commands.CommandDelay;
+import org.usfirst.frc.team238.commands.CommandDeployGear;
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
 import org.usfirst.frc.team238.commands.CommandTurnAwayFromBoiler;
 
@@ -36,6 +38,8 @@ public class AutonomousCmdFactory {
 	CommandCloseHopper closeHopper;
 	CommandTargetBoiler targetBoiler;
 	CommandCurlForward curlForward;
+	CommandDeployGear deployGear;
+	CommandUnDeployGear unDeployGear;
 	
 	HashMap <String, Command> autonomousCommands;
 	//TODO change that static 10
@@ -73,6 +77,10 @@ public class AutonomousCmdFactory {
     autonomousCommands.put("CommandTargetBoiler", targetBoiler);
     curlForward = new CommandCurlForward(robotDrive, myNavigation, myRobot);
     autonomousCommands.put("CommandCurlForward", curlForward);
+    deployGear = new CommandDeployGear(myFuelHandler);
+    autonomousCommands.put("CommandDeployGear", deployGear);
+    unDeployGear = new CommandUnDeployGear(myFuelHandler);
+    autonomousCommands.put("CommandUnDeployGear", unDeployGear);
     
 		return autonomousCommands;
 		

@@ -2,34 +2,29 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.Command;
 import org.usfirst.frc.team238.robot.FuelHandler;
-import org.usfirst.frc.team238.robot.Climber;
 
-public class CommandStopEverything implements Command {
+public class CommandUnDeployGear implements Command {
 
-  FuelHandler myFuelHandler;
-  Climber myClimber;
+  FuelHandler theFuelHandler;
   
-  public CommandStopEverything(FuelHandler theFuelHandler, Climber theClimber) {
+  boolean isDone = false;
+  
+  public CommandUnDeployGear(FuelHandler theFuelHandler) {
     // TODO Auto-generated constructor stub
-    
-    this.myFuelHandler = theFuelHandler;
-    this.myClimber = theClimber;
-    
+    this.theFuelHandler = theFuelHandler;
   }
 
   @Override
   public void execute() {
     // TODO Auto-generated method stub
-    myFuelHandler.stopEverything();
-    myClimber.StopClimbing();
-    myFuelHandler.openHopper();
-    myFuelHandler.undeployGearSolenoid();
+    theFuelHandler.undeployGearSolenoid();
+    isDone = true;
   }
 
   @Override
   public void prepare() {
     // TODO Auto-generated method stub
-
+    isDone = false;
   }
 
   @Override
@@ -41,7 +36,7 @@ public class CommandStopEverything implements Command {
   @Override
   public boolean done() {
     // TODO Auto-generated method stub
-    return false;
+    return isDone;
   }
 
 }
