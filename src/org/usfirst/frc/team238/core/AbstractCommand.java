@@ -14,6 +14,12 @@ public class AbstractCommand implements Command {
 	}
 
 	@Override
+  public void execute(int buttonPressed) {
+    // TODO Auto-generated method stub
+
+  }
+	
+	@Override
 	public void prepare() {
 		// TODO Auto-generated method stub
 

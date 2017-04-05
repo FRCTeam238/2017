@@ -44,4 +44,10 @@ public class CommandStopEverything implements Command {
     return false;
   }
 
+  @Override
+  public void execute(int btnPressed) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

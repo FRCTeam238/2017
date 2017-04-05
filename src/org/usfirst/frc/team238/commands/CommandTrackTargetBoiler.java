@@ -72,7 +72,7 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 		{
 			// Turn Right
 			
-		  myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
+		  myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
 			
 		}
 		
@@ -80,7 +80,7 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 		{
 			// Turn Right
 			
-		  myRobotDrive.turnLeft(calculatedMotorValue, calculatedMotorValue);
+		  myRobotDrive.turnRight(calculatedMotorValue, calculatedMotorValue);
 			
 		}
 		
@@ -151,11 +151,11 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 			  
 				Logger.Log("CommandTrackTarget(): We Have Finished!");
 				
-				if(myFuelHandler.isRingLightOn()){
+				/*if(myFuelHandler.isRingLightOn()){
 				  
-				  myFuelHandler.turnOffRingLight();
+				  //myFuelHandler.turnOffRingLight();
 				  
-				}
+				}*/
 				
 				return true;
 			

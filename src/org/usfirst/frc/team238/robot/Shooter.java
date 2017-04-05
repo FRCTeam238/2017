@@ -115,7 +115,7 @@ public class Shooter {
     shooterMaster.disableControl();
     //shooterSlave.disableControl();
     //Logger.Log("We Are STOPPING!!!!!!!");
-    shooterRingLight.set(false); 
+    //shooterRingLight.set(false); 
     isRingLightOn = false;
     
   }
@@ -142,6 +142,8 @@ public class Shooter {
      
      talon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
      talon.SetVelocityMeasurementWindow(20);
+     
+     talon.setNominalClosedLoopVoltage(11.3);//11.3 IZ PURFEKt
      
      //this set the talon to use speed mode instead of voltage mode
      talon.changeControlMode(TalonControlMode.Speed);

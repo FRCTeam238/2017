@@ -80,7 +80,7 @@ public class CommandController {
 		theDriverCommandFactory = new DriverCommandFactory();
 		theDriverCommandFactory.init();
 		
-		driverLeftCmdList = theDriverCommandFactory.createDriverLeftCommands(driveTrain,myNavigation,myVision);
+		driverLeftCmdList = theDriverCommandFactory.createDriverLeftCommands(driveTrain,myNavigation,myVision,myFuelHandler);
 		driverRightCmdList = theDriverCommandFactory.createDriverRightCommands(driveTrain,myNavigation,myVision,myFuelHandler);
 		driverCmdList = theDriverCommandFactory.createDriverCommands(myRobotDrive);
 	}
@@ -172,7 +172,19 @@ public class CommandController {
 			buttonPressed = commandValue.get(CrusaderCommon.OPR_CMD_LIST);		
 			commandForTheButtonPressed = operatorCmdList.get(buttonPressed); 
 			if(commandForTheButtonPressed != null){
-				commandForTheButtonPressed.execute();
+			  
+			  if(buttonPressed == 1 || buttonPressed == 5)
+			  {
+			    
+			    commandForTheButtonPressed.execute(buttonPressed);
+			  
+			  }
+			  else
+			  {
+			    
+			    commandForTheButtonPressed.execute();
+			  
+			  }
 			}
 			
 			

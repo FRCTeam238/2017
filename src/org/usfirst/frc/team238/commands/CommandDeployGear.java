@@ -39,4 +39,10 @@ public class CommandDeployGear implements Command {
     return isDone;
   }
 
+  @Override
+  public void execute(int btnPressed) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

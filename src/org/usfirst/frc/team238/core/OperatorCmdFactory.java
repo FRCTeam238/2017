@@ -18,6 +18,7 @@ import org.usfirst.frc.team238.testCommands.CommandReverseIntake;
 import org.usfirst.frc.team238.robot.FuelHandler;
 
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
+import org.usfirst.frc.team238.commands.CommandTrackTargetBoiler;
 import org.usfirst.frc.team238.commands.CommandRunShooter;
 import org.usfirst.frc.team238.commands.CommandStartClimber;
 import org.usfirst.frc.team238.commands.CommandStartIntake;
@@ -68,6 +69,8 @@ public class OperatorCmdFactory {
 	CommandReverseIntake commandReverseIntake;
 	
 	CommandTargetBoiler commandTargetBoiler;
+	
+	CommandTrackTargetBoiler commandTrackTargetBoiler;
    
 	
 	HashMap <Integer, Command> operatorCommands;
@@ -92,11 +95,11 @@ public class OperatorCmdFactory {
 		commandDepositGear = new CommandDeployGear(theFuelHandler);
 		operatorCommands.put(2, commandDepositGear);
 		
-    commandAlignToBoiler = new CommandAlignToBoiler(driveTrain, theVision, theNavigation, theFuelHandler);
-    operatorCommands.put(3, commandAlignToBoiler);
+		commandTrackTargetBoiler = new CommandTrackTargetBoiler(driveTrain,theNavigation,theVision,theFuelHandler);
+    operatorCommands.put(3, commandTrackTargetBoiler);
     
-    commandTargetBoiler = new CommandTargetBoiler(driveTrain,theNavigation, theRobot, theFuelHandler);
-    operatorCommands.put(5, commandTargetBoiler);
+   // commandTargetBoiler = new CommandTargetBoiler(driveTrain,theNavigation, theRobot, theFuelHandler);
+    operatorCommands.put(5, commandRunShooter);
     
     commandRunIntake = new CommandStartIntake(theFuelHandler.theIntake);
     operatorCommands.put(7, commandRunIntake);

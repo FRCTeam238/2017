@@ -374,9 +374,9 @@ public class Robot extends IterativeRobot {
   
 	  SmartDashboard.putNumber("Chosen Auto Mode", 0);
   
-	  SmartDashboard.putBoolean("Output Log to File", true);
+	  SmartDashboard.putBoolean("Output Log to File", false);
   
-	  SmartDashboard.putBoolean("Debug", true);
+	  SmartDashboard.putBoolean("Debug", false);
   
 	  SmartDashboard.putBoolean("Match Time Flag", false);
   
@@ -467,6 +467,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 
 		HashMap<Integer, Integer> commandValue;
+		
+		theFuelHandler.turnOnRingLight();
 		
 		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
 		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());

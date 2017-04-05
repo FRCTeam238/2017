@@ -45,7 +45,7 @@ public class DriverCommandFactory {
 	}
 	
 	
-	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision){
+	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler){
 		
 		NoDriveCommand = new NoDriverCommand(driveTrain);
 		
@@ -54,6 +54,9 @@ public class DriverCommandFactory {
 		commandShiftLow = new CommandShiftLow(driveTrain);
 		
 		driverLeftCommands.put(1, commandShiftLow);
+		
+    commandTrackBoiler = new CommandTrackTargetBoiler(driveTrain,myNavigation,myVision,myFuelHandler);
+    driverRightCommands.put(2, commandTrackBoiler);
 		
 		//cmdReverseClimb = new CommandReverseClimber(theClimber);
 		

@@ -35,4 +35,10 @@ public class CommandStopSerializer implements Command {
     return mySerializer.complete();
   }
 
+  @Override
+  public void execute(int btnPressed) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

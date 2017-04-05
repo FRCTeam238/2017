@@ -41,14 +41,14 @@ public class CommandRunShooter extends AbstractCommand {
     this.myFuelHandler = theFuelHandler;
     this.myVision = theVision;
     
-  }
+  } 
+  
   /**
    * this is the execute method.
    */
-  public void execute()
+  public void execute(int buttonPressed)
   {
  
-    
     if(!myFuelHandler.isRingLightOn())
     {
       myFuelHandler.turnOnRingLight();
@@ -70,7 +70,9 @@ public class CommandRunShooter extends AbstractCommand {
     
     //Logger.Log("Elapsed Time is : " + elapsed);
     
-    if((autonomousFlag == 1) || (Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY))
+    if((autonomousFlag == 1) ||
+        (Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY) &&
+        buttonPressed == 1)
     {
      
       if(autonomousFlag == 1)
@@ -98,6 +100,10 @@ public class CommandRunShooter extends AbstractCommand {
        // shooterSpeed = calculateRPM();
       }
        
+    } else if (buttonPressed == 5){
+      
+      shooterSpeed = calculateRPM();
+      
     }
       //shooterSpeed = calculateRPM
       myFuelHandler.theShooter.isShooterAtSpeed(shooterSpeed);

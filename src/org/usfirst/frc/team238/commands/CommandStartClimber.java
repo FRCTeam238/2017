@@ -39,4 +39,10 @@ public class CommandStartClimber implements Command {
     
   }
 
+  @Override
+  public void execute(int btnPressed) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
