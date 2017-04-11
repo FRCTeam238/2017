@@ -8,10 +8,12 @@ import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandCurlForward extends AbstractCommand {
+public class CommandCurlForward extends AbstractCommand 
+{
 
   String direction="";
   Alliance teamColor;
@@ -28,7 +30,7 @@ public class CommandCurlForward extends AbstractCommand {
   int autonomousCount;
   double yawValue;
   double yawErrorTotal;
-  double ultrasonicTarget;
+  double blueTargetValue; //formerly known as ultrasonicTarget;
   double CurrentDrawLimit = 20.0; // Limit for CurrentDraw
   double yawPConstant = CrusaderCommon.DRIVE_FORWARD_P_VALUE; // Proportional constant for drive
   double yawIConstant = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
@@ -129,15 +131,12 @@ public class CommandCurlForward extends AbstractCommand {
     yawValue = myNavigation.getYaw();
     stage = CrusaderCommon.CURL_START;
     delayCount = 0;
-  
-  }
-
-  public void setParams(String params[]) {
     
+    
+//    teamColor = Alliance.Blue;
+//    direction = "Left";
+     
     teamColor = theRobot.getAllianceTeam();
-    
-    Logger.Log("CommandCurlForward(): Team Color is : " + teamColor,"CommandCurlForwardLog");
-    
     if (teamColor == Alliance.Red)
     {
       
@@ -147,7 +146,18 @@ public class CommandCurlForward extends AbstractCommand {
       
       direction = "Left";
       
+      targetValue = blueTargetValue;
+      
     }
+   
+    Logger.Log("CommandCurlForward(): Direction  : " + direction,"CommandCurlForwardLog");
+  
+    
+  }
+
+  public void setParams(String params[]) {
+    
+   
     
     Logger.Log("CommandCurlForward(): Direction is: "+direction,"CommandCurlForwardLog");
     
@@ -179,16 +189,18 @@ public class CommandCurlForward extends AbstractCommand {
       newTargetYaw = 0; // Don't turn if there's no input
 
     }
-
-    if(direction.equals("Left")){
-      
-      myNavigation.setTargetValues(newTargetYaw);
-      
-    }else{
-      
-      myNavigation.setTargetValues(newTargetYaw);
-      
+    
+    if ((params[3] != null) || (!params[3].isEmpty())) 
+    {
+      blueTargetValue = Double.parseDouble(params[3]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT;;
+    } 
+    else 
+    {
+      blueTargetValue = 0;
     }
+      
+     myNavigation.setTargetValues(newTargetYaw);
+          
   }
 
   @Override
@@ -204,7 +216,8 @@ public class CommandCurlForward extends AbstractCommand {
       case CrusaderCommon.CURL_START: //Checks if we're at the targeted distance and increments to stage 2
         
         boolean areWeDone = (amountOfTicks > targetValue);
-        
+        Logger.Log("CommandCurlForward(): done current  : " + amountOfTicks,"CommandCurlForwardLog");
+        Logger.Log("CommandCurlForward(): done target : " + targetValue,"CommandCurlForwardLog");
         if(areWeDone){
           stage++;
         }
@@ -234,8 +247,23 @@ public class CommandCurlForward extends AbstractCommand {
         
         if(timerInMillis() < CrusaderCommon.COLLISION_DELAY_IN_MILLIS)
         {
-          //go full speed to square us off
-          myRobotDrive.driveForward(0, 1);
+          
+          switch(direction){
+            
+            case "Left":
+              myRobotDrive.driveForward(0, 1);
+              break;
+           
+            case "Right":
+              myRobotDrive.driveForward(1, 0);
+              break;
+              
+            default:
+                //do nothing
+              break;
+            }
+          
+          
         }
         else
         {

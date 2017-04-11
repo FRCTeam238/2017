@@ -4,6 +4,7 @@ package org.usfirst.frc.team238.robot;
 import org.usfirst.frc.team238.core.Logger;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.StatusFrameRate;
 import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -54,6 +55,14 @@ public class Drivetrain {
 		leftFrontDrive.configEncoderCodesPerRev(256);
 		rightFrontDrive.configEncoderCodesPerRev(256);
 		
+		
+		leftFrontDrive.setStatusFrameRateMs(StatusFrameRate.QuadEncoder, 10);
+		rightFrontDrive.setStatusFrameRateMs(StatusFrameRate.QuadEncoder, 10);
+		
+		leftFrontDrive.setVoltageRampRate(100);
+    rightFrontDrive.setVoltageRampRate(100);
+
+    
 		configTalon(leftFrontDrive);
 		configTalon(rightFrontDrive);
 		
@@ -92,39 +101,39 @@ public class Drivetrain {
 		Logger.Log("DriveTrain(): Right Encoder = " + encoderRight);
 		
 		//If the left encoder isn't reading, return the right encoder
-		if((encoderLeft == 0) && (encoderRight != 0))
-		{
-
-		  encoderNumber = encoderRight;
-		  
-		}
-		//If the right encoder isn't reading, return the left encoder
-		else if((encoderLeft != 0) && (encoderRight == 0))
-		{
-
-		  encoderNumber = encoderLeft;
-		  
-		}
-		//If neither of them are reading, return 0
-		else if((encoderLeft == 0) && (encoderRight == 0))
-		{
-		  Logger.Log("DriveTrain(): Encoders are broken!!!! HELP!!");
-		  encoderNumber = 0;
-		  
-		}
-		else//If none of the above conditions are true, average both of the encoders
-		{
-		  
-		  encoderAverage = Math.abs(encoderRight) + Math.abs(encoderLeft);
-		  encoderNumber = encoderAverage / 2;
-		  
-		}
-
-		
-		SmartDashboard.putNumber("DriveTrain: EncoderAverage", encoderAverage);
+//		if((encoderLeft == 0) && (encoderRight != 0))
+//		{
+//
+//		  encoderNumber = encoderRight;
+//		  
+//		}
+//		//If the right encoder isn't reading, return the left encoder
+//		else if((encoderLeft != 0) && (encoderRight == 0))
+//		{
+//
+//		  encoderNumber = encoderLeft;
+//		  
+//		}
+//		//If neither of them are reading, return 0
+//		else if((encoderLeft == 0) && (encoderRight == 0))
+//		{
+//		  Logger.Log("DriveTrain(): Encoders are broken!!!! HELP!!");
+//		  encoderNumber = 0;
+//		  
+//		}
+//		else//If none of the above conditions are true, average both of the encoders
+//		{
+//		  
+//		  encoderAverage = Math.abs(encoderRight) + Math.abs(encoderLeft);
+//		  encoderNumber = encoderAverage / 2;
+//		  
+//		}
 
 		
-		return encoderNumber;
+		SmartDashboard.putNumber("DriveTrain: EncoderAverage", encoderRight);
+
+		
+		return encoderRight;
 	}
 	
 	
@@ -259,6 +268,9 @@ public class Drivetrain {
     talon.setD(CrusaderCommon.TALON_NO_VALUE);*/
     
     //this set the talon to use speed mode instead of voltage mode
+    
+    
+    
     talon.changeControlMode(TalonControlMode.PercentVbus);
     
   }

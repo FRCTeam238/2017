@@ -43,6 +43,13 @@ public class CommandRunShooter extends AbstractCommand {
     
   } 
   
+  public void execute()
+  {
+    
+    execute(0);
+    
+  }
+  
   /**
    * this is the execute method.
    */
@@ -70,9 +77,9 @@ public class CommandRunShooter extends AbstractCommand {
     
     //Logger.Log("Elapsed Time is : " + elapsed);
     
-    if((autonomousFlag == 1) ||
-        (Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY) &&
-        buttonPressed == 1)
+    if(
+        (autonomousFlag == 1) ||
+      (Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY) && buttonPressed == 1)
     {
      
       if(autonomousFlag == 1)
@@ -104,6 +111,10 @@ public class CommandRunShooter extends AbstractCommand {
       
       shooterSpeed = calculateRPM();
       
+    }
+    else
+    {
+      Logger.Log("we're not shooting");
     }
       //shooterSpeed = calculateRPM
       myFuelHandler.theShooter.isShooterAtSpeed(shooterSpeed);
@@ -137,10 +148,10 @@ public class CommandRunShooter extends AbstractCommand {
     
   }
   
-  
+  //---------------------------------------AUTO NOTE------------------------------------
   //AUTO NOTE!!!!!
   //RPM 2808 at hopper 2
-  
+  //------------------------------------------END------------------------------------------
   
   
   /**
@@ -204,7 +215,11 @@ public class CommandRunShooter extends AbstractCommand {
   
   
   
-  
+ /**
+  * This is the done method.
+  * 
+  * @return boolean
+  */
   public boolean done()
   {
     

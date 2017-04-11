@@ -144,8 +144,16 @@ public class CommandDriveForward extends AbstractCommand {
     if((!areWeDone) && (stallValue != 0)) 
     {
       //if we run into a wall and still arent There yet consider it done 
-     
-      if (amountOfTicks > okToCheckForCollision)
+      
+      if(ultrasonicTarget > 0)
+      {
+        
+        if(timerInMillis() > ultrasonicTarget)
+          areWeDone = true;
+        
+      }
+      
+      else if (amountOfTicks > okToCheckForCollision)
       {
         
         areWeCollided = myNavigation.haveWeCollided();
@@ -160,6 +168,7 @@ public class CommandDriveForward extends AbstractCommand {
           
         }
       }
+
          
     }
 

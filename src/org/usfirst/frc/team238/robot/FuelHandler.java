@@ -136,7 +136,7 @@ public class FuelHandler {
     theIntake.IntakeStop();
     theShooter.stopShooter();
     theSerializer.stopSpinning();
-    openHopper();
+    //openHopper();
     delayMotorStart = 0;
    
     
@@ -294,12 +294,16 @@ public class FuelHandler {
     
     //deploy solenoid 
     
+    theHopperDoor.deployGear();
+    
   }
   
   public void undeployGearSolenoid()
   {
     
     //undeploy solenoid
+    
+    theHopperDoor.undeployGear();
     
   }
   

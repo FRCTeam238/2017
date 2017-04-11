@@ -72,6 +72,20 @@ public class CommandTargetBoiler extends AbstractCommand {
   public void prepare() {
     
     myNavigation.zeroYaw();
+    
+    teamColor = theRobot.getAllianceTeam();
+//    teamColor = Alliance.Blue;
+    
+    if (teamColor == Alliance.Red)
+    {
+      direction = "Left";
+      
+    }else{
+      direction = "Right";
+    }
+   
+    Logger.Log("CommandTargetBoier:Prpare(): Direction  : " + direction,"CommandCurlForwardLog");
+    
   
   }
 

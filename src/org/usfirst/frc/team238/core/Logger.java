@@ -58,7 +58,7 @@ public class Logger {
   {
     if(isDebug())
     {
-      System.out.println(comment);
+      //System.out.println(comment);
       
       if(writeToFile()){
         
@@ -81,9 +81,9 @@ public class Logger {
   {
     if(isDebug())
     {
-      System.out.println(comment);
+      //System.out.println(comment);
       
-      if(writeToFile()){
+      if( writeToFile() ){
         
 		writeToNewLogFile(comment,fileName);
         
@@ -105,7 +105,8 @@ public class Logger {
     File customFile = new File("/home/lvuser/"+logFileName+".txt");
     
     //If the file already exists, open the file and write the string to it 
-      if(customFile.exists()){
+      if(customFile.exists())
+      {
         
         FileWriter logFile = new FileWriter("/home/lvuser/"+logFileName+".txt",true);
         logFile.write(newline+log);
@@ -113,7 +114,9 @@ public class Logger {
         logFile.close();
      
     //If the file doesn't already exists, create a new one and write the string to it
-      }else{
+      }
+      else
+      {
        
         customFile.createNewFile();
         FileWriter logFile = new FileWriter("/home/lvuser/"+logFileName+".txt",true);
@@ -122,7 +125,9 @@ public class Logger {
         logFile.close();
         
       }
-    }catch(Exception e){
+    }
+    catch(Exception e)
+    {
       
       e.printStackTrace();
       Log("Logger: writeToNewLogFile has Failed!");
@@ -135,9 +140,11 @@ public class Logger {
    * Writes the log into a file
    * @param log
    */
-  public static void writeToLogFile(String log){
+  public static void writeToLogFile(String log)
+  {
     
-    try{
+    try
+    {
     
     File logFile238 = new File("/home/lvuser/logFile238.txt");
     

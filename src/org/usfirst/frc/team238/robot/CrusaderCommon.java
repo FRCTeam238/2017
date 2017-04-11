@@ -148,10 +148,10 @@ public class CrusaderCommon {
 	
 	public final static double PERCENT_COMPLETE_BEFORE_SHOOTER_START = 0.25;  
 	
-	public final static double RED_SHOOTER_SPEED = 1800;
+	public final static double RED_SHOOTER_SPEED = 1755;
 	
 	//public final static double BLUE_SHOOTER_SPEED = 1828;
-	public final static double BLUE_SHOOTER_SPEED = 1860;
+	public final static double BLUE_SHOOTER_SPEED = 1815;
 	
   public static final int AUTONOMOUS_READ_FILE = 2;
   public static final int AUTONOMOUS_SAVE = 1;

@@ -114,10 +114,10 @@ public class OperatorCmdFactory {
 		operatorCommands.put(11, commandCloseHopper);
 		
 		commandRunClimber = new CommandStartClimber(theClimber);
-    operatorCommands.put(10, commandRunClimber);
+    operatorCommands.put(9, commandRunClimber);
         
-    //commandOpenHopper = new CommandOpenHopper(theFuelHandler);
-    //operatorCommands.put(11, commandOpenHopper);
+    commandOpenHopper = new CommandOpenHopper(theFuelHandler);
+    operatorCommands.put(10, commandOpenHopper);
     
 		return operatorCommands;
 	}

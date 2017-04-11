@@ -78,6 +78,8 @@ public class Robot extends IterativeRobot {
   //SendableChooser<String> aModeSelector;
   SendableChooser<String> autonomousStateParamsUpdate;
 	
+  String teamColorString;
+
 	Alliance teamColor;
 	
 	
@@ -226,7 +228,17 @@ public class Robot extends IterativeRobot {
 				
 				//Logger.Log("Robot(): disabledPeriodic(): Vision Horizontal : " + dataFromVision[0]);
 				//Logger.Log("Robot(): disabledPeriodic(): Vision Vertical : " + dataFromVision[1]);
-				
+				 String teamColorString = SmartDashboard.getString("Alliance Color", "Red");
+			    if(teamColorString.equals("Red"))
+			    {
+			      teamColor = Alliance.Red;
+			    }
+			    else
+			    {
+			      teamColor = Alliance.Blue;
+			    }
+			    
+			    theFuelHandler.setAlliance(teamColor);
 			}
 			
 			count++;
@@ -263,8 +275,18 @@ public class Robot extends IterativeRobot {
 				
 				myDriveTrain.getEncoderTicks();
 				
-				teamColor = DriverStation.getInstance().getAlliance();
-				SmartDashboard.putString("Alliance Color", teamColor.toString());
+				 teamColorString = SmartDashboard.getString("Alliance Color", "Red");
+			    if(teamColorString.equals("Red"))
+			    {
+			      teamColor = Alliance.Red;
+			    }
+			    else
+			    {
+			      teamColor = Alliance.Blue;
+			    }
+				//teamColor = DriverStation.getInstance().getAlliance();
+				
+				//SmartDashboard.putString("Alliance Color", teamColor.toString());
 				theFuelHandler.setAlliance(teamColor);
 				
 		} catch (Exception ex) {
@@ -282,6 +304,10 @@ public class Robot extends IterativeRobot {
 
 		try {
 			System.out.println("RobotInit()");
+			
+		  SmartDashboard.putBoolean("Output Log to File", true);
+		   
+		  SmartDashboard.putBoolean("Debug", true);
 			
 			myRobot = Robot.this; 
 		
@@ -354,7 +380,11 @@ public class Robot extends IterativeRobot {
       //myTargetingData.init(theMCP);
       
 			Logger.Log("Robot(): robotInit(): Fully Initialized");
-
+			
+		  SmartDashboard.putBoolean("Output Log to File", false);
+		   
+		  SmartDashboard.putBoolean("Debug", false);
+		  
 		} catch (Exception ex) {
 		  ex.printStackTrace();
 			Logger.Log("Robot(): robotInit() Exception : "+ex);
@@ -374,9 +404,9 @@ public class Robot extends IterativeRobot {
   
 	  SmartDashboard.putNumber("Chosen Auto Mode", 0);
   
-	  SmartDashboard.putBoolean("Output Log to File", false);
+	  //SmartDashboard.putBoolean("Output Log to File", false);
   
-	  SmartDashboard.putBoolean("Debug", false);
+	  //SmartDashboard.putBoolean("Debug", false);
   
 	  SmartDashboard.putBoolean("Match Time Flag", false);
   
@@ -423,12 +453,16 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putBoolean("CLIMBDEBUG", false);
     
     SmartDashboard.putNumber("Curl Turn Value", 0.5);
+  //SmartDashboard.putString("Alliance Color", teamColor.toString());
   
     //SmartDashboard.putNumber("DRIVETRAIN TUNING", 0.2);
   
     //SmartDashboard.putString("Team Side :",getAllianceTeam());
     //SmartDashboard.putNumber("SHOOTER RPM",0);
-	  
+    SmartDashboard.putString("Alliance Color", "Red");
+    
+    
+      
 	}
 	
 	public CommandController getTheMCP()
