@@ -44,6 +44,33 @@ public class Navigation {
 		elapsed = 0;
 	}
 	
+	public void test()
+	{
+	  
+	  if(!weAreConntected())
+	  {
+	   
+	    Logger.Log("Navigation(): test(): The NavX board isn't connected!!!");
+	    
+	  }
+	  
+	}
+	
+	
+	/**
+	 * Checks if the NavX Board is actually connected
+	 * @return
+	 */
+	public boolean weAreConntected(){
+	  
+	  boolean isConnected;
+    
+    isConnected = ahrs.isConnected();
+    
+    return isConnected;
+	}
+	
+	
 //	public double getDistanceFromUltrasonic()
 //	{
 //		

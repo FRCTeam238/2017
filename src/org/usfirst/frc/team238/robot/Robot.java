@@ -62,6 +62,8 @@ public class Robot extends IterativeRobot {
 	Climber theClimber;
   Logger myLogger;
   DriverStation myDriverStation;
+  
+  //There shouldn't be two of these
   Alliance myAllianceTeam;
 	
 	// Autonomous Mode Support
@@ -82,7 +84,14 @@ public class Robot extends IterativeRobot {
 
 	Alliance teamColor;
 	
-	
+	/**
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * !!!!!!!!!!!!!!!!!THIS SHOULDN'T BE HERE!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * !!!!!!!This only gets called through CommandCurlForward!!!!!!!!!!
+	 * !!Instead, pass theFuelHandler through the init as a parameter!!!
+	 * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 * @return
+	 */
 	public FuelHandler getFuelHandler()
 	{
 	  return theFuelHandler;
@@ -110,7 +119,7 @@ public class Robot extends IterativeRobot {
 	 * Called periodically when the robot is disabled
 	 */
 	public void disabledPeriodic() {
-		//boolean debug;m,
+		//boolean debug;
 		try {
 			if (count > 150) {
 				
