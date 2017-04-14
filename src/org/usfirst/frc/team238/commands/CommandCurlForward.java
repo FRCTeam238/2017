@@ -161,6 +161,7 @@ public class CommandCurlForward extends AbstractCommand
     
     Logger.Log("CommandCurlForward(): Direction is: "+direction,"CommandCurlForwardLog");
     
+    // this is the distance to travel on red side
     if ((params[0] != null) || (!params[0].isEmpty())) {
       
       targetValue = Double.parseDouble(params[0]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT;
@@ -169,7 +170,8 @@ public class CommandCurlForward extends AbstractCommand
       
       targetValue = 0;
     }
-
+    
+    //this is the speed of the drive train
     if ((params[1] != null) || (!params[1].isEmpty())) {
       
       motorValue = Double.parseDouble(params[1]);
@@ -179,7 +181,8 @@ public class CommandCurlForward extends AbstractCommand
       motorValue = 1;
       
     }
-
+    
+    //this is the angle to curl to
     if ((params[2] != null) || (!params[2].isEmpty())) {
       
       newTargetYaw = Integer.parseInt(params[2]);
@@ -190,6 +193,7 @@ public class CommandCurlForward extends AbstractCommand
 
     }
     
+    //this is the distance to travel on blue side
     if ((params[3] != null) || (!params[3].isEmpty())) 
     {
       blueTargetValue = Double.parseDouble(params[3]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT;;
@@ -312,6 +316,10 @@ public class CommandCurlForward extends AbstractCommand
 
   }
   
+  /**
+   * This is a timer that tracks time in milliseconds
+   * @return
+   */
   public double timerInMillis()
   {
     if(delayCount == 0)

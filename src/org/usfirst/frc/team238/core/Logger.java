@@ -85,7 +85,7 @@ public class Logger {
       
       if( writeToFile() ){
         
-		writeToNewLogFile(comment,fileName);
+        writeToNewLogFile(comment,fileName);
         
       }
       

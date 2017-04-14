@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class udpClient extends Thread{
 	
+  //lol i remember this thing
+  
 	public final static int PORT = 5800;
 	public final static int BYTE_SIZE = 16;
 	public static final double VISION_DATA_FRESHNESS = .1;

@@ -15,7 +15,7 @@ public class Vision {
 	public void init()
 	{
 		
-		theClient = new udpClient();
+		//theClient = new udpClient();
 		/*theClient.init();
 		theClient.enable();
 		theClient.start();*/
@@ -23,25 +23,25 @@ public class Vision {
 		
 	}
 	
-	public void startClient()
-	{
-		
-		theClient.enable();
-		
-		
-	}
-	
-	public void runClient()
-	{
-		
-		theClient.run();
-		
-	}
-	
-	public void stopClient()
-	{
-		theClient.disable();
-	}
+//	public void startClient()
+//	{
+//		
+//		theClient.enable();
+//		
+//		
+//	}
+//	
+//	public void runClient()
+//	{
+//		
+//		theClient.run();
+//		
+//	}
+//	
+//	public void stopClient()
+//	{
+//		theClient.disable();
+//	}
 	/*
 	public double getDistance()
 	{
@@ -66,6 +66,13 @@ public class Vision {
 		return angle;
 	}
 	*/
+	
+	/**
+	 * this returns an array with gear angles, pretty bad name for this function
+	 * considering we have similar functions that get boiler data that
+	 * are named appropriately 
+	 * @return
+	 */
 	public double[] getTheData()
 	{
 		

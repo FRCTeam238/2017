@@ -83,7 +83,7 @@ public class FuelHandler {
   /**
    *  This is the function that has the logic for shooting
    *  @param shooterRPM double.
-   *  @param serializerDelayy double.
+   *  @param serializerDelay double.
    */
   public void shoot(double shooterRPM,double serializerDelay)
   {

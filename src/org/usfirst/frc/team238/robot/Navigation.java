@@ -62,12 +62,9 @@ public class Navigation {
 	 * @return
 	 */
 	public boolean weAreConntected(){
-	  
-	  boolean isConnected;
     
-    isConnected = ahrs.isConnected();
+    return ahrs.isConnected();
     
-    return isConnected;
 	}
 	
 	
@@ -121,15 +118,15 @@ public class Navigation {
 		Timer.delay(0.020);
 		
 		/*SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
-        SmartDashboard.putBoolean(  "IMU_IsCalibrating",    ahrs.isCalibrating());
+      SmartDashboard.putBoolean(  "IMU_IsCalibrating",    ahrs.isCalibrating());
         
-		SmartDashboard.putNumber("Gyro_X", ahrs.getRawGyroX());
-		SmartDashboard.putNumber("Gyro_Y", ahrs.getRawGyroY());
-		SmartDashboard.putNumber("Gyro_Z", ahrs.getRawGyroZ());
+		  SmartDashboard.putNumber("Gyro_X", ahrs.getRawGyroX());
+		  SmartDashboard.putNumber("Gyro_Y", ahrs.getRawGyroY());
+		  SmartDashboard.putNumber("Gyro_Z", ahrs.getRawGyroZ());
 		
-		SmartDashboard.putNumber("Accel_X", ahrs.getRawAccelX());
-		SmartDashboard.putNumber("Accel_Y", ahrs.getRawAccelY());
-		SmartDashboard.putNumber("Accel_Z", ahrs.getRawAccelZ());*/
+		  SmartDashboard.putNumber("Accel_X", ahrs.getRawAccelX());
+		  SmartDashboard.putNumber("Accel_Y", ahrs.getRawAccelY());
+		  SmartDashboard.putNumber("Accel_Z", ahrs.getRawAccelZ());*/
 		
         SmartDashboard.putNumber("IMU_Yaw", ahrs.getYaw());
         SmartDashboard.putNumber("IMU_Pitch", ahrs.getPitch());
@@ -137,7 +134,7 @@ public class Navigation {
         
         SmartDashboard.putNumber("Refresh Rate", ahrs.getActualUpdateRate());
        // haveWeCollided();
-        //SmartDashboard.putBoolean("Are We Moving?", ahrs.isMoving());
+       //SmartDashboard.putBoolean("Are We Moving?", ahrs.isMoving());
 	}
 	//Tells us if we are at our target yaw
 	public boolean areWeThereYet()
@@ -175,7 +172,13 @@ public class Navigation {
       return false;
     }
   }*/
-	
+	/**
+	 * What is this here for? It doesnt get called anywhere
+	 * @param targetYaw
+	 * @param currentYaw
+	 * @param motorValue
+	 * @return
+	 */
 	public double turningMotorValue(double targetYaw, double currentYaw, double motorValue)
 	{
 	  

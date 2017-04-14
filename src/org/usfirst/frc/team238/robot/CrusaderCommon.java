@@ -84,6 +84,9 @@ public class CrusaderCommon {
 	public final static int SPROCKET_SERVO_ONE = 15;
 	public final static int SPROCKET_SERVO_TWO = 16;
 	
+	public final static int HOPPER_SOLENOID_ID = 4;
+	public final static int GEAR_SOLENOID_ID = 5;
+	
 	//Servo power setting
 	public static final int SERVO_ON = 1;
 	public static final int SERVO_OFF = 0;
@@ -113,8 +116,9 @@ public class CrusaderCommon {
 	public final static double DRIVE_FORWARD_P_VALUE = 0.015;
 	public final static double DRIVE_FORWARD_I_VALUE = 0;
 	public final static double DRIVE_FORWARD_MAX_YAW_PERCENT = 0.1;
-	
-	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 3900;//4983;//3900;
+	                                                                
+	                                                              //325 = 1 inch 3900 = 1 foot
+	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 325;//3900;//4983;//3900;
 	
 	public final static int SONIC_SENSOR_ACTIVATION_DISTANCE = 6840;
 	public final static int SONIC_INPUT_PORT = 8;

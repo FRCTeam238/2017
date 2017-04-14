@@ -20,8 +20,8 @@ public class HopperDoor {
   public void init()
   {
     
-    hopperSolenoid = new Solenoid(4);
-    gearSolenoid = new Solenoid(5);
+    hopperSolenoid = new Solenoid(CrusaderCommon.HOPPER_SOLENOID_ID);
+    gearSolenoid = new Solenoid(CrusaderCommon.GEAR_SOLENOID_ID);
     
     openDoor();
   }
