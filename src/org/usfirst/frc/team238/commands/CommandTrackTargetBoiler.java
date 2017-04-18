@@ -15,20 +15,21 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 	Navigation myNavigation;
 	Vision myVision;
 	FuelHandler myFuelHandler;
+	
 	double realAngle = 0;
-	
 	double slowSide = 0;
-	
 	double paramMotorValue = 0;
-	
 	double pickASide;
+	double targetValue = 0;
 	
 	double leftMotor = 0;
 	double rightMotor = 0;
+		  
+	double boilerAngle;
 	
 	int count = 0;
 	
-	double targetValue = 0;
+
 	
 	
 	
@@ -46,14 +47,15 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 		// TODO Auto-generated method stub
 		
 	  myFuelHandler.turnOnRingLight();
-	  
-		double boilerAngle;
+
+		
+		boilerAngle = myVision.shooterHorizontal();
 		
     double calculatedMotorValue;
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
-        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
+        boilerAngle, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
 		
-		boilerAngle = myVision.shooterHorizontal();
+		
 		
 		//Logger.logDouble("Real Angle Is = ", realAngle);
 		
@@ -96,7 +98,17 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 		myNavigation.zeroYaw();
 		
 	}
-
+	
+	public double getError()
+	{
+	    double error;
+	    double currentYaw = Math.abs(boilerAngle);
+	    
+	    error = 0 - currentYaw;
+	    
+	    return error;
+	}
+	
 	@Override
 	public void prepare() {
 		// TODO Auto-generated method stub
