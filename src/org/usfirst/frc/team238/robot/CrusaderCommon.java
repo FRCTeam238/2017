@@ -118,7 +118,7 @@ public class CrusaderCommon {
 	public final static double DRIVE_FORWARD_MAX_YAW_PERCENT = 0.1;
 	                                                                
 	                                                              //325 = 1 inch 3900 = 1 foot
-	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 325;//3900;//4983;//3900;
+	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 325;//4983;//3900;
 	
 	public final static int SONIC_SENSOR_ACTIVATION_DISTANCE = 6840;
 	public final static int SONIC_INPUT_PORT = 8;
@@ -134,7 +134,7 @@ public class CrusaderCommon {
 	public final static double TURN_MAX_MOTOR_VALUE = .7;//SmartDashboard.getNumber("Turn Max Error",45);//45;
 	  
 	public final static double STRAIGHT_P_VALUE = 0.000055;//0.00003512;
-	public final static double STRAIGHT_DEAD_STOP = 0.05;
+	public final static double STRAIGHT_DEAD_STOP = 0.1;//0.05;
 	public final static double STRAIGHT_MAX_ERROR = 15000;//9966;
 	 public final static double STRAIGHT_MAX_MOTOR_VALUE  = 1;//SmartDashboard.getNumber("Turn Max Error",45);//45;
 	  

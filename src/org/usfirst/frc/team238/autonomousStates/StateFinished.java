@@ -52,6 +52,7 @@ public class StateFinished implements AutonomousState {
     SmartDashboard.putString("Param 2 - motorSpeed", "0");
     SmartDashboard.putString("Param 3 - targetYaw", "0");
     SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
+    SmartDashboard.putString("Param 5 - collisionToggle", "0");
   }
 
   @Override

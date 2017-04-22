@@ -58,7 +58,7 @@ public class Logger {
   {
     if(isDebug())
     {
-      //System.out.println(comment);
+      System.out.println(comment);
       
       if(writeToFile()){
         

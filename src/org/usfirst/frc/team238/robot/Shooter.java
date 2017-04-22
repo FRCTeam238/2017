@@ -140,10 +140,11 @@ public class Shooter {
      talon.setI(SmartDashboard.getNumber("Shooter I Value", CrusaderCommon.SHOOTER_TALON_I_VALUE)); //0)); 
      talon.setD(SmartDashboard.getNumber("Shooter D Value", CrusaderCommon.SHOOTER_TALON_D_VALUE)); //1.33));
      
-     talon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_10Ms);
-     talon.SetVelocityMeasurementWindow(20);
+     talon.SetVelocityMeasurementPeriod(VelocityMeasurementPeriod.Period_100Ms);
+     talon.SetVelocityMeasurementWindow(5);
      
      talon.setNominalClosedLoopVoltage(11.3);//11.3 IZ PURFEKt
+
      
      //this set the talon to use speed mode instead of voltage mode
      talon.changeControlMode(TalonControlMode.Speed);

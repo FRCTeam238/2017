@@ -60,6 +60,7 @@ public class StateDelay implements AutonomousState {
     SmartDashboard.putString("Param 2 - motorSpeed", "0");
     SmartDashboard.putString("Param 3 - targetYaw", "0");
     SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
+    SmartDashboard.putString("Param 5 - collisionToggle", "0");
   }
 
   @Override
@@ -70,6 +71,7 @@ public class StateDelay implements AutonomousState {
   String param2;
   String param3;
   String param4;
+  String param5;
 
   param1 = SmartDashboard.getString("Param 1 - targetValue");
   parameters[0] = param1;
@@ -79,6 +81,8 @@ public class StateDelay implements AutonomousState {
   parameters[2] = param3;
   param4 = SmartDashboard.getString("Param 4 - ultrasonicTarget");
   parameters[3] = param4;
+  param5 = SmartDashboard.getString("Param 5 - collisionToggle");
+  parameters[4] = param5;
   }
   
   @Override

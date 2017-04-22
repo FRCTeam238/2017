@@ -96,6 +96,7 @@ public class Drivetrain {
 		encoderRight = rightFrontDrive.getEncPosition();
 		
 		encoderLeft = Math.abs(encoderLeft);
+		encoderRight = Math.abs(encoderRight);
 		
 		Logger.Log("DriveTrain(): Left Encoder = " + encoderLeft);
 		Logger.Log("DriveTrain(): Right Encoder = " + encoderRight);

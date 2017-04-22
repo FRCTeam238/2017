@@ -56,6 +56,7 @@ public class CommandDriveForward extends AbstractCommand {
     myRobotDrive.resetEncoders();
     yawValue = myNavigation.getYaw();
     previousEncoderTicks = 0;
+    delayCount = 0;
     SmartDashboard.putNumber("Starting Yaw", yawValue);
     
     //Logger.Log("CommandDriveForward.prepare");
@@ -153,7 +154,7 @@ public class CommandDriveForward extends AbstractCommand {
         
       }
       
-      else if (amountOfTicks > okToCheckForCollision)
+      if (amountOfTicks > okToCheckForCollision)
       {
         
         areWeCollided = myNavigation.haveWeCollided();

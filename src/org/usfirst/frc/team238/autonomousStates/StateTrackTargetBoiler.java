@@ -84,6 +84,7 @@ public class StateTrackTargetBoiler implements AutonomousState {
 		SmartDashboard.putString("Param 2 - motorSpeed", parameters[1]);
 		SmartDashboard.putString("Param 3 - newTargetYaw", "0");
 		SmartDashboard.putString("Param 4 - ultrasonicTarget", "0");
+		SmartDashboard.putString("Param 5 - collisionToggle", "0");
 	}
 
 	@Override

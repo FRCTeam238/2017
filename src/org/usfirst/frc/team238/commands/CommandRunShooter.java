@@ -86,7 +86,7 @@ public class CommandRunShooter extends AbstractCommand {
       {
         if (myFuelHandler.getAlliance() == Alliance.Red)
         {
-          shooterSpeed = SmartDashboard.getNumber("Red TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED); //2900); +
+          shooterSpeed = SmartDashboard.getNumber("Red Hopper 2 TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED); //2900); +
         }        
         else
         {
@@ -97,7 +97,7 @@ public class CommandRunShooter extends AbstractCommand {
       {
         if (myFuelHandler.getAlliance() == Alliance.Red)
         {
-          shooterSpeed = SmartDashboard.getNumber("Red TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED); //2900); +
+          shooterSpeed = SmartDashboard.getNumber("Red Hopper 2 TESTING RPM", CrusaderCommon.RED_SHOOTER_SPEED); //2900); +
         }        
         else
         {

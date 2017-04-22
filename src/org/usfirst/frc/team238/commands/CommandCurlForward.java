@@ -36,6 +36,7 @@ public class CommandCurlForward extends AbstractCommand
   double yawIConstant = CrusaderCommon.DRIVE_FORWARD_I_VALUE;
   double yawCorrectionMaxPercent = CrusaderCommon.DRIVE_FORWARD_MAX_YAW_PERCENT;   // percent of motorValue for max yaw
   double previousEncoderTicks;
+  double collisionToggle;
   
   double finalMotorValueLeft;
   double finalMotorValueRight;
@@ -202,6 +203,15 @@ public class CommandCurlForward extends AbstractCommand
     {
       blueTargetValue = 0;
     }
+    
+    if ((params[4] != null) || (!params[4].isEmpty())) 
+    {
+      collisionToggle = Double.parseDouble(params[4]);
+    } 
+    else 
+    {
+      collisionToggle = 0;
+    }
       
      myNavigation.setTargetValues(newTargetYaw);
           
@@ -230,8 +240,11 @@ public class CommandCurlForward extends AbstractCommand
       
       case CrusaderCommon.CURL_TURN: //Checks if we are at a certain angle and increments to stage 3
         
-        collisionDetected = myNavigation.haveWeCollided();
-        
+        if(collisionToggle != 1)
+        {
+          collisionDetected = myNavigation.haveWeCollided();
+        }
+          
         if(myNavigation.areWeThereYet())
         {
           myRobotDrive.driveForward(0, 0);
@@ -239,10 +252,12 @@ public class CommandCurlForward extends AbstractCommand
           doness = true;
         }
         
-        if(collisionDetected)
+        //THIS DAMN COLLISION IS CAUSING PROBLEMS IN OUTER CURL      
+       
+        if((collisionDetected))
         {        
           timerInMillis();
-          stage++;         
+          stage++;      
         }
         
         break;
