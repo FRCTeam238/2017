@@ -493,7 +493,7 @@ public class Robot extends IterativeRobot {
 		try {
 			
 			theMACP.process();
-			//myNavigation.navxValues();
+			myNavigation.navxValues();
 			
 			int currentYaw = (int) myNavigation.getYaw();			
 			SmartDashboard.putNumber("AutonomousPeriodic: The CurrentYaw ", currentYaw);
