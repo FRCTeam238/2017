@@ -1,9 +1,24 @@
 package org.usfirst.frc.team238.robot;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CrusaderCommon {
 	
+  //All button inputs for the operator
+  public static final Integer[] stopEverythingInput = {0};
+  public static final Integer[] runStaticShooterInput = {1};
+  public static final Integer[] depositGearInput = {2};
+  public static final Integer[] trackTheBoilerInput = {3};
+  public static final Integer[] runDynamicShooterInput = {5};
+  public static final Integer[] reverseIntakeInput = {6};
+  public static final Integer[] runIntakeInput = {7};
+  public static final Integer[] runClimberInput = {9};
+  public static final Integer[] openHopperInput = {10};
+  public static final Integer[] closeHopperInput = {11};
+  
+  
 	/*DO NOT NUKE*/
 	//two types of command lists
 	public static final int OPR_CMD_LIST = 1;
@@ -42,7 +57,7 @@ public class CrusaderCommon {
 	public static final double AUTO_DRIVE_IDLE = 0.0;
 	
 	/*DO NOT NUKE*/
-	public static final int DRIVE_TRAIN_CMD_IDX = 0;
+	public static final HashMap<Integer, Boolean> DRIVE_TRAIN_CMD_IDX = new HashMap<Integer, Boolean>() {{put(0,true);}};
 	
 	/*DO NOT NUKE*/
 	public static final int AUTO_DRIVE_LIMIT = 15000;

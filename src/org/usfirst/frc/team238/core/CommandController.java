@@ -12,20 +12,22 @@ import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Vision;
 
-public class CommandController {
-
+public class CommandController 
+{
+  //Command factories
   AutonomousCmdFactory theRouge;
 	DriverCommandFactory  theDriverCommandFactory;
 	OperatorCmdFactory theOperatorCmdFactory;
 	
+	//Command lists
 	HashMap<String, Command> autoCmdList;
 	HashMap<Integer, Command> driverCmdList; 
 	HashMap<Integer, Command> driverLeftCmdList;
 	HashMap<Integer, Command> driverRightCmdList;
-	HashMap<Integer, Command> operatorCmdList;
+	HashMap<Integer[], Command[]> operatorCmdList;
 	
-	HashMap<Integer, Command> commandValue;
-	
+	//Controller inputs
+	//HashMap<Integer, Command> commandValue;
 	
 	/**
 	 * Populates the command factories with their respective objects
@@ -46,7 +48,8 @@ public class CommandController {
 		setupDriverCommands(myRobotDrive, driveTrain, myNavigation,myVision,theFuelHandler);
 		setupAutonomousCommands(driveTrain, myNavigation, myVision, myRobot, theFuelHandler);
 		
-		commandValue = new HashMap<Integer, Command>(8);
+		//Doesn't get used
+		//commandValue = new HashMap<Integer, Command>(8);
 	}
 	
 	
@@ -60,7 +63,14 @@ public class CommandController {
 		return autoCmdList.get(cmdName);
 	}
 	
-	//loads all the autonomous commands from the auto factory
+	/**
+	 * Creates the autonomous command factory and gets the command list that's created in that factory
+	 * @param driveTrain
+	 * @param myNavigation
+	 * @param myVision
+	 * @param myRobot
+	 * @param theFuelHandler
+	 */
 	private void setupAutonomousCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, Robot myRobot,FuelHandler theFuelHandler)
 	{
 		theRouge = new AutonomousCmdFactory();
@@ -75,6 +85,14 @@ public class CommandController {
 		return driverCmdList.get(cmdName);
 	}
 	
+	/**
+	 * Creates the driver command factory and gets the command lists that are in the factory
+	 * @param myRobotDrive
+	 * @param driveTrain
+	 * @param myNavigation
+	 * @param myVision
+	 * @param myFuelHandler
+	 */
 	private void setupDriverCommands( RobotDrive myRobotDrive, Drivetrain driveTrain,Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler)
 	{
 		theDriverCommandFactory = new DriverCommandFactory();
@@ -85,12 +103,23 @@ public class CommandController {
 		driverCmdList = theDriverCommandFactory.createDriverCommands(myRobotDrive);
 	}
 	
-	//gets Operator Commands by name
-	public Command getOperatorCmd(int cmdName)
-	{
-		return operatorCmdList.get(cmdName);
-	}
+	//Never gets called
 	
+	//gets Operator Commands by name
+	//public Command getOperatorCmd(int cmdName)
+	//{
+	//	return operatorCmdList.get(cmdName);
+	//}
+	
+	/**
+	 * Creates the operator command factory and gets the command list that's created in that factory
+	 * @param myNavigation
+	 * @param driveTrain
+	 * @param myVision
+	 * @param theFuelHandler
+	 * @param theClimber
+	 * @param myRobot
+	 */
 	private void setupOperatorCommands(Navigation myNavigation, Drivetrain driveTrain, Vision myVision,
 	    FuelHandler theFuelHandler, Climber theClimber, Robot myRobot)
 	{
@@ -135,62 +164,68 @@ public class CommandController {
 		}
 	}*/
 	
-	public void buttonPressed(HashMap<Integer, Integer> commandValue){
-			
+	/**
+	 * Cycles through the hashmap, checking if a buttonis pressed.
+	 * If a button is pressed, grab the command associated with that button and executes it.
+	 * @param commandValues
+	 */
+	public void joyStickCommandExecution(HashMap<Integer, HashMap<Integer, Boolean>> commandValues)
+	{
 			Command commandForTheButtonPressed;
-			Integer buttonPressed = commandValue.get(CrusaderCommon.INPUT_DRIVER_LEFT_JS);
+			Command operatorCommandsForTheButtonPressed[];
+			HashMap<Integer, Boolean> buttonPressed;
 			
+			//Checks for inputs on the left driver joystick
+			buttonPressed = commandValues.get(CrusaderCommon.INPUT_DRIVER_LEFT_JS);
+			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed.containsValue(true));
 			
-			
-			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed);
-			if(commandForTheButtonPressed != null){
-				
+			if(commandForTheButtonPressed != null)
+			{
 				commandForTheButtonPressed.execute();
 			}
 			
+			//Checks for inputs on the right driver joystick
+			buttonPressed = commandValues.get(CrusaderCommon.INPUT_DRIVER_RIGHT_JS);
+			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed.containsValue(true));
 			
-			
-			buttonPressed = commandValue.get(CrusaderCommon.INPUT_DRIVER_RIGHT_JS);
-			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
-			if(commandForTheButtonPressed != null){
-				//Logger.logInt("buttonPressed driver right : ", buttonPressed);
+			if(commandForTheButtonPressed != null)
+			{
 				commandForTheButtonPressed.execute();
 			}
 			
+			//Checks for y inputs on both of the driver joysticks
+			buttonPressed = commandValues.get(CrusaderCommon.DT_CMD_LIST);
+			commandForTheButtonPressed = driverCmdList.get(buttonPressed.containsValue(true)); 
 			
-			
-			buttonPressed = commandValue.get(CrusaderCommon.DT_CMD_LIST);
-			//Logger.logInt("buttonPressed : ", buttonPressed);
-			commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
-			if(commandForTheButtonPressed != null){
-				//Logger.logInt("buttonPressed(in if statement) : ", buttonPressed);
+			if(commandForTheButtonPressed != null)
+			{
 				commandForTheButtonPressed.execute();
 			}
 			
+			//Check for inputs on the operator joystick
+			buttonPressed = commandValues.get(CrusaderCommon.OPR_CMD_LIST);		
+			operatorCommandsForTheButtonPressed = operatorCmdList.get(buttonPressed.containsValue(true)); 
 			
-			
-			buttonPressed = commandValue.get(CrusaderCommon.OPR_CMD_LIST);		
-			commandForTheButtonPressed = operatorCmdList.get(buttonPressed); 
-			if(commandForTheButtonPressed != null){
+			if(commandForTheButtonPressed != null)
+			{
 			  
-			  if(buttonPressed == 1 || buttonPressed == 5)
+			  for(int i = 0; i < operatorCommandsForTheButtonPressed.length; i++)
 			  {
 			    
-			    commandForTheButtonPressed.execute(buttonPressed);
-			  
+			    //Because the shooter command takes button inputs in order to switch between a dynamic and static shooter
+			    if(buttonPressed.get(1) == true) 
+			    {
+			      operatorCommandsForTheButtonPressed[0].execute(1);
+			    }
+			    else if(buttonPressed.get(5) == true)
+			    {
+			      operatorCommandsForTheButtonPressed[0].execute(5);
+			    } 
+			    else
+			    {
+			      operatorCommandsForTheButtonPressed[i].execute();
+			    }
 			  }
-			  else
-			  {
-			    
-			    commandForTheButtonPressed.execute();
-			  
-			  }
-			}
-			
-			
-		}
-	
-	//Edit to send to github
-
-	
+			}	
+	 }
 }

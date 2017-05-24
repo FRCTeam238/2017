@@ -7,7 +7,6 @@ import org.usfirst.frc.team238.commands.CommandShiftLow;
 import org.usfirst.frc.team238.commands.CommandTankDrive;
 import org.usfirst.frc.team238.commands.CommandTrackTargetBoiler;
 import org.usfirst.frc.team238.commands.NoDriverCommand;
-import org.usfirst.frc.team238.robot.Climber;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.FuelHandler;
 import org.usfirst.frc.team238.robot.Navigation;
@@ -21,7 +20,8 @@ import org.usfirst.frc.team238.testCommands.CommandReverseClimber;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 
-public class DriverCommandFactory {
+public class DriverCommandFactory 
+{
 
 	NoDriverCommand NoDriveCommand;
 	CommandShiftHigh commandShiftHigh;
@@ -38,14 +38,23 @@ public class DriverCommandFactory {
 	HashMap <Integer, Command> driverRightCommands;
 	HashMap <Integer, Command> driverCommands;
 	
-	public void init(){
+	public void init()
+	{
 		driverLeftCommands = new HashMap<Integer, Command>(10);
 		driverRightCommands = new HashMap<Integer, Command>(10);
 		driverCommands = new HashMap<Integer, Command>(10);
 	}
 	
-	
-	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler){
+	/**
+	 * Creates commands for the left driver joystick
+	 * @param driveTrain
+	 * @param myNavigation
+	 * @param myVision
+	 * @param myFuelHandler
+	 * @return
+	 */
+	public HashMap<Integer, Command> createDriverLeftCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler)
+	{
 		
 		NoDriveCommand = new NoDriverCommand(driveTrain);
 		
@@ -66,8 +75,17 @@ public class DriverCommandFactory {
 		
 	}
 
-	public HashMap<Integer, Command> createDriverRightCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler ){
-		
+	/**
+	 * Creates commands for the right driver joystick
+	 * @param driveTrain
+	 * @param myNavigation
+	 * @param myVision
+	 * @param myFuelHandler
+	 * @return
+	 */
+	public HashMap<Integer, Command> createDriverRightCommands(Drivetrain driveTrain, Navigation myNavigation, Vision myVision, FuelHandler myFuelHandler)
+	{
+	  
 		NoDriveCommand  = new NoDriverCommand(driveTrain);
 		driverRightCommands.put(0, NoDriveCommand);
 		
@@ -88,10 +106,16 @@ public class DriverCommandFactory {
 		
 	}
 	
-public HashMap<Integer, Command> createDriverCommands(RobotDrive myRobotDrive){
+	/**
+	 * Creates a command for both driver joysticks
+	 * (In this case, enables the driver to actually drive the robot)
+	 * @param myRobotDrive
+	 * @return
+	 */
+	public HashMap<Integer, Command> createDriverCommands(RobotDrive myRobotDrive)
+	{
 		
 	 	CommandTankDrive cmdToDriveTheRobot = new CommandTankDrive(myRobotDrive);
-		
 		
 		driverCommands.put(0, cmdToDriveTheRobot);
 		

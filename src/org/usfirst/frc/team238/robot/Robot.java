@@ -1,7 +1,6 @@
 package org.usfirst.frc.team238.robot;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.usfirst.frc.team238.core.AutonomousState;
@@ -21,12 +20,12 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.DriverStation;
 
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.DriverStation;
 
 
 /**
@@ -271,9 +270,10 @@ public class Robot extends IterativeRobot {
 
 	}
 
-	public void autonomousInit() {
-		try {
-
+	public void autonomousInit() 
+	{
+		try 
+		{
 			  Logger.Log("Robot(): AutononousInit()");
 			
 			  myDriveTrain.resetEncoders();
@@ -298,7 +298,9 @@ public class Robot extends IterativeRobot {
 				//SmartDashboard.putString("Alliance Color", teamColor.toString());
 				theFuelHandler.setAlliance(teamColor);
 				
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) 
+		{
 		  ex.printStackTrace();
 			Logger.Log("Robot(): AutononousInit() Exception: "+ex);
 		}
@@ -308,10 +310,10 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	@SuppressWarnings({ "deprecation"})
-	public void robotInit() {
-
-		try {
+	public void robotInit() 
+	{
+		try 
+		{
 			System.out.println("RobotInit()");
 			
 		  SmartDashboard.putBoolean("Output Log to File", true);
@@ -394,7 +396,9 @@ public class Robot extends IterativeRobot {
 		   
 		  SmartDashboard.putBoolean("Debug", false);
 		  
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) 
+		{
 		  ex.printStackTrace();
 			Logger.Log("Robot(): robotInit() Exception : "+ex);
 
@@ -404,7 +408,8 @@ public class Robot extends IterativeRobot {
 	/**
 	 * Creates all the objects to be used on the SmartDashboard
 	 */
-	public void InitSmartDashboardObjects(){
+	@SuppressWarnings("deprecation")
+  public void InitSmartDashboardObjects(){
 	  
 	  SmartDashboard.putNumber("Shooter F Value", CrusaderCommon.SHOOTER_TALON_F_VALUE); //0.0427);
 	  SmartDashboard.putNumber("Shooter P Value", CrusaderCommon.SHOOTER_TALON_P_VALUE); // 0.2);
@@ -469,9 +474,7 @@ public class Robot extends IterativeRobot {
     //SmartDashboard.putString("Team Side :",getAllianceTeam());
     //SmartDashboard.putNumber("SHOOTER RPM",0);
     SmartDashboard.putString("Alliance Color", "Red");
-    
-    
-      
+ 
 	}
 	
 	public CommandController getTheMCP()
@@ -487,10 +490,13 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	public void autonomousPeriodic() {
+	public void autonomousPeriodic() 
+	{
 		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
 		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
-		try {
+		
+		try 
+		{
 			
 			theMACP.process();
 			myNavigation.navxValues();
@@ -498,7 +504,9 @@ public class Robot extends IterativeRobot {
 			int currentYaw = (int) myNavigation.getYaw();			
 			SmartDashboard.putNumber("AutonomousPeriodic: The CurrentYaw ", currentYaw);
 			
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) 
+		{
 		  ex.printStackTrace();
 			Logger.Log("Robot(): autonomousPeriodic() Exception: "+ex);
 		}
@@ -507,25 +515,31 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during operator control
 	 */
-	public void teleopPeriodic() {
+	public void teleopPeriodic() 
+	{
 
-		HashMap<Integer, Integer> commandValue;
+		HashMap<Integer, HashMap<Integer, Boolean>> commandValues;
 		
 		theFuelHandler.turnOnRingLight();
 		
 		SmartDashboard.putNumber("Left Encoder", leftFrontDrive.getEncPosition());
 		SmartDashboard.putNumber("Right Encoder", rightFrontDrive.getEncPosition());
 		
-		try {
+		try 
+		{
 
-			//get the buttons (commands) that were pressed on the control board
-			commandValue = myControlBoard.getCommands();
-			//pass the array with the commands coming form the control to the Controller object 
-			theMCP.buttonPressed(commandValue);
+			//get the buttons that were pressed on the joySticks/controlBoard
+			commandValues = myControlBoard.getControllerInputs();
+			
+			//pass the buttonsPressed into the commandController for command execution
+			theMCP.joyStickCommandExecution(commandValues);
+			
 			//mjf do we need this?
 			myNavigation.navxValues();
 
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 		  e.printStackTrace();
 			Logger.Log("Robot(): teleopPeriodic() Exception: "+ e);
 			
@@ -535,14 +549,17 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during test mode
 	 */
-	public void testPeriodic() {
+	public void testPeriodic() 
+	{
 
-	  try{
+	  try
+	  {
 	    
 	    theFuelHandler.test();
 	    
-	  }catch(Exception e){
-	    
+	  }
+	  catch(Exception e)
+	  {
 	    e.printStackTrace();
 	  }
 	  
@@ -552,17 +569,23 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This should ONLY be called from an init function
 	 */
-	private void checkForSmartDashboardChanges(String key, String value) {
+	@SuppressWarnings({ "unused", "deprecation" })
+  private void checkForSmartDashboardChanges(String key, String value) 
+	{
 		myPreferences = Preferences.getInstance();
 
 		String valueFromPrefs = myPreferences.getString(key, value);
-		if (valueFromPrefs != null) {
+		if (valueFromPrefs != null) 
+		{
 			Logger.Log("Robot(): CheckSDChanges(): valueFromPrefs : " + key + " = " + valueFromPrefs);
 			String valueFromDS = null;
 			
-			try {
+			try 
+			{
 				valueFromDS = SmartDashboard.getString(key);
-			} catch (Exception ex) {
+			} 
+			catch (Exception ex) 
+			{
 				ex.printStackTrace();
 				SmartDashboard.putString(key, valueFromPrefs);
 			}
@@ -571,9 +594,11 @@ public class Robot extends IterativeRobot {
 
 			// check for null and also if it's empty don't overwrite what's in
 			// the preferences table
-			if ((valueFromDS != null)  && (!valueFromDS.isEmpty())) {
+			if ((valueFromDS != null)  && (!valueFromDS.isEmpty())) 
+			{
 								// if they are not the same then update the preferences
-				if (!valueFromPrefs.equalsIgnoreCase(valueFromDS)) {
+				if (!valueFromPrefs.equalsIgnoreCase(valueFromDS)) 
+				{
 					
 					Logger.Log("Robot(): CheckSDChanges(): UpdatePrefs" + key + " = " + valueFromDS);
 					myPreferences.putString(key, valueFromDS);
@@ -589,7 +614,8 @@ public class Robot extends IterativeRobot {
 				}
 			}
 			
-			if(( valueFromDS != null) && (valueFromDS.isEmpty()) && (!valueFromPrefs.isEmpty())) {
+			if(( valueFromDS != null) && (valueFromDS.isEmpty()) && (!valueFromPrefs.isEmpty())) 
+			{
 			
 				SmartDashboard.putString(key, valueFromPrefs);
 			

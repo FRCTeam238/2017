@@ -3,6 +3,7 @@ package org.usfirst.frc.team238.core;
 import java.util.HashMap;
 
 import org.usfirst.frc.team238.robot.Climber;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
@@ -19,6 +20,7 @@ import org.usfirst.frc.team238.robot.FuelHandler;
 
 import org.usfirst.frc.team238.commands.CommandTrackTarget;
 import org.usfirst.frc.team238.commands.CommandTrackTargetBoiler;
+import org.usfirst.frc.team238.commands.CommandMultiButtonTest;
 import org.usfirst.frc.team238.commands.CommandRunShooter;
 import org.usfirst.frc.team238.commands.CommandStartClimber;
 import org.usfirst.frc.team238.commands.CommandStartIntake;
@@ -71,64 +73,91 @@ public class OperatorCmdFactory {
 	CommandTargetBoiler commandTargetBoiler;
 	
 	CommandTrackTargetBoiler commandTrackTargetBoiler;
-   
 	
-	HashMap <Integer, Command> operatorCommands;
+	CommandMultiButtonTest commandMultiButtonsTest;
+
+	
+	HashMap<Integer[], Command[]> operatorCommands;
 	
 	
-	public void init(){
+	public void init()
+	{
 	
-	operatorCommands = new HashMap<Integer, Command>(16);
+	  operatorCommands = new HashMap<Integer[], Command[]>(16);
 	
 	}
 	
-	public HashMap<Integer, Command> createOperatorCommands(Drivetrain driveTrain,
+	/**
+	 * Operator controls get binded here. Assigning a series of buttons and commands to a HashMap
+	 * @param driveTrain
+	 * @param theNavigation
+	 * @param theVision
+	 * @param theFuelHandler
+	 * @param theClimber
+	 * @param theRobot
+	 * @return
+	 */
+	public HashMap<Integer[], Command[]> createOperatorCommands(Drivetrain driveTrain,
 	    Navigation theNavigation, Vision theVision, FuelHandler theFuelHandler,
-	    Climber theClimber, Robot theRobot){
-	
-		commandStopEverything = new CommandStopEverything(theFuelHandler, theClimber);
-		operatorCommands.put(0, commandStopEverything);
+	    Climber theClimber, Robot theRobot)
+	{
+	  //Inputs get defined in CrusaderCommon
+	  Integer[] multiButtonTestInput = {1,2,3,4,5}; //Test : Button input
 	  
+	  //Create command objects, passing objects into each of them
+	  commandStopEverything = new CommandStopEverything(theFuelHandler, theClimber);
 	  commandRunShooter = new CommandRunShooter(theFuelHandler, theVision);
-		operatorCommands.put(1, commandRunShooter);
+	  commandDepositGear = new CommandDeployGear(theFuelHandler);
+	  commandTrackTargetBoiler = new CommandTrackTargetBoiler(driveTrain,theNavigation,theVision,theFuelHandler);
+	  commandReverseIntake = new CommandReverseIntake(theFuelHandler.theIntake);
+	  commandRunIntake = new CommandStartIntake(theFuelHandler.theIntake);
+	  commandRunClimber = new CommandStartClimber(theClimber);
+	  commandOpenHopper = new CommandOpenHopper(theFuelHandler);
+	  commandCloseHopper = new CommandCloseHopper(theFuelHandler);
+	  
+	  commandMultiButtonsTest = new CommandMultiButtonTest();	//Test : Just outputs a simple log statement  
+	  
+	  //Define the command sequences here
+	  Command[] stopEverythingCommandArray = {commandStopEverything};
+	  Command[] runStaticShooterCommandArray = {commandRunShooter};
+	  Command[] depositGearCommandArray = {commandDepositGear};
+	  Command[] trackTargetBoilerCommandArray = {commandTrackTargetBoiler};
+	  Command[] runDynamicShooterCommandArray = {commandRunShooter};
+	  Command[] reverseIntakeCommandArray = {commandReverseIntake};
+	  Command[] runIntakeCommandArray = {commandRunIntake};
+	  Command[] runClimberCommandArray = {commandRunClimber};
+	  Command[] openHopperCommandArray = {commandOpenHopper};
+	  Command[] closeHopperCommandArray = {commandCloseHopper};
+	     
+		Command[] twoButtonTestCommandArray = {commandMultiButtonsTest,commandMultiButtonsTest,commandMultiButtonsTest,commandMultiButtonsTest}; //Test : Should output the log statement four times 
+	  
+	  //Assigns all command arrays and their specific inputs to the HashMap
+	  operatorCommands.put(CrusaderCommon.stopEverythingInput, stopEverythingCommandArray);
+	  operatorCommands.put(CrusaderCommon.runStaticShooterInput, runStaticShooterCommandArray);
+		operatorCommands.put(CrusaderCommon.depositGearInput, depositGearCommandArray);
+		operatorCommands.put(CrusaderCommon.trackTheBoilerInput, trackTargetBoilerCommandArray);
+    operatorCommands.put(CrusaderCommon.runDynamicShooterInput, runDynamicShooterCommandArray);
+    operatorCommands.put(CrusaderCommon.reverseIntakeInput, reverseIntakeCommandArray);
+    operatorCommands.put(CrusaderCommon.runIntakeInput, runIntakeCommandArray);
+    operatorCommands.put(CrusaderCommon.runClimberInput, runClimberCommandArray);
+    operatorCommands.put(CrusaderCommon.openHopperInput, openHopperCommandArray);
+    operatorCommands.put(CrusaderCommon.closeHopperInput, closeHopperCommandArray);
+    
+    operatorCommands.put(multiButtonTestInput, twoButtonTestCommandArray); //Test : Command put
 		
-		commandDepositGear = new CommandDeployGear(theFuelHandler);
-		operatorCommands.put(2, commandDepositGear);
-		
-		commandTrackTargetBoiler = new CommandTrackTargetBoiler(driveTrain,theNavigation,theVision,theFuelHandler);
-    operatorCommands.put(3, commandTrackTargetBoiler);
-    
-   // commandTargetBoiler = new CommandTargetBoiler(driveTrain,theNavigation, theRobot, theFuelHandler);
-    operatorCommands.put(5, commandRunShooter);
-    
-    commandRunIntake = new CommandStartIntake(theFuelHandler.theIntake);
-    operatorCommands.put(7, commandRunIntake);
-    
-    commandReverseIntake = new CommandReverseIntake(theFuelHandler.theIntake);
-    operatorCommands.put(6, commandReverseIntake);
-    
-    //commandRunSerializer = new CommandStartSerializer(theFuelHandler.theSerializer);
-    //operatorCommands.put(8, commandRunSerializer);
-		
-		commandCloseHopper = new CommandCloseHopper(theFuelHandler);
-		operatorCommands.put(11, commandCloseHopper);
-		
-		commandRunClimber = new CommandStartClimber(theClimber);
-    operatorCommands.put(9, commandRunClimber);
-        
-    commandOpenHopper = new CommandOpenHopper(theFuelHandler);
-    operatorCommands.put(10, commandOpenHopper);
-    
+	  
 		return operatorCommands;
+		
 	}
 
-	/*commandOpenSprocket = new CommandOpenSprocket(theSprocket);
-  operatorCommands.put(9, commandOpenSprocket);*/
+	/* Older testCommands
+	 
+	commandOpenSprocket = new CommandOpenSprocket(theSprocket);
+  operatorCommands.put(9, commandOpenSprocket);
   
-  /*commandTrackTarget = new CommandTrackTarget(driveTrain, theNavigation, theVision);
-  operatorCommands.put(10, commandTrackTarget);*/
+  commandTrackTarget = new CommandTrackTarget(driveTrain, theNavigation, theVision);
+  operatorCommands.put(10, commandTrackTarget);
   
-  /*
   commandIncreaseOne = new CommandIncrementOnePercent(driveTrain, myFuelHandler);
   operatorCommands.put(3, commandIncreaseOne);
   
@@ -149,6 +178,7 @@ public class OperatorCmdFactory {
   
   commandReset = new CommandResetTestDriveWithButtons(driveTrain, myFuelHandler);
   operatorCommands.put(10, commandReset);
+  
   */
 	
 }

@@ -1,27 +1,24 @@
 package org.usfirst.frc.team238.robot;
-import org.usfirst.frc.team238.core.Logger;
 
 import java.util.*;
-
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import org.usfirst.frc.team238.core.Logger;
 
 public class ControlBoard { 
-	//Here are the joysticks for controlling  the robot
+
 	static Joystick manualOverrideJs; 	// operator manual overide
 	static Joystick operatorJs;  	// operator control board
+	
 	private static Joystick driverLeftJs; 	// driveTrain left
 	private static Joystick driverRightJs; 	// driveTrain right
+	
 	static Joystick xboxController;
 	
-	HashMap<Integer, Integer> controllers; /*This is the list that contains the locations
-						for the controllers*/
+	HashMap<Integer, HashMap<Integer, Boolean>> controllers; //Contains each joystick value and their button inputs
 	
 	boolean isXBoxController;
-	//look at using more sophisticated collection classes
-	static int commands[];
-	static int [] xBoxToJsCmdMapping= { 0, 11, 10, 2, 3, 7, 6};
+	
+	static Integer[] xBoxToJsCmdMapping= { 0, 11, 10, 2, 3, 7, 6};
 	
 	public void controlBoardInit()
 	{
@@ -32,11 +29,7 @@ public class ControlBoard {
 			setDriverLeftJs(new Joystick(2));
 			setDriverRightJs(new Joystick(3));
 		
-			//array that holds the command sent by each control device
-			commands = new int[5];
-			
-			controllers = new HashMap<Integer, Integer>(5);
-			
+			controllers = new HashMap<Integer, HashMap<Integer,Boolean>>(5);
 			
 		}
 		
@@ -46,88 +39,95 @@ public class ControlBoard {
 		}
 	}
 	
-	
-	
 	/**
-	 * loops thru all the buttons on the joystick until it gets to the one that is pressed
-	 * works as long as we only need one button pressed at a time, if we need  more than one
-	 * button we'll need to create an array of commands.... int command[]
+	 * Loops through all buttons on the joystick. Keeping track of every button pressed.
 	 * @return command value
 	 */
-	public int getCommand(Joystick theJoyStick){
-		int command;
-		boolean jsButtonValue = false;
+	public HashMap<Integer,Boolean> getOperatorJoystickInputs(Joystick theJoyStick)
+	{
 		
-		int interator = theJoyStick.getButtonCount(); 
+		boolean jsButtonValue = false;
+		int joyStickButtonCount = theJoyStick.getButtonCount();
+
+    //Integer = button ID
+    //Boolean = isButtonPressed
+    HashMap<Integer,Boolean> buttonsPressed = new HashMap<Integer,Boolean>(joyStickButtonCount);
 		
 		//interator = 11 and buttons do not count from zero
-		for(command = 1; command <= interator; command++){
-			jsButtonValue = theJoyStick.getRawButton(command);
-			if(jsButtonValue){
-				break;
+		for(int i = 1; i <= joyStickButtonCount; i++) 
+		{
+		  
+			jsButtonValue = theJoyStick.getRawButton(i);
+			
+			//If a button is detected
+			if(jsButtonValue) 
+			{
+			  
+			  //Add that button to the collection of buttons pressed
+			  buttonsPressed.put(i, jsButtonValue); 
+			  
 			}
-		}
-		if(!jsButtonValue){
-			command = 0;
+			
 		}
 		
+		//Update later (If needed)
+		/*
 		if(isXBoxController)
 		{
-			command =  xBoxToJsCmdMapping[command];
+		  command[0] =  xBoxToJsCmdMapping[command[0]];
 		}
+		*/
 		
-		return command;
+		return buttonsPressed;
 	}
 	
 	/**
-	 * 
+	 * Loops through all buttons on the joystick. Keeping track of every button pressed.
 	 * @param theJoyStick
 	 * @return
 	 */
-	public int getDriverCommand(Joystick theJoyStick){
-		int command = 0;
-		double zPos =  0.0;
+	public HashMap<Integer, Boolean> getDriverJoystickInput(Joystick theJoyStick){
+	  
+		HashMap<Integer, Boolean> buttonsPressed = new HashMap<Integer,Boolean>(1);
 		
 		if(theJoyStick.getRawButton(1))
 		{
-			command = 1;
+		  buttonsPressed.put(1,true);
 		}
 		else if (theJoyStick.getRawButton(2))
 		{
-			command = 2;
+		  buttonsPressed.put(2,true);
 		}
 		else if(theJoyStick.getRawButton(3))
 		{
-			command = 3;
+		  buttonsPressed.put(3,true);
 		}
 		else if(theJoyStick.getRawButton(4))
 		{
-			command = 4;
+		  buttonsPressed.put(4,true);
 		}
-		
-
-		
-		return command;
+    
+    return buttonsPressed;
 	}
 	
-	//populates each array element with the corresponding value for the joy stick
-	public HashMap<Integer, Integer> getCommands(){
+	/**
+	 * Grabs button/analog inputs from the controllers
+	 * @return
+	 */
+	public HashMap<Integer, HashMap<Integer,Boolean>> getControllerInputs(){
 		
-		/*commands[0] = getCommand(manualOverrideJs);
-		commands[1] = getCommand(operatorJs);
-		commands[2] = getDriverCommand(getDriverRightJs());
-		commands[3] = getDriverCommand(getDriverLeftJs());
-		commands[4] = CrusaderCommon.DRIVE_TRAIN_CMD_IDX;*/
-		
-		controllers.put(0, getCommand(manualOverrideJs));
-		controllers.put(CrusaderCommon.OPR_CMD_LIST, getCommand(operatorJs));
-		controllers.put(CrusaderCommon.INPUT_DRIVER_RIGHT_JS, getDriverCommand(getDriverRightJs()));
-		controllers.put(CrusaderCommon.INPUT_DRIVER_LEFT_JS, getDriverCommand(getDriverLeftJs()));
+	  //ManualOverride Input
+		controllers.put(0, getOperatorJoystickInputs(manualOverrideJs));
+		//Operator Input
+		controllers.put(CrusaderCommon.OPR_CMD_LIST, getOperatorJoystickInputs(operatorJs));
+		//Left Driver Joystick Input
+		controllers.put(CrusaderCommon.INPUT_DRIVER_LEFT_JS, getDriverJoystickInput(getDriverLeftJs()));
+		//Right Driver Joystick Input
+		controllers.put(CrusaderCommon.INPUT_DRIVER_RIGHT_JS, getDriverJoystickInput(getDriverRightJs()));
+		//Driver Joystick y Values (For robot movement)
 		controllers.put(CrusaderCommon.DT_CMD_LIST, CrusaderCommon.DRIVE_TRAIN_CMD_IDX);
 		
 		return controllers;
-		
-		//return commands;
 		
 	}
 	
@@ -149,9 +149,6 @@ public class ControlBoard {
 		Logger.Log("ControlBoard(): resetEncoderValue(): Reset Encoder = " + resetEncoderValue);
 		return resetEncoderValue;
 	}
-	
-	
-	
 	
 	public boolean overRide(){
 		boolean overRide = operatorJs.getRawButton(10);
