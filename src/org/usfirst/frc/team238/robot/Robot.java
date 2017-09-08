@@ -470,7 +470,9 @@ public class Robot extends IterativeRobot {
     //SmartDashboard.putNumber("SHOOTER RPM",0);
     SmartDashboard.putString("Alliance Color", "Red");
     
-    
+
+    SmartDashboard.putNumber("JERK_X", 0.75);
+    SmartDashboard.putNumber("JERK_Y", 0.75);
       
 	}
 	

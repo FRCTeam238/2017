@@ -26,6 +26,9 @@ public class Navigation {
   double start = 0;
   double current = 0;
   double elapsed = 0;
+  
+  double JERK_X;
+  double JERK_Y;
 	
 	public void init()
 	{
@@ -42,6 +45,10 @@ public class Navigation {
 		start = 0;
 		current = 0;
 		elapsed = 0;
+		
+		JERK_X = SmartDashboard.getNumber("JERKX",0.75);
+		JERK_Y = SmartDashboard.getNumber("JERKY",0.75);
+		
 	}
 	
 	public void test()
@@ -234,14 +241,30 @@ public class Navigation {
     double curr_world_linear_accel_y = ahrs.getWorldLinearAccelY();
     double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
     last_world_linear_accel_y = curr_world_linear_accel_y;
+   
+   Logger.Log("Navigation(): haveWeCollided(): cur_worl_linear_accel_X = "+curr_world_linear_accel_x, "CURL_DEBUG");
+   Logger.Log("Navigation(): haveWeCollided(): cur_worl_linear_accel_Y = "+curr_world_linear_accel_y, "CURL_DEBUG");
+   
+   double local_jerk_X = Math.abs(currentJerkX);
+   double local_jerk_Y = Math.abs(currentJerkY);
+   
     
-    if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
-         ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ) {
+    if ( ( local_jerk_X > JERK_X) ||//kCollisionThreshold_DeltaG ) ||
+         ( local_jerk_Y > JERK_Y ) ) {//kCollisionThreshold_DeltaG) ) {
       
         collisionDetected = true;
         
-        Logger.Log("Navigation(): haveWeCollided(): CollisionDetected =" + collisionDetected);
-    }
+        Logger.Log("Navigation(): haveWeCollided(): currentJerkX = " + local_jerk_X, "CURL_DEBUG");
+        Logger.Log("Navigation(): haveWeCollided(): currentJerkY = " + local_jerk_Y, "CURL_DEBUG");
+        
+        Logger.Log("Navigation(): haveWeCollided(): last_worl_linear_accel_X = " + last_world_linear_accel_x, "CURL_DEBUG");
+        Logger.Log("Navigation(): haveWeCollided(): last_worl_linear_accel_Y = " + last_world_linear_accel_y, "CURL_DEBUG");
+        
+        Logger.Log("Navigation(): haveWeCollided(): CollisionDetected = " + collisionDetected, "CURL_DEBUG");
+    
+       }
+    
+     
    // SmartDashboard.putNumber("cOLLISIONvaLUE x: ", currentJerkX);
    // SmartDashboard.putNumber("cOLLISIONvaLUE y: ", currentJerkY);
     

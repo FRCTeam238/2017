@@ -3,3 +3,5 @@ build/
 dist/
 *.class
 dist/FRCUserProgram.jar
+*.class
+*.class

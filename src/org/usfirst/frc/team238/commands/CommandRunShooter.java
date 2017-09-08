@@ -79,9 +79,9 @@ public class CommandRunShooter extends AbstractCommand {
     
     if(
         (autonomousFlag == 1) ||
-      (Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY) && buttonPressed == 1)
+        (Timer.getFPGATimestamp() - ringLightTime > CrusaderCommon.RING_LIGHT_DELAY) && buttonPressed == 1)
     {
-     
+
       if(autonomousFlag == 1)
       {
         if (myFuelHandler.getAlliance() == Alliance.Red)
@@ -103,14 +103,14 @@ public class CommandRunShooter extends AbstractCommand {
         {
           shooterSpeed = SmartDashboard.getNumber("Blue TESTING RPM", CrusaderCommon.BLUE_SHOOTER_SPEED); //2808);\
         } 
-        
-       // shooterSpeed = calculateRPM();
+
+        // shooterSpeed = calculateRPM();
       }
-       
+
     } else if (buttonPressed == 5){
-      
+
       shooterSpeed = calculateRPM();
-      
+
     }
     else
     {
@@ -225,17 +225,17 @@ public class CommandRunShooter extends AbstractCommand {
     
     
     
-    if(elapsed >= maxShootTime)
-    {
-      myFuelHandler.shoot(0, 0);
-      myFuelHandler.stopEverything();
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-    
+    //if(elapsed >= maxShootTime)
+    //{
+      //myFuelHandler.shoot(0, 0);
+      //myFuelHandler.stopEverything();
+      ///return true;
+    //}
+    //else
+    //{
+      //return false;
+    //}
+    return false;
     
   }
 
