@@ -14,7 +14,7 @@ public class ControlBoard {
 	
 	static Joystick xboxController;
 	
-	HashMap<Integer, HashMap<Integer, Boolean>> controllers; //Contains each joystick value and their button inputs
+	HashMap<Integer, Integer[]> controllers; //Contains each joystick value and their button inputs
 	
 	boolean isXBoxController;
 	
@@ -29,7 +29,8 @@ public class ControlBoard {
 			setDriverLeftJs(new Joystick(2));
 			setDriverRightJs(new Joystick(3));
 		
-			controllers = new HashMap<Integer, HashMap<Integer,Boolean>>(5);
+			controllers = new HashMap<Integer,Integer[]>();
+			//controllers = new HashMap<Integer, HashMap<Integer,Boolean>>(5);
 			
 		}
 		
@@ -43,15 +44,17 @@ public class ControlBoard {
 	 * Loops through all buttons on the joystick. Keeping track of every button pressed.
 	 * @return command value
 	 */
-	public HashMap<Integer,Boolean> getOperatorJoystickInputs(Joystick theJoyStick)
+	public Integer[] getOperatorJoystickInputs(Joystick theJoyStick)
 	{
 		
 		boolean jsButtonValue = false;
 		int joyStickButtonCount = theJoyStick.getButtonCount();
-
+		Integer[] buttonsPressed;
+		buttonsPressed = new Integer[joyStickButtonCount];
+		int arrayIterator = 0;
     //Integer = button ID
     //Boolean = isButtonPressed
-    HashMap<Integer,Boolean> buttonsPressed = new HashMap<Integer,Boolean>(joyStickButtonCount);
+    //HashMap<Integer,Boolean> buttonsPressed = new HashMap<Integer,Boolean>(joyStickButtonCount);
 		
 		//interator = 11 and buttons do not count from zero
 		for(int i = 1; i <= joyStickButtonCount; i++) 
@@ -64,7 +67,9 @@ public class ControlBoard {
 			{
 			  
 			  //Add that button to the collection of buttons pressed
-			  buttonsPressed.put(i, jsButtonValue); 
+			  //buttonsPressed.put(i, jsButtonValue); 
+			  buttonsPressed[arrayIterator] = i;
+			  arrayIterator++;
 			  
 			}
 			
@@ -77,7 +82,7 @@ public class ControlBoard {
 		  command[0] =  xBoxToJsCmdMapping[command[0]];
 		}
 		*/
-		
+		//System.out.println(buttonsPressed);
 		return buttonsPressed;
 	}
 	
@@ -86,25 +91,27 @@ public class ControlBoard {
 	 * @param theJoyStick
 	 * @return
 	 */
-	public HashMap<Integer, Boolean> getDriverJoystickInput(Joystick theJoyStick){
+	public Integer[] getDriverJoystickInput(Joystick theJoyStick){
 	  
-		HashMap<Integer, Boolean> buttonsPressed = new HashMap<Integer,Boolean>(1);
-		
+	  /*!!!!!!!!!!!!!!THIS NEEDS TO BE REWORKED SO IT IS NOT HARDCODED IN!!!!!!!!!!!!!!!!!!*/
+		//HashMap<Integer, Boolean> buttonsPressed = new HashMap<Integer,Boolean>(1);
+		Integer[] buttonsPressed = new Integer[5];
+	  
 		if(theJoyStick.getRawButton(1))
 		{
-		  buttonsPressed.put(1,true);
+		  buttonsPressed[1] = 1;
 		}
 		else if (theJoyStick.getRawButton(2))
 		{
-		  buttonsPressed.put(2,true);
+		  buttonsPressed[2] = 2;
 		}
 		else if(theJoyStick.getRawButton(3))
 		{
-		  buttonsPressed.put(3,true);
+		  buttonsPressed[3] = 3;
 		}
 		else if(theJoyStick.getRawButton(4))
 		{
-		  buttonsPressed.put(4,true);
+		  buttonsPressed[4] = 4;
 		}
     
     return buttonsPressed;
@@ -114,7 +121,7 @@ public class ControlBoard {
 	 * Grabs button/analog inputs from the controllers
 	 * @return
 	 */
-	public HashMap<Integer, HashMap<Integer,Boolean>> getControllerInputs(){
+	public HashMap<Integer, Integer[]> getControllerInputs(){
 		
 	  //ManualOverride Input
 		controllers.put(0, getOperatorJoystickInputs(manualOverrideJs));

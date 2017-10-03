@@ -7,16 +7,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CrusaderCommon {
 	
   //All button inputs for the operator
-  public static final Integer[] stopEverythingInput = {0};
-  public static final Integer[] runStaticShooterInput = {1};
-  public static final Integer[] depositGearInput = {2};
-  public static final Integer[] trackTheBoilerInput = {3};
-  public static final Integer[] runDynamicShooterInput = {5};
-  public static final Integer[] reverseIntakeInput = {6};
-  public static final Integer[] runIntakeInput = {7};
-  public static final Integer[] runClimberInput = {9};
-  public static final Integer[] openHopperInput = {10};
-  public static final Integer[] closeHopperInput = {11};
+  //MAKE THESE INT
+  public static final int stopEverythingInput = 0;
+  public static final int runStaticShooterInput = 1;
+  public static final int depositGearInput = 2;
+  public static final int trackTheBoilerInput = 3;
+  public static final int runDynamicShooterInput = 5;
+  public static final int reverseIntakeInput = 6;
+  public static final int runIntakeInput = 7;
+  public static final int runClimberInput = 8;
+  public static final int openHopperInput = 10;
+  public static final int closeHopperInput = 11;
   
   
 	/*DO NOT NUKE*/
@@ -57,7 +58,8 @@ public class CrusaderCommon {
 	public static final double AUTO_DRIVE_IDLE = 0.0;
 	
 	/*DO NOT NUKE*/
-	public static final HashMap<Integer, Boolean> DRIVE_TRAIN_CMD_IDX = new HashMap<Integer, Boolean>() {{put(0,true);}};
+	//public static final HashMap<Integer, Boolean> DRIVE_TRAIN_CMD_IDX = new HashMap<Integer, Boolean>() {{put(0,true);}};
+	public static final Integer[] DRIVE_TRAIN_CMD_IDX = new Integer[0];
 	
 	/*DO NOT NUKE*/
 	public static final int AUTO_DRIVE_LIMIT = 15000;

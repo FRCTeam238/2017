@@ -518,7 +518,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() 
 	{
 
-		HashMap<Integer, HashMap<Integer, Boolean>> commandValues;
+		HashMap<Integer,Integer[]> commandValues;
 		
 		theFuelHandler.turnOnRingLight();
 		

@@ -24,7 +24,7 @@ public class CommandController
 	HashMap<Integer, Command> driverCmdList; 
 	HashMap<Integer, Command> driverLeftCmdList;
 	HashMap<Integer, Command> driverRightCmdList;
-	HashMap<Integer[], Command[]> operatorCmdList;
+	HashMap<Integer, Command> operatorCmdList;
 	
 	//Controller inputs
 	//HashMap<Integer, Command> commandValue;
@@ -169,15 +169,17 @@ public class CommandController
 	 * If a button is pressed, grab the command associated with that button and executes it.
 	 * @param commandValues
 	 */
-	public void joyStickCommandExecution(HashMap<Integer, HashMap<Integer, Boolean>> commandValues)
+	public void joyStickCommandExecution(HashMap<Integer, Integer[]> commandValues)
 	{
 			Command commandForTheButtonPressed;
-			Command operatorCommandsForTheButtonPressed[];
-			HashMap<Integer, Boolean> buttonPressed;
+			Command operatorCommandsForTheButtonPressed;
+			//HashMap<Integer, int[]> buttonPressed;
+			Integer[] buttonPressed;
 			
 			//Checks for inputs on the left driver joystick
 			buttonPressed = commandValues.get(CrusaderCommon.INPUT_DRIVER_LEFT_JS);
-			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed.containsValue(true));
+			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed
+			    );
 			
 			if(commandForTheButtonPressed != null)
 			{
@@ -186,7 +188,7 @@ public class CommandController
 			
 			//Checks for inputs on the right driver joystick
 			buttonPressed = commandValues.get(CrusaderCommon.INPUT_DRIVER_RIGHT_JS);
-			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed.containsValue(true));
+			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
 			
 			if(commandForTheButtonPressed != null)
 			{
@@ -195,7 +197,12 @@ public class CommandController
 			
 			//Checks for y inputs on both of the driver joysticks
 			buttonPressed = commandValues.get(CrusaderCommon.DT_CMD_LIST);
-			commandForTheButtonPressed = driverCmdList.get(buttonPressed.containsValue(true)); 
+			
+			/*for(int i = 0; i < buttonPressed.length; i++)
+			{
+			  commandForTheButtonPressed = driverCmdList.get(buttonPressed);
+			}*/
+			//commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
 			
 			if(commandForTheButtonPressed != null)
 			{
@@ -203,21 +210,53 @@ public class CommandController
 			}
 			
 			//Check for inputs on the operator joystick
-			buttonPressed = commandValues.get(CrusaderCommon.OPR_CMD_LIST);		
-			operatorCommandsForTheButtonPressed = operatorCmdList.get(buttonPressed.containsValue(true)); 
+			buttonPressed = commandValues.get(CrusaderCommon.OPR_CMD_LIST);	
 			
-			if(commandForTheButtonPressed != null)
+			boolean buttonIsPressed = false;
+			//System.out.print(buttonPressed.length);
+			for(int i = 0; i < buttonPressed.length; i++)
 			{
 			  
+			    if(buttonPressed[i] != null)
+			    {
+			      int index = buttonPressed[i];
+			      System.out.println(index);
+			      if(index > 0)
+			      {
+  			    //if(index >= 0)
+  			    //{
+			        buttonIsPressed = true;
+  			      operatorCommandsForTheButtonPressed = operatorCmdList.get(index);
+  	          operatorCommandsForTheButtonPressed.execute(); //why are you null
+  			    //}
+			    //}
+			      }
+		
+			  //operatorCommandsForTheButtonPressed = operatorCmdList.get(i);
+			    }
+			}
+			if(!buttonIsPressed)
+			{
+			  operatorCommandsForTheButtonPressed = operatorCmdList.get(0);
+			  operatorCommandsForTheButtonPressed.execute();
+			}
+      
+			//operatorCommandsForTheButtonPressed = operatorCmdList.get(buttonPressed); 
+			
+			
+			//System.out.println(operatorCommandsForTheButtonPressed);
+			/*if(operatorCommandsForTheButtonPressed != null)
+			{
+			  System.out.println("!!!!!!!!AFTER commandForTheButtonPressed != null");
 			  for(int i = 0; i < operatorCommandsForTheButtonPressed.length; i++)
 			  {
 			    
 			    //Because the shooter command takes button inputs in order to switch between a dynamic and static shooter
-			    if(buttonPressed.get(1) == true) 
+			    if(buttonPressed[i] == 1) 
 			    {
 			      operatorCommandsForTheButtonPressed[0].execute(1);
 			    }
-			    else if(buttonPressed.get(5) == true)
+			    else if(buttonPressed[i] == 5)
 			    {
 			      operatorCommandsForTheButtonPressed[0].execute(5);
 			    } 
@@ -226,6 +265,7 @@ public class CommandController
 			      operatorCommandsForTheButtonPressed[i].execute();
 			    }
 			  }
-			}	
+			}*/
+			
 	 }
 }

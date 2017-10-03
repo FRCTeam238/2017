@@ -77,13 +77,13 @@ public class OperatorCmdFactory {
 	CommandMultiButtonTest commandMultiButtonsTest;
 
 	
-	HashMap<Integer[], Command[]> operatorCommands;
+	HashMap<Integer, Command> operatorCommands;
 	
 	
 	public void init()
 	{
 	
-	  operatorCommands = new HashMap<Integer[], Command[]>(16);
+	  operatorCommands = new HashMap<Integer, Command>(16);
 	
 	}
 	
@@ -97,7 +97,7 @@ public class OperatorCmdFactory {
 	 * @param theRobot
 	 * @return
 	 */
-	public HashMap<Integer[], Command[]> createOperatorCommands(Drivetrain driveTrain,
+	public HashMap<Integer, Command> createOperatorCommands(Drivetrain driveTrain,
 	    Navigation theNavigation, Vision theVision, FuelHandler theFuelHandler,
 	    Climber theClimber, Robot theRobot)
 	{
@@ -118,7 +118,7 @@ public class OperatorCmdFactory {
 	  commandMultiButtonsTest = new CommandMultiButtonTest();	//Test : Just outputs a simple log statement  
 	  
 	  //Define the command sequences here
-	  Command[] stopEverythingCommandArray = {commandStopEverything};
+	  /*Command[] stopEverythingCommandArray = {commandStopEverything};
 	  Command[] runStaticShooterCommandArray = {commandRunShooter};
 	  Command[] depositGearCommandArray = {commandDepositGear};
 	  Command[] trackTargetBoilerCommandArray = {commandTrackTargetBoiler};
@@ -130,20 +130,20 @@ public class OperatorCmdFactory {
 	  Command[] closeHopperCommandArray = {commandCloseHopper};
 	     
 		Command[] twoButtonTestCommandArray = {commandMultiButtonsTest,commandMultiButtonsTest,commandMultiButtonsTest,commandMultiButtonsTest}; //Test : Should output the log statement four times 
-	  
+	  */
 	  //Assigns all command arrays and their specific inputs to the HashMap
-	  operatorCommands.put(CrusaderCommon.stopEverythingInput, stopEverythingCommandArray);
-	  operatorCommands.put(CrusaderCommon.runStaticShooterInput, runStaticShooterCommandArray);
-		operatorCommands.put(CrusaderCommon.depositGearInput, depositGearCommandArray);
-		operatorCommands.put(CrusaderCommon.trackTheBoilerInput, trackTargetBoilerCommandArray);
-    operatorCommands.put(CrusaderCommon.runDynamicShooterInput, runDynamicShooterCommandArray);
-    operatorCommands.put(CrusaderCommon.reverseIntakeInput, reverseIntakeCommandArray);
-    operatorCommands.put(CrusaderCommon.runIntakeInput, runIntakeCommandArray);
-    operatorCommands.put(CrusaderCommon.runClimberInput, runClimberCommandArray);
-    operatorCommands.put(CrusaderCommon.openHopperInput, openHopperCommandArray);
-    operatorCommands.put(CrusaderCommon.closeHopperInput, closeHopperCommandArray);
+	  operatorCommands.put(CrusaderCommon.stopEverythingInput, commandStopEverything);
+	  operatorCommands.put(CrusaderCommon.runStaticShooterInput, commandRunShooter);
+		operatorCommands.put(CrusaderCommon.depositGearInput, commandDepositGear);
+		operatorCommands.put(CrusaderCommon.trackTheBoilerInput, commandTrackTargetBoiler);
+    //operatorCommands.put(CrusaderCommon.runDynamicShooterInput, runDynamicShooterCommandArray);
+    operatorCommands.put(CrusaderCommon.reverseIntakeInput, commandReverseIntake);
+    operatorCommands.put(CrusaderCommon.runIntakeInput, commandRunIntake);
+    operatorCommands.put(CrusaderCommon.runClimberInput, commandRunClimber);
+    operatorCommands.put(CrusaderCommon.openHopperInput, commandOpenHopper);
+    operatorCommands.put(CrusaderCommon.closeHopperInput, commandCloseHopper);
     
-    operatorCommands.put(multiButtonTestInput, twoButtonTestCommandArray); //Test : Command put
+    //operatorCommands.put(multiButtonTestInput, twoButtonTestCommandArray); //Test : Command put
 		
 	  
 		return operatorCommands;
