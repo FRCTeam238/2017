@@ -145,7 +145,7 @@ public class Navigation {
 		Logger.Log("Navigation(): areWeThereYet(): Current Yaw is : "+ currentYaw);
 		Logger.Log("Navigation(): areWeThereYet(): Target is : "+ targetYaw);
 		
-		if((currentYaw >= targetYaw)) // && (currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE)))
+		if((currentYaw >= (targetYaw - CrusaderCommon.NAVIGATION_TURNING_DEADZONE))) // && (currentYaw < (targetYaw + CrusaderCommon.NAVIGATION_TURNING_DEADZONE)))
 		{
 			return true;
 		}
@@ -229,11 +229,14 @@ public class Navigation {
 
 	  
     double curr_world_linear_accel_x = ahrs.getWorldLinearAccelX();
-    double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
     last_world_linear_accel_x = curr_world_linear_accel_x;
+    double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
+     
+    
     double curr_world_linear_accel_y = ahrs.getWorldLinearAccelY();
-    double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
     last_world_linear_accel_y = curr_world_linear_accel_y;
+    double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
+    
     
     if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
          ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ) {

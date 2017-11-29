@@ -178,36 +178,112 @@ public class CommandController
 			
 			//Checks for inputs on the left driver joystick
 			buttonPressed = commandValues.get(CrusaderCommon.INPUT_DRIVER_LEFT_JS);
-			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed
-			    );
+			commandForTheButtonPressed = driverLeftCmdList.get(buttonPressed);
 			
-			if(commandForTheButtonPressed != null)
-			{
-				commandForTheButtonPressed.execute();
-			}
+		
+			  boolean leftDButtonPressed = false;
+			  for(int l = 0; l < buttonPressed.length; l++)
+	      {
+	        
+	          if(buttonPressed[l] != null)
+	          {
+	            int index = buttonPressed[l];
+	            System.out.println(index);
+	            if(index > 0)
+	            {
+	            //if(index >= 0)
+	            //{
+	              leftDButtonPressed = true;
+	              commandForTheButtonPressed = driverLeftCmdList.get(index);
+	              commandForTheButtonPressed.execute(); //why are you null
+	            //}
+	          //}
+	            }
+	    
+	        //operatorCommandsForTheButtonPressed = operatorCmdList.get(i);
+	          }
+	      }
+			  if(!leftDButtonPressed)
+	      {
+	        commandForTheButtonPressed = driverLeftCmdList.get(0);
+	        commandForTheButtonPressed.execute();
+	      }
+				
+			
 			
 			//Checks for inputs on the right driver joystick
 			buttonPressed = commandValues.get(CrusaderCommon.INPUT_DRIVER_RIGHT_JS);
 			commandForTheButtonPressed = driverRightCmdList.get(buttonPressed);
 			
-			if(commandForTheButtonPressed != null)
+			/*if(commandForTheButtonPressed != null)
 			{
 				commandForTheButtonPressed.execute();
 			}
-			
+			*/
+			boolean rightDButtonPressed = false;
+      for(int r = 0; r < buttonPressed.length; r++)
+      {
+        
+          if(buttonPressed[r] != null)
+          {
+            int index = buttonPressed[r];
+            System.out.println(index);
+            if(index > 0)
+            {
+            //if(index >= 0)
+            //{
+              rightDButtonPressed = true;
+             commandForTheButtonPressed = driverRightCmdList.get(index);
+             commandForTheButtonPressed.execute(); //why are you null
+            //}
+          //}
+            }
+    
+        //operatorCommandsForTheButtonPressed = operatorCmdList.get(i);
+          }
+      }
+      if(!rightDButtonPressed)
+      {
+        commandForTheButtonPressed = driverRightCmdList.get(0);
+        commandForTheButtonPressed.execute();
+      }
 			//Checks for y inputs on both of the driver joysticks
 			buttonPressed = commandValues.get(CrusaderCommon.DT_CMD_LIST);
 			
-			/*for(int i = 0; i < buttonPressed.length; i++)
+			boolean driverButtonPressed = false;
+			for(int d = 0; d < buttonPressed.length; d++)
 			{
 			  commandForTheButtonPressed = driverCmdList.get(buttonPressed);
-			}*/
+			  if(buttonPressed[d] != null)
+        {
+          int index = buttonPressed[d];
+          System.out.println(index);
+          if(index > 0)
+          {
+          //if(index >= 0)
+          //{
+            //rightDButtonPressed = true;
+           commandForTheButtonPressed = driverCmdList.get(buttonPressed);
+           commandForTheButtonPressed.execute(); //why are you null
+          //}
+        //}
+          }
+  
+      //operatorCommandsForTheButtonPressed = operatorCmdList.get(i);
+        }
+			}
+			if(!driverButtonPressed)
+      {
+        commandForTheButtonPressed = driverCmdList.get(0);
+        commandForTheButtonPressed.execute();
+      }
+      
 			//commandForTheButtonPressed = driverCmdList.get(buttonPressed); 
 			
-			if(commandForTheButtonPressed != null)
-			{
-				commandForTheButtonPressed.execute();
-			}
+			
+			 
+				
+			
 			
 			//Check for inputs on the operator joystick
 			buttonPressed = commandValues.get(CrusaderCommon.OPR_CMD_LIST);	
@@ -227,8 +303,16 @@ public class CommandController
   			    //{
 			        buttonIsPressed = true;
   			      operatorCommandsForTheButtonPressed = operatorCmdList.get(index);
-  	          operatorCommandsForTheButtonPressed.execute(); //why are you null
-  			    //}
+  	          
+  			      if(buttonPressed[i] == 1 || buttonPressed[i] == 5)
+  			      {
+  			        int shootButton = buttonPressed[i];
+  			        operatorCommandsForTheButtonPressed.execute(shootButton);
+  			      }
+  			      else
+  			      {
+  			        operatorCommandsForTheButtonPressed.execute(); //why are you null
+  			      }
 			    //}
 			      }
 		

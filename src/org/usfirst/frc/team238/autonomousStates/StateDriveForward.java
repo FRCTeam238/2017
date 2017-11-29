@@ -85,7 +85,7 @@ public class StateDriveForward implements AutonomousState {
     param4 = SmartDashboard.getString("Param 4 - ultrasonicTarget");
     parameters[3] = param4;
     param5 = SmartDashboard.getString("Param 5 - collisionToggle");
-    parameters[4] = param5;
+    //parameters[4] = param5;
   }
 
   @Override

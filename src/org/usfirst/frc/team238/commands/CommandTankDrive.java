@@ -33,7 +33,10 @@ public class CommandTankDrive extends AbstractCommand {
     //This represents x = ax^3+(1-a)x where leftJsValue = x; tuningValue = a;
     leftJsValue = (tuningValue * (leftJsValue * leftJsValue * leftJsValue) + (1-tuningValue) * leftJsValue);
     rightJsValue = (tuningValue * (rightJsValue * rightJsValue * rightJsValue) + (1-tuningValue) * rightJsValue);
-
+    
+    Logger.Log("Left Motor Value in TELEOP = " + leftJsValue);
+    Logger.Log("Right Motor Value in TELEOP = " + rightJsValue);
+    
     myRobotDrive.tankDrive(leftJsValue, rightJsValue);
 
   }

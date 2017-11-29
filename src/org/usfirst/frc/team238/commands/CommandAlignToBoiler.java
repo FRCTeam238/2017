@@ -81,7 +81,7 @@ public class CommandAlignToBoiler extends AbstractCommand {
 
 		} else {
 			calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP, visionAngle,
-					CrusaderCommon.TURN_MAX_ERROR,CrusaderCommon.TURN_MAX_MOTOR_VALUE);
+					CrusaderCommon.TURN_MAX_ERROR,CrusaderCommon.TURN_MAX_MOTOR_VALUE, CrusaderCommon.TURN_I_VALUE);
 
 			Logger.Log("Turning to vision angle: " + realAngle);
 

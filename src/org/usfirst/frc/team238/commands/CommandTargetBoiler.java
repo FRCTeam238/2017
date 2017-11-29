@@ -42,7 +42,7 @@ public class CommandTargetBoiler extends AbstractCommand {
     
     double calculatedMotorValue;
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
-        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
+        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE,CrusaderCommon.TURN_I_VALUE);
     
     Logger.Log("CommandTargetBoiler(): Calculated Motor Value is " + calculatedMotorValue);
     
@@ -74,6 +74,7 @@ public class CommandTargetBoiler extends AbstractCommand {
     myNavigation.zeroYaw();
     
     teamColor = theRobot.getAllianceTeam();
+    resetVals();
 //    teamColor = Alliance.Blue;
     
     if (teamColor == Alliance.Red)

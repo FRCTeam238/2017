@@ -2,6 +2,7 @@ package org.usfirst.frc.team238.commands;
 
 import org.usfirst.frc.team238.core.AbstractCommand;
 import org.usfirst.frc.team238.core.Logger;
+import org.usfirst.frc.team238.robot.CrusaderCommon;
 import org.usfirst.frc.team238.robot.Drivetrain;
 import org.usfirst.frc.team238.robot.Navigation;
 
@@ -30,6 +31,7 @@ public class CommandTurnRight extends AbstractCommand {
 
     myNavigation.resetNAVX();
     myNavigation.zeroYaw();
+    resetVals();
 
   }
 
@@ -38,10 +40,14 @@ public class CommandTurnRight extends AbstractCommand {
    // finalMotorValue = myNavigation.turningMotorValue(targetValue, currentYaw, motorValue);
     
     double yaw = myNavigation.getYaw();
+    double calculatedValue;
     
-    myNavigation.navxValues();
+    calculatedValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP_RIGHT,
+        targetValue, CrusaderCommon.TURN_MAX_ERROR,CrusaderCommon.TURN_MAX_MOTOR_VALUE, CrusaderCommon.TURN_I_VALUE);
     currentYaw = myNavigation.getYaw();
-    myRobotDrive.turnRight(motorValue, motorValue);
+    myRobotDrive.turnRight(calculatedValue, calculatedValue);
+    Logger.Log("CALCULATED VALUE = " + calculatedValue);
+    myNavigation.navxValues();
     
     Logger.Log("CommandTurnRight(): Our yaw = "+yaw);
     Logger.Log("CommandTurnRight(): Our Target yaw is = "+ targetValue);
@@ -85,6 +91,17 @@ public class CommandTurnRight extends AbstractCommand {
       return false;
     }
 
+  }
+  
+  public double getError()
+  {
+    double error;
+    double currentYaw = Math.abs(myNavigation.getYaw());
+    
+    error = targetValue - currentYaw;
+    //Logger.Log("TURN ERROR = " + error);
+    
+    return error;
   }
   
 }

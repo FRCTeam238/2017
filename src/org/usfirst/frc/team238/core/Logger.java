@@ -173,4 +173,41 @@ public class Logger {
     
     }
   }
+  
+  /*public static void writeToUSB(String log,String logFileName){
+    // /U or media/svb?
+    try{
+    
+    File customFile = new File("/U"+logFileName+".txt");
+    
+    //If the file already exists, open the file and write the string to it 
+      if(customFile.exists())
+      {
+        
+        FileWriter logFile = new FileWriter("/U"+logFileName+".txt",true);
+        logFile.write(newline+log);
+        logFile.flush();
+        logFile.close();
+     
+    //If the file doesn't already exists, create a new one and write the string to it
+      }
+      else
+      {
+       
+        customFile.createNewFile();
+        FileWriter logFile = new FileWriter("/U"+logFileName+".txt",true);
+        logFile.write(newline+log);
+        logFile.flush();
+        logFile.close();
+        
+      }
+    }
+    catch(Exception e)
+    {
+      
+      e.printStackTrace();
+      Log("Logger: writeToNewLogFile has Failed!");
+    
+    }
+  }*/
 }

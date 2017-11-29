@@ -53,7 +53,7 @@ public class CommandTrackTargetBoiler extends AbstractCommand {
 		
     double calculatedMotorValue;
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
-        boilerAngle, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
+        boilerAngle, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE, CrusaderCommon.TURN_I_VALUE);
 		
 		
 		

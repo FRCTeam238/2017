@@ -9,6 +9,7 @@ import org.usfirst.frc.team238.robot.Navigation;
 import org.usfirst.frc.team238.robot.Robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -52,6 +53,7 @@ public class CommandCurlForward extends AbstractCommand
   double delayStart = 0;
   double delayCurrent = 0;
   double delayElapsed = 0;
+  double startTime = 0;
   
   public CommandCurlForward(Drivetrain theRobotDrive, Navigation myNavigationForTarget, Robot myRobot){
     
@@ -165,7 +167,7 @@ public class CommandCurlForward extends AbstractCommand
     // this is the distance to travel on red side
     if ((params[0] != null) || (!params[0].isEmpty())) {
       
-      targetValue = Double.parseDouble(params[0]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT;
+      targetValue = Double.parseDouble(params[0]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_INCH;
       
     } else {
       
@@ -197,7 +199,7 @@ public class CommandCurlForward extends AbstractCommand
     //this is the distance to travel on blue side
     if ((params[3] != null) || (!params[3].isEmpty())) 
     {
-      blueTargetValue = Double.parseDouble(params[3]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT;;
+      blueTargetValue = Double.parseDouble(params[3]) * CrusaderCommon.DRIVE_FORWARD_ENCODER_TICKS_PER_INCH;
     } 
     else 
     {
@@ -222,7 +224,7 @@ public class CommandCurlForward extends AbstractCommand
     
     boolean doness = false;
     double amountOfTicks;
-        
+    
     amountOfTicks = myRobotDrive.getEncoderTicks();
     
     switch(stage){
@@ -234,17 +236,25 @@ public class CommandCurlForward extends AbstractCommand
         Logger.Log("CommandCurlForward(): done target : " + targetValue,"CommandCurlForwardLog");
         if(areWeDone){
           stage++;
+          startTime = Timer.getFPGATimestamp();
         }
         
         break; 
       
       case CrusaderCommon.CURL_TURN: //Checks if we are at a certain angle and increments to stage 3
         
-        if(collisionToggle != 1)
-        {
-          collisionDetected = myNavigation.haveWeCollided();
-        }
+       // double currentTime = Timer.getFPGATimestamp();
+        //double finalTime = currentTime - startTime;
+        //if((finalTime) > 10)
+        //{
           
+          if(collisionToggle != 1)
+          {
+            //System.out.println("FINAL TIME = " + finalTime);
+            collisionDetected = myNavigation.haveWeCollided();
+          }
+        //}
+        
         if(myNavigation.areWeThereYet())
         {
           myRobotDrive.driveForward(0, 0);

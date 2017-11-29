@@ -85,10 +85,10 @@ public class CrusaderCommon {
 	/*THESE ARE THE ALL THE TALON IDS FOR THE 2017 ROBOT*/
 	public final static int SHOOTER_MASTER_TALON = 11;//11
 	public final static int SHOOTER_SLAVE_TALON = 12;//10
-	public final static int ELEVATOR_TALON = 7;
+	public final static int ELEVATOR_TALON = 3;
 	public final static int INTAKE_TALON = 2;
 	public final static int DRIVE_TRAIN_MASTER_RIGHT = 8;
-	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 3;
+	public final static int DRIVE_TRAIN_SLAVE_RIGHT = 7;
 	public final static int DRIVE_TRAIN_MASTER_LEFT = 5;
 	public final static int DRIVE_TRAIN_SLAVE_LEFT = 6;
 	public final static int SERIALIZER_TALON = 4;
@@ -128,14 +128,14 @@ public class CrusaderCommon {
 
 	public final static double NAVIGATION_P_VALUE = 0.1;
 	public final static double NAVIGATION_MAX_MOTOR_INCREMENT = 0.2;
-	public final static double NAVIGATION_TURNING_DEADZONE = 6;
+	public final static double NAVIGATION_TURNING_DEADZONE = 1.5;
 	
 	public final static double DRIVE_FORWARD_P_VALUE = 0.015;
 	public final static double DRIVE_FORWARD_I_VALUE = 0;
 	public final static double DRIVE_FORWARD_MAX_YAW_PERCENT = 0.1;
 	                                                                
 	                                                              //325 = 1 inch 3900 = 1 foot
-	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_FOOT = 325;//4983;//3900;
+	public final static int DRIVE_FORWARD_ENCODER_TICKS_PER_INCH = 325;//4983;//3900;
 	
 	public final static int SONIC_SENSOR_ACTIVATION_DISTANCE = 6840;
 	public final static int SONIC_INPUT_PORT = 8;
@@ -145,12 +145,15 @@ public class CrusaderCommon {
 	
 	public final static double SHOOTER_VISION_DEADZONE = 1;
 	
-	public final static double TURN_P_VALUE = 0.003;//SmartDashboard.getNumber("Turn P Value",0.005);//0.005;
-	public final static double TURN_DEAD_STOP = 0.25;//SmartDashboard.getNumber("Turn Dead Stop", 0.42);//0.42;
+	public final static double TURN_P_VALUE = 0.0007;//0.003;//SmartDashboard.getNumber("Turn P Value",0.005);//0.005;
+	public final static double TURN_I_VALUE = 0.00120;//0.00125;//0.003;//FIND A VALUE FOR THIS
+	public final static double TURN_DEAD_STOP = 0.175;//0.25;//SmartDashboard.getNumber("Turn Dead Stop", 0.42);//0.42;
+	public final static double TURN_DEAD_STOP_RIGHT = 0.118;
 	public final static double TURN_MAX_ERROR = 80;//SmartDashboard.getNumber("Turn Max Error",45);//45;
 	public final static double TURN_MAX_MOTOR_VALUE = .7;//SmartDashboard.getNumber("Turn Max Error",45);//45;
 	  
 	public final static double STRAIGHT_P_VALUE = 0.000055;//0.00003512;
+	public final static double STRAIGHT_I_VALUE = 0.0000095;
 	public final static double STRAIGHT_DEAD_STOP = 0.1;//0.05;
 	public final static double STRAIGHT_MAX_ERROR = 15000;//9966;
 	 public final static double STRAIGHT_MAX_MOTOR_VALUE  = 1;//SmartDashboard.getNumber("Turn Max Error",45);//45;

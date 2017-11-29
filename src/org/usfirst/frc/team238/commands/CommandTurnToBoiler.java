@@ -35,7 +35,7 @@ public class CommandTurnToBoiler extends AbstractCommand {
     
     double calculatedMotorValue;
     calculatedMotorValue = pidCalc(CrusaderCommon.TURN_P_VALUE, CrusaderCommon.TURN_DEAD_STOP,
-        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE);
+        targetValue, CrusaderCommon.TURN_MAX_ERROR, CrusaderCommon.TURN_MAX_MOTOR_VALUE, CrusaderCommon.TURN_I_VALUE);
     
     Logger.Log("CommandTurnToBoiler(): Calculated Motor Value is " + calculatedMotorValue);
     
